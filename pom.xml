@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.touchbit</groupId>
+    <artifactId>testrail4j-api-client</artifactId>
+    <version>0.0.1</version>
+
+    <name>testrail4j</name>
+    <description>Java client for TestRail API</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>feign</module>
+        <module>okhttp</module>
+    </modules>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>manual</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@gitlab.com:TouchBIT/testrail4j.git</connection>
+        <developerConnection>scm:git:git@gitlab.com:TouchBIT/testrail4j.git</developerConnection>
+        <url>https://gitlab.com/TouchBIT/testrail4j</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>maria.vasilenko</id>
+            <name>Maria Vasilenko</name>
+            <email>maria.vasilenko@touchbit.org</email>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+        <developer>
+            <id>oleg.shaburov</id>
+            <name>Oleg Shaburov</name>
+            <email>oleg.shaburov@touchbit.org</email>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <encoding>UTF-8</encoding>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <file.encoding>${encoding}</file.encoding>
+        <source.encoding>${encoding}</source.encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <junit.report>${project.build.directory}/report/junit-report</junit.report>
+        <jacoco.report>${project.build.directory}/report/jacoco.exec</jacoco.report>
+
+        <sonar.gitlab.project_id>8110538</sonar.gitlab.project_id>
+        <sonar.sources>src/main</sonar.sources>
+        <sonar.tests>src/test</sonar.tests>
+        <sonar.host.url>https://touchbit.org/sonar/</sonar.host.url>
+        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.junit.reportPaths>${junit.report}</sonar.junit.reportPaths>
+        <sonar.jacoco.reportPaths>${jacoco.report}</sonar.jacoco.reportPaths>
+
+        <project.build.lib.dir>${project.build.directory}/lib</project.build.lib.dir>
+
+        <log4j.version>2.9.1</log4j.version>
+        <jackson.version>2.8.5</jackson.version>
+        <jupiter.version>5.2.0</jupiter.version>
+        <jacoco.version>0.8.1</jacoco.version>
+        <skip.test>false</skip.test>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- self -->
+            <dependency>
+                <groupId>org.touchbit</groupId>
+                <artifactId>testrail4j-feign-client</artifactId>
+                <version>0.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.touchbit</groupId>
+                <artifactId>testrail4j-okhttp-client</artifactId>
+                <version>0.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- Test -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-all</artifactId>
+                <version>1.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>1.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-library</artifactId>
+                <version>1.3</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>9.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-jackson</artifactId>
+                <version>9.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-slf4j</artifactId>
+                <version>9.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>1.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>9.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.8</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                    <allowIncrementalUpdates>true</allowIncrementalUpdates>
+                    <processAllModules>true</processAllModules>
+                    <updateMatchingVersions>true</updateMatchingVersions>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <encoding>${source.encoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>copy-junit-platform-console-standalone</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${skip.test}</skip>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>org.junit.platform</groupId>
+                                        <artifactId>junit-platform-console-standalone</artifactId>
+                                        <version>1.2.0</version>
+                                        <type>jar</type>
+                                        <outputDirectory>${project.build.lib.dir}</outputDirectory>
+                                        <destFileName>junit-console.jar</destFileName>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-jacoco</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${skip.test}</skip>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>org.jacoco</groupId>
+                                        <artifactId>org.jacoco.ant</artifactId>
+                                        <version>${jacoco.version}</version>
+                                        <type>jar</type>
+                                        <outputDirectory>${project.build.lib.dir}</outputDirectory>
+                                        <destFileName>jacoco-ant.jar</destFileName>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.jacoco</groupId>
+                                        <artifactId>org.jacoco.core</artifactId>
+                                        <version>${jacoco.version}</version>
+                                        <type>jar</type>
+                                        <outputDirectory>${project.build.lib.dir}</outputDirectory>
+                                        <destFileName>jacoco-core.jar</destFileName>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>org.jacoco</groupId>
+                                        <artifactId>org.jacoco.agent</artifactId>
+                                        <version>${jacoco.version}</version>
+                                        <type>jar</type>
+                                        <outputDirectory>${project.build.lib.dir}</outputDirectory>
+                                        <destFileName>jacoco-agent.jar</destFileName>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>unpack-dependencies</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${skip.test}</skip>
+                                <overWriteIfNewer>true</overWriteIfNewer>
+                                <outputDirectory>${project.build.directory}/dependency-classes</outputDirectory>
+                                <includeScope>test</includeScope>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>tree</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>tree</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>analyze</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <outputXML>true</outputXML>
+                                <ignoreNonCompile>true</ignoreNonCompile>
+                                <failOnWarning>false</failOnWarning>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <phase>test</phase>
+                            <configuration>
+                                <skip>${skip.test}</skip>
+                                <target name="Running unit tests with code coverage analysis">
+                                    <path id="jacoco-ant-jar" >
+                                        <fileset dir="${project.build.lib.dir}">
+                                            <include name="*.jar"/>
+                                        </fileset>
+                                    </path>
+                                    <taskdef uri="antlib:org.jacoco.ant"
+                                             name="test_coverage"
+                                             classpathref="jacoco-ant-jar"
+                                             classname="org.jacoco.ant.CoverageTask">
+                                    </taskdef>
+                                    <jacoco:test_coverage destfile="${jacoco.report}"
+                                                          xmlns:jacoco="antlib:org.jacoco.ant">
+                                        <java fork="true" jar="target/lib/junit-console.jar" failonerror="true">
+
+                                            <arg value="--class-path"/><arg value="target/classes/"/>
+                                            <arg value="--class-path"/><arg value="target/test-classes/"/>
+                                            <arg value="--class-path"/><arg value="target/dependency-classes/"/>
+                                            <arg value="--include-package"/><arg value="org.touchbit.gitlab.api"/>
+                                            <arg value="--reports-dir"/><arg value="${junit.report}"/>
+                                            <arg value="--scan-class-path"/>
+                                        </java>
+                                    </jacoco:test_coverage>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
