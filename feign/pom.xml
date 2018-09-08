@@ -18,9 +18,9 @@
         <sonar.exclusions/>
         <sonar.coverage.exclusions>
             *.xml,
-            src/main/java/org/touchbit/gitlab/api/feign/model/*,
-            src/main/java/org/touchbit/gitlab/api/feign/model/**/*,
-            src/main/java/org/touchbit/gitlab/api/feign/model/**/**/*
+            src/main/java/org/touchbit/testrail4j/api/feign/model/*,
+            src/main/java/org/touchbit/testrail4j/api/feign/model/**/*,
+            src/main/java/org/touchbit/testrail4j/api/feign/model/**/**/*
         </sonar.coverage.exclusions>
     </properties>
 
@@ -109,7 +109,7 @@
                             <directory>target</directory>
                         </fileset>
                         <fileset>
-                            <directory>src/main/java/org/touchbit/gitlab/api/feign/model</directory>
+                            <directory>src/main/java/org/touchbit/testrail4j/api/feign/model</directory>
                         </fileset>
                     </filesets>
                 </configuration>

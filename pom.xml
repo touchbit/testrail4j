@@ -337,7 +337,7 @@
                                             <arg value="--class-path"/><arg value="target/classes/"/>
                                             <arg value="--class-path"/><arg value="target/test-classes/"/>
                                             <arg value="--class-path"/><arg value="target/dependency-classes/"/>
-                                            <arg value="--include-package"/><arg value="org.touchbit.gitlab.api"/>
+                                            <arg value="--include-package"/><arg value="org.touchbit.testrail4j.api"/>
                                             <arg value="--reports-dir"/><arg value="${junit.report}"/>
                                             <arg value="--scan-class-path"/>
                                         </java>
