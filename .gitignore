@@ -1,6 +1,6 @@
 .idea
 *.iml
-feign/src/main/java/org/touchbit/gitlab/api/feign/model
+**/src/main/java/org/touchbit/testrail4j/**/model
 *.class
 *.log
 *.ctxt
