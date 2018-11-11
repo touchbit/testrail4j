@@ -13,6 +13,10 @@ Build testrail4j:
   script:
     # do not use -Dmaven.test.skip=true
     - mvn clean install -DskipTests
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - "*/target/reports"
 
 Sonar review:
   stage: verify
