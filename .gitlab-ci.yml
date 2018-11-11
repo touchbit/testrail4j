@@ -1,35 +1,22 @@
 stages:
-  - build
-  - verify
+  - test
   - deploy
 
 variables:
   SONAR_ARGS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${CI_COMMIT_REF_NAME}"
 
 Build testrail4j:
-  stage: build
+  stage: test
   tags:
     - touchbit-shell
   script:
     # do not use -Dmaven.test.skip=true
     - mvn clean install -DskipTests
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - "*/target/reports"
-
-Sonar review:
-  stage: verify
-  dependencies:
-    - Build testrail4j
-  tags:
-    - touchbit-shell
-  script:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
-        mvn compile sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS
+        mvn sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS
       else
-        mvn compile sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS -Dsonar.analysis.mode=preview
+        mvn sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS -Dsonar.analysis.mode=preview
       fi
 
 Deploy Snapshot:
