@@ -6,14 +6,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="feign" />
-        <module name="okhttp" />
+        <module name="gson-api-model" />
+        <module name="jackson2-api-model" />
+        <module name="jackson2-feign-client" />
+        <module name="testrail4j-core" />
+        <module name="testrail4j-jackson2-api-feign-client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="feign" target="1.8" />
-      <module name="okhttp" target="1.8" />
-      <module name="testrail4jokhttpclient" target="1.5" />
+      <module name="gson-api-model" target="1.8" />
+      <module name="jackson2-api-model" target="1.8" />
+      <module name="jackson2-feign-client" target="1.8" />
+      <module name="testrail4j" target="1.8" />
+      <module name="testrail4j-api-client" target="1.8" />
+      <module name="testrail4j-core" target="1.8" />
+      <module name="testrail4j-feign-client" target="1.8" />
+      <module name="testrail4j-jackson2-api-feign-client" target="1.8" />
+      <module name="testrail4j-okhttp-client" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The unique ID of the test result"
+    },
+    "case_id": {
+      "type": "integer",
+      "description": "The ID of the test case"
+    },
+    "status_id": {
+      "type": "integer",
+      "description": "The status of the test result, e.g. passed or failed"
+    },
+    "test_id": {
+      "type": "integer",
+      "description": "The ID of the test this test result belongs to"
+    },
+    "comment": {
+      "type": "string",
+      "description": "The comment or error message of the test result"
+    },
+    "defects": {
+      "type": "string",
+      "description": "A comma-separated list of defects linked to the test result"
+    },
+    "version": {
+      "type": "string",
+      "description": "The (build) version the test was executed against"
+    },
+    "elapsed": {
+      "type": "string",
+      "description": "The amount of time it took to execute the test (e.g. '1m' or '2m 30s')"
+    },
+    "created_by": {
+      "type": "integer",
+      "description": "The ID of the user who created the test result"
+    },
+    "created_on": {
+      "type": "integer",
+      "description": "The date/time when the test result was created (as UNIX timestamp)"
+    },
+    "assignedto_id": {
+      "type": "integer",
+      "description": "The ID of the assignee (user) of the test result"
+    }
+  }
+}
