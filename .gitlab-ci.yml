@@ -53,7 +53,7 @@ Deploy Snapshot:
     - SNAPSHOT_TR4J_VERSION=${TR4J_VERSION}-SNAPSHOT
     - mvn versions:set -DnewVersion=${SNAPSHOT_TR4J_VERSION}
     - mvn deploy -DskipTests
-    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=true&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${SNAPSHOT_TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/buggy/buggy/${SNAPSHOT_TR4J_VERSION}/%29\""
+    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=true&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${SNAPSHOT_TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${SNAPSHOT_TR4J_VERSION}/%29\""
 
 Deploy TestRail4J:
   stage: deploy
@@ -82,4 +82,4 @@ Deploy TestRail4J:
     # do not use -Dmaven.test.skip=true
     - mvn deploy -DskipTests
     - TR4J_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=false&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/buggy/buggy/${TR4J_VERSION}/%29\""
+    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=false&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${TR4J_VERSION}/%29\""
