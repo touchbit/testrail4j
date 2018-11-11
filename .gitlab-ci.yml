@@ -1,5 +1,7 @@
 stages:
   - build
+  - test
+  - verify
   - deploy
 
 variables:
@@ -10,12 +12,33 @@ Build testrail4j:
   tags:
     - touchbit-shell
   script:
-    - mvn clean install
+    # do not use -Dmaven.test.skip=true
+    - mvn clean package -DskipTests
+
+Test testrail4j:
+  stage: test
+  tags:
+    - touchbit-shell
+  script:
+    # do not use -Dmaven.test.skip=true
+    - mvn test
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - "*/target/reports"
+
+Sonar review:
+  stage: verify
+  dependencies:
+    - Test testrail4j
+  tags:
+    - touchbit-shell
+  script:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
-        mvn sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS
+        mvn compile sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS
       else
-        mvn sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS -Dsonar.analysis.mode=preview
+        mvn compile sonar:sonar -Dsonar.login=$SONAR_LOGIN $SONAR_ARGS -Dsonar.analysis.mode=preview
       fi
 
 Deploy Snapshot:
