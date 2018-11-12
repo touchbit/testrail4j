@@ -1,9 +1,9 @@
-package org.touchbit.testrail4j.jackson2.feign.client;
+package org.touchbit.testrail4j.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.touchbit.testrail4j.jackson2.feign.client.query.GetCasesQueryMap;
-import org.touchbit.testrail4j.jackson2.feign.client.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +24,8 @@ class QueryMapsTests {
         map.setUpdatedAfter(8);
         map.setUpdatedBefore(9);
         map.setUpdatedBy(10);
+        map.setSuiteId(11);
+        map.setSectionId(12);
         assertThat(map.getCreatedAfter()).isEqualTo(1);
         assertThat(map.getCreatedBefore()).isEqualTo(2);
         assertThat(map.getCreatedBy()).isEqualTo(3);
@@ -34,6 +36,8 @@ class QueryMapsTests {
         assertThat(map.getUpdatedAfter()).isEqualTo(8);
         assertThat(map.getUpdatedBefore()).isEqualTo(9);
         assertThat(map.getUpdatedBy()).isEqualTo(10);
+        assertThat(map.getSuiteId()).isEqualTo(11);
+        assertThat(map.getSectionId()).isEqualTo(12);
     }
 
     @Test

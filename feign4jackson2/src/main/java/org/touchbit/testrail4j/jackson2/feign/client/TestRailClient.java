@@ -1,8 +1,8 @@
 package org.touchbit.testrail4j.jackson2.feign.client;
 
 import feign.*;
-import org.touchbit.testrail4j.jackson2.feign.client.query.GetCasesQueryMap;
-import org.touchbit.testrail4j.jackson2.feign.client.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings("unused")
-@Headers("Content-Type: application/json")
+@Headers("Content-Type: application/json; charset=utf-8")
 public interface TestRailClient {
 
     /*
@@ -28,7 +28,7 @@ public interface TestRailClient {
      * http://docs.gurock.com/testrail-api2/reference-results#get_results
      *
      * Get the latest 10 results for test with ID 1 and statuses 4 or 5 (Retest, Failed)
-     * GET index.php?/api/v2/get_results/1&status_id=4,5&limit=10
+     * GET /index.php?/api/v2/get_results/1&status_id=4,5&limit=10
      *
      * @param testID - The ID of the test
      * @param getResultsQueryMap - see {@link GetResultsQueryMap}
@@ -57,8 +57,15 @@ public interface TestRailClient {
      *   }
      * ]
      * */
-    @RequestLine(value = "GET index.php?/api/v2/get_results/{test_id}")
-    List<Result> getResults(@Param("test_id") Integer testID, @QueryMap GetResultsQueryMap getResultsQueryMap);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{test_id}")
+    List<Result> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap getResultsQueryMap);
+
+    /**
+     * See {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
+     */
+    default List<Result> getResults(Long testID) {
+        return getResults(testID, new GetResultsQueryMap());
+    }
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases
@@ -79,11 +86,11 @@ public interface TestRailClient {
      *   ]
      * }
      * @return if successful, this method returns the new list of test {@link Result}s
-     *  using the same response format as {@link TestRailClient#getResults(Integer, GetResultsQueryMap)}
+     *  using the same response format as {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
      *  and in the same order as the list of the request.
      */
-    @RequestLine(value = "POST index.php?/api/v2/add_results_for_cases/{run_id}")
-    List<Result> addResultsForCases(Results results, @Param("run_id") String runID);
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_results_for_cases/{run_id}")
+    List<Result> addResultsForCases(Results results, @Param("run_id") Long runID);
 
     /*
      * API: Cases
@@ -113,19 +120,17 @@ public interface TestRailClient {
      *   "updated_on": 1393586511
      * }
      * */
-    @RequestLine(value = "GET index.php?/api/v2/get_case/{case_id}")
-    Case getCase(@Param("case_id") Integer caseID);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_case/{case_id}")
+    Case getCase(@Param("case_id") Long caseID);
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-cases#get_cases
      *
      * For example get all test cases for project with ID 1, suite with ID 2 and priority 3 or 4
-     * GET index.php?/api/v2/get_cases/1&suite_id=2&priority_id=3,4
+     * GET /index.php?/api/v2/get_cases/1&suite_id=2&priority_id=3,4
      *
      * @param projectID - The ID of the project
-     * @param suiteID - The ID of the test suite (optional if the project is operating in single suite mode)
-     * @param sectionID - The ID of the section (optional)
-     * @param queryMap - following filters {@link GetCasesQueryMap}
+     * @param queryMap - following optional parameters and filters {@link GetCasesQueryMap}
      *
      * @return a list of {@link Case} for a test suite or specific section in a test suite.
      * [
@@ -133,11 +138,15 @@ public interface TestRailClient {
      * 	{ "id": 2, "title": "..", .. }
      * ]
      */
-    @RequestLine(value = "GET index.php?/api/v2/get_cases/{project_id}&suite_id={suite_id}&section_id={section_id}")
-    List<Case> getCases(@Param("project_id") Integer projectID,
-                        @Param("suite_id") Integer suiteID,
-                        @Param("section_id") Integer sectionID,
-                        @QueryMap GetCasesQueryMap queryMap);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_cases/{project_id}")
+    List<Case> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);
+
+    /**
+     * See {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
+     */
+    default List<Case> getCases(Long projectID) {
+        return getCases(projectID, new GetCasesQueryMap());
+    }
 
     /*
      * API: Projects
@@ -161,8 +170,8 @@ public interface TestRailClient {
      * 	"url": "http://localhost/testrail/index.php?/projects/overview/1"
      * }
      * */
-    @RequestLine(value = "GET index.php?/api/v2/get_project/:project_id")
-    Project getProject(@Param("project_id") Integer projectID);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_project/{projectID}")
+    Project getProject(@Param("projectID") Long projectID);
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-projects#get_projects
@@ -173,14 +182,21 @@ public interface TestRailClient {
      *
      * @return The response includes an array of projects.
      * Each project in this list follows the same format as
-     * {@link TestRailClient#getProject(Integer)}
+     * {@link TestRailClient#getProject(Long)}
      * [
      * 	{ "id": 1, "name": "DataHub", .. },
      * 	{ "id": 2, "name": "Writer", .. }
      * ]
      */
-    @RequestLine(value = "GET index.php?/api/v2/get_projects&is_completed={is_completed}")
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_projects&is_completed={is_completed}")
     List<Project> getProjects(@Param("is_completed") Boolean isCompleted);
+
+    /**
+     * See {@link TestRailClient#getProjects(Boolean)}
+     */
+    default List<Project> getProjects() {
+        return getProjects(false);
+    }
 
     /*
      * API: Runs
@@ -224,8 +240,8 @@ public interface TestRailClient {
      * 	"url": "http://<server>/testrail/index.php?/runs/view/81"
      * }
      */
-    @RequestLine(value = "GET index.php?/api/v2/get_run/{run_id}")
-    Run getRun(@Param("run_id") Integer runID);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_run/{run_id}")
+    Run getRun(@Param("run_id") Long runID);
 
     /*
      * API: Suites
@@ -246,8 +262,8 @@ public interface TestRailClient {
      * 	"url": "http://<server>/testrail/index.php?/suites/view/1"
      * }
      */
-    @RequestLine(value = "GET index.php?/api/v2/get_suite/{suite_id}")
-    Suite getSuite(@Param("suite_id") Integer suiteID);
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_suite/{suite_id}")
+    Suite getSuite(@Param("suite_id") Long suiteID);
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suites
@@ -255,14 +271,13 @@ public interface TestRailClient {
      * @param projectID - The ID of the project
      *
      * @return The response includes an array of test suite. Each test suite in this
-     * list follows the same format as {@link TestRailClient#getSuite(Integer)}.
+     * list follows the same format as {@link TestRailClient#getSuite(Long)}.
      * [
      * 	{ "id": 1, "name": "Setup & Installation", .. },
      * 	{ "id": 2, "name": "Document Editing", .. }
      * ]
      */
-    @RequestLine(value = "GET index.php?/api/v2/get_suites/{project_id}")
-    List<Suite> getSuites(@Param("project_id") Integer projectID);
-
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_suites/{project_id}")
+    List<Suite> getSuites(@Param("project_id") Long projectID);
 
 }
