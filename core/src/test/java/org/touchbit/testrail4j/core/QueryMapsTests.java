@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 
+import java.lang.reflect.Field;
+import java.math.BigInteger;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Feign QueryMaps classes tests")
@@ -14,18 +17,18 @@ class QueryMapsTests {
     @DisplayName("Check GetCasesQueryMap")
     void unitTest_20181111214825() {
         GetCasesQueryMap map = new GetCasesQueryMap();
-        map.setCreatedAfter(1);
-        map.setCreatedBefore(2);
-        map.setCreatedBy(3);
-        map.setMilestoneId(4);
-        map.setPriorityId(5);
-        map.setTemplateId(6);
-        map.setTypeId(7);
-        map.setUpdatedAfter(8);
-        map.setUpdatedBefore(9);
-        map.setUpdatedBy(10);
-        map.setSuiteId(11);
-        map.setSectionId(12);
+        map.setCreatedAfter(1L);
+        map.setCreatedBefore(2L);
+        map.setCreatedBy(3L);
+        map.setMilestoneId(4L);
+        map.setPriorityId(5L);
+        map.setTemplateId(6L);
+        map.setTypeId(7L);
+        map.setUpdatedAfter(8L);
+        map.setUpdatedBefore(9L);
+        map.setUpdatedBy(10L);
+        map.setSuiteId(11L);
+        map.setSectionId(12L);
         assertThat(map.getCreatedAfter()).isEqualTo(1);
         assertThat(map.getCreatedBefore()).isEqualTo(2);
         assertThat(map.getCreatedBy()).isEqualTo(3);
@@ -44,12 +47,32 @@ class QueryMapsTests {
     @DisplayName("Check GetResultsQueryMap")
     void unitTest_20181111220009() {
         GetResultsQueryMap map = new GetResultsQueryMap();
-        map.setLimit(1);
-        map.setOffset(2);
-        map.setStatusId(3);
+        map.setLimit(1L);
+        map.setOffset(2L);
+        map.setStatusId(3L);
         assertThat(map.getLimit()).isEqualTo(1);
         assertThat(map.getOffset()).isEqualTo(2);
         assertThat(map.getStatusId()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("GetCasesQueryMap number field type is Long")
+    void unitTest_20181112162433() {
+        Field[] fields = GetCasesQueryMap.class.getDeclaredFields();
+        for (Field field : fields) {
+            assertThat(field.getType()).isNotSameAs(Integer.class);
+            assertThat(field.getType()).isNotSameAs(BigInteger.class);
+        }
+    }
+
+    @Test
+    @DisplayName("GetResultsQueryMap number field type is Long")
+    void unitTest_20181112163018() {
+        Field[] fields = GetResultsQueryMap.class.getDeclaredFields();
+        for (Field field : fields) {
+            assertThat(field.getType()).isNotSameAs(Integer.class);
+            assertThat(field.getType()).isNotSameAs(BigInteger.class);
+        }
     }
 
 }

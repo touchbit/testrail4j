@@ -34,7 +34,7 @@ class TestRailClientTests extends BaseUnitTest {
         @DisplayName("TestRailClient#getResults(Integer, GetResultsQueryMap)")
         void unitTest_20181112032818() {
             GetResultsQueryMap resultsQueryMap = new GetResultsQueryMap();
-            resultsQueryMap.setLimit(10);
+            resultsQueryMap.setLimit(10L);
             CLIENT.getResults(2818L, resultsQueryMap);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_results/2818&limit=10");
         }
@@ -83,7 +83,7 @@ class TestRailClientTests extends BaseUnitTest {
         @DisplayName("TestRailClient#getCases(Integer, GetCasesQueryMap)")
         void unitTest_20181112134620() {
             GetCasesQueryMap map = new GetCasesQueryMap();
-            map.setTypeId(3);
+            map.setTypeId(3L);
             CLIENT.getCases(34530L, map);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_cases/34530&type_id=3");
         }

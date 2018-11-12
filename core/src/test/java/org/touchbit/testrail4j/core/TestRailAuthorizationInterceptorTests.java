@@ -41,4 +41,20 @@ class TestRailAuthorizationInterceptorTests extends BaseUnitTest {
         assertThat(t.getMessage())
                 .isEqualTo("Invalid url value. Expected contains '/index.php%3F/'. Received url: /index.php?/");
     }
+
+    @Test
+    @DisplayName("Replace ? to &")
+    void unitTest_20181112163152() {
+        TestRailAuthorizationInterceptor interceptor = new TestRailAuthorizationInterceptor() {
+            @Override
+            public void intercept(RequestTemplate template) {
+                // do nothing
+            }
+        };
+        RequestTemplate template = new RequestTemplate();
+        template.uri("/index.php%3F/api/v1/get_at?a=a&b=b");
+        interceptor.apply(template);
+        assertThat(template.url()).contains("/index.php?/api/v1/get_at&a=a&b=b");
+    }
+
 }

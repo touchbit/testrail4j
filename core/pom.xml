@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>0.2.0</version>
+        <version>0.3.0</version>
     </parent>
 
     <artifactId>testrail4j-core</artifactId>
     <name>TestRail4j core module</name>
     <description>TestRail4j core module</description>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
 
     <dependencies>

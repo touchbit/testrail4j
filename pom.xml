@@ -4,7 +4,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 
     <name>TestRail4J</name>
     <description>TestRail API clients</description>
@@ -130,23 +130,23 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0</version>
             </dependency>
             <!-- Self Test -->
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>0.2.0</version>
+                <version>0.3.0</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>

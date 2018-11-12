@@ -71,8 +71,8 @@ To generate models, simply build the project `mvn clean package`.
             TestRailClient client = TestRailClientBuilder
                     .build(new BasicAuthorizationInterceptor("user", "pass"), "http://localhost");
 
-            Case testCase = client.getCase(1);
-            assert testCase.getId() == 1;
+            Case testCase = client.getCase(1L);
+            assert testCase.getId() == 1L;
         }
     }
     ```

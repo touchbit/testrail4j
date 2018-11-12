@@ -8,126 +8,126 @@ package org.touchbit.testrail4j.core.query;
 public class GetCasesQueryMap {
 
     /** The ID of the test suite (optional if the project is operating in single suite mode) */
-    private Integer suite_id;
+    private Long suite_id;
     /** The ID of the section (optional) */
-    private Integer section_id;
+    private Long section_id;
     /** Only return test cases created after this date (as UNIX timestamp). */
-    private Integer created_after;
+    private Long created_after;
     /** Only return test cases created before this date (as UNIX timestamp). */
-    private Integer created_before;
+    private Long created_before;
     /** Only return test cases updated after this date (as UNIX timestamp). */
-    private Integer updated_after;
+    private Long updated_after;
     /** Only return test cases updated before this date (as UNIX timestamp). */
-    private Integer updated_before;
+    private Long updated_before;
     /**
      * A comma-separated list of milestone IDs to filter by
      * (not available if the milestone field is disabled for the project).
      */
-    private Integer milestone_id;
+    private Long milestone_id;
     /** A comma-separated list of creators (user IDs) to filter by. */
-    private Integer created_by;
+    private Long created_by;
     /** A comma-separated list of priority IDs to filter by. */
-    private Integer priority_id;
+    private Long priority_id;
     /** A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later) */
-    private Integer template_id;
+    private Long template_id;
     /** A comma-separated list of case type IDs to filter by. */
-    private Integer type_id;
+    private Long type_id;
     /** A comma-separated list of users who updated test cases to filter by. */
-    private Integer updated_by;
+    private Long updated_by;
 
-    public Integer getCreatedAfter() {
+    public Long getCreatedAfter() {
         return created_after;
     }
 
-    public void setCreatedAfter(Integer createdAfter) {
+    public void setCreatedAfter(Long createdAfter) {
         this.created_after = createdAfter;
     }
 
-    public Integer getCreatedBefore() {
+    public Long getCreatedBefore() {
         return created_before;
     }
 
-    public void setCreatedBefore(Integer createdBefore) {
+    public void setCreatedBefore(Long createdBefore) {
         this.created_before = createdBefore;
     }
 
-    public Integer getUpdatedAfter() {
+    public Long getUpdatedAfter() {
         return updated_after;
     }
 
-    public void setUpdatedAfter(Integer updatedAfter) {
+    public void setUpdatedAfter(Long updatedAfter) {
         this.updated_after = updatedAfter;
     }
 
-    public Integer getUpdatedBefore() {
+    public Long getUpdatedBefore() {
         return updated_before;
     }
 
-    public void setUpdatedBefore(Integer updatedBefore) {
+    public void setUpdatedBefore(Long updatedBefore) {
         this.updated_before = updatedBefore;
     }
 
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return created_by;
     }
 
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.created_by = createdBy;
     }
 
-    public Integer getMilestoneId() {
+    public Long getMilestoneId() {
         return milestone_id;
     }
 
-    public void setMilestoneId(Integer milestoneId) {
+    public void setMilestoneId(Long milestoneId) {
         this.milestone_id = milestoneId;
     }
 
-    public Integer getPriorityId() {
+    public Long getPriorityId() {
         return priority_id;
     }
 
-    public void setPriorityId(Integer priorityId) {
+    public void setPriorityId(Long priorityId) {
         this.priority_id = priorityId;
     }
 
-    public Integer getTemplateId() {
+    public Long getTemplateId() {
         return template_id;
     }
 
-    public void setTemplateId(Integer templateId) {
+    public void setTemplateId(Long templateId) {
         this.template_id = templateId;
     }
 
-    public Integer getTypeId() {
+    public Long getTypeId() {
         return type_id;
     }
 
-    public void setTypeId(Integer typeId) {
+    public void setTypeId(Long typeId) {
         this.type_id = typeId;
     }
 
-    public Integer getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updated_by;
     }
 
-    public void setUpdatedBy(Integer updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updated_by = updatedBy;
     }
 
-    public Integer getSuiteId() {
+    public Long getSuiteId() {
         return suite_id;
     }
 
-    public void setSuiteId(Integer suiteId) {
+    public void setSuiteId(Long suiteId) {
         this.suite_id = suiteId;
     }
 
-    public Integer getSectionId() {
+    public Long getSectionId() {
         return section_id;
     }
 
-    public void setSectionId(Integer sectionId) {
+    public void setSectionId(Long sectionId) {
         this.section_id = sectionId;
     }
 

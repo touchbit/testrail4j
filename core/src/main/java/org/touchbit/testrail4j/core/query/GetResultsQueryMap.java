@@ -8,34 +8,34 @@ package org.touchbit.testrail4j.core.query;
 public class GetResultsQueryMap {
 
     /** A comma-separated list of status IDs to filter by */
-    private Integer status_id;
+    private Long status_id;
     /** Limit the test result */
-    private Integer limit;
+    private Long limit;
 
     /** Use to skip records */
-    private Integer offset;
+    private Long offset;
 
-    public Integer getStatusId() {
+    public Long getStatusId() {
         return status_id;
     }
 
-    public void setStatusId(Integer statusId) {
+    public void setStatusId(Long statusId) {
         this.status_id = statusId;
     }
 
-    public Integer getLimit() {
+    public Long getLimit() {
         return limit;
     }
 
-    public void setLimit(Integer limit) {
+    public void setLimit(Long limit) {
         this.limit = limit;
     }
 
-    public Integer getOffset() {
+    public Long getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(Long offset) {
         this.offset = offset;
     }
 
