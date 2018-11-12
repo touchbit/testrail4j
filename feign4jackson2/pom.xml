@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
     </parent>
 
     <artifactId>jackson2-feign-client</artifactId>
     <name>Jackson2 Feign client</name>
     <description>Feign client for TestRail API with Jackson2 annotation models</description>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -31,6 +31,11 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.touchbit.testrail4j</groupId>
+            <artifactId>testrail4j-core</artifactId>
+            <type>test-jar</type>
         </dependency>
     </dependencies>
 

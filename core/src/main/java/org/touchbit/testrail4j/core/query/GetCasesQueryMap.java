@@ -1,4 +1,4 @@
-package org.touchbit.testrail4j.jackson2.feign.client.query;
+package org.touchbit.testrail4j.core.query;
 
 /**
  * Created by Oleg Shaburov on 11.11.2018
@@ -7,6 +7,10 @@ package org.touchbit.testrail4j.jackson2.feign.client.query;
 @SuppressWarnings({"unused", "squid:S00116"})
 public class GetCasesQueryMap {
 
+    /** The ID of the test suite (optional if the project is operating in single suite mode) */
+    private Integer suite_id;
+    /** The ID of the section (optional) */
+    private Integer section_id;
     /** Only return test cases created after this date (as UNIX timestamp). */
     private Integer created_after;
     /** Only return test cases created before this date (as UNIX timestamp). */
@@ -15,10 +19,13 @@ public class GetCasesQueryMap {
     private Integer updated_after;
     /** Only return test cases updated before this date (as UNIX timestamp). */
     private Integer updated_before;
+    /**
+     * A comma-separated list of milestone IDs to filter by
+     * (not available if the milestone field is disabled for the project).
+     */
+    private Integer milestone_id;
     /** A comma-separated list of creators (user IDs) to filter by. */
     private Integer created_by;
-    /** A comma-separated list of milestone IDs to filter by (not available if the milestone field is disabled for the project). */
-    private Integer milestone_id;
     /** A comma-separated list of priority IDs to filter by. */
     private Integer priority_id;
     /** A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later) */
@@ -106,6 +113,22 @@ public class GetCasesQueryMap {
 
     public void setUpdatedBy(Integer updatedBy) {
         this.updated_by = updatedBy;
+    }
+
+    public Integer getSuiteId() {
+        return suite_id;
+    }
+
+    public void setSuiteId(Integer suiteId) {
+        this.suite_id = suiteId;
+    }
+
+    public Integer getSectionId() {
+        return section_id;
+    }
+
+    public void setSectionId(Integer sectionId) {
+        this.section_id = sectionId;
     }
 
 }

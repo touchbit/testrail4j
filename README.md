@@ -1,5 +1,7 @@
 # TestRail4J
 
+Lightweight java HTTP-client for the TestRail API.
+
 Http clients (feign) are represented by the `BaseTestRailClient` interface for each type of model annotation.   
 Annotated jackson2 and gson models are generated using the jsonschema2pojo plugin from json schemas (see `schema` directory).   
 To generate models, simply build the project `mvn clean package`.
@@ -49,37 +51,32 @@ To generate models, simply build the project `mvn clean package`.
     ```xml
     <project>
        ...
-       <dependencies>
+       <dependency>
            <groupId>org.touchbit.testrail4j</groupId>
            <artifactId>jackson2-feign-client</artifactId>
            <version>0.0.1</version>
-       </dependencies>
+       </dependency>
        ...
     </project>
     ```
 
-3. Create feign client implementation and call the necessary method
+3. Build feign client implementation and call the necessary method
     ```java
-    import feign.Feign;
-    import feign.jackson.JacksonDecoder;
-    import feign.jackson.JacksonEncoder;
-    import org.touchbit.testrail.jackson2.model.Case;
+    import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
+    import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
+    import org.touchbit.testrail4j.jackson2.model.Case;
     
     public class Example {
         public static void main(String[] a) {
-         
-            TestRailClient client = new Feign.Builder()
-                    .encoder(new JacksonEncoder())
-                    .decoder(new JacksonDecoder())
-                    .requestInterceptor(new BasicAuthorizationInterceptor("user", "pass"))
-                    .target(TestRailClient.class, "http://localhost");
-         
+            TestRailClient client = TestRailClientBuilder
+                    .build(new BasicAuthorizationInterceptor("user", "pass"), "http://localhost");
+
             Case testCase = client.getCase(1);
             assert testCase.getId() == 1;
         }
     }
     ```
-    
+
 ## Contributing
 
 For update version use `make ver <version>`. For example `make ver 0.0.1`.

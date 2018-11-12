@@ -1,7 +1,7 @@
 package org.touchbit.testrail4j.core;
 
-import feign.RequestInterceptor;
 import feign.RequestTemplate;
+
 import java.util.Base64;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -10,7 +10,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
-public class BasicAuthorizationInterceptor implements RequestInterceptor {
+public class BasicAuthorizationInterceptor extends TestRailAuthorizationInterceptor {
 
     private final String user;
     private final String pass;
@@ -21,7 +21,7 @@ public class BasicAuthorizationInterceptor implements RequestInterceptor {
     }
 
     @Override
-    public void apply(RequestTemplate template) {
+    public void intercept(RequestTemplate template) {
         template.header("Authorization", "Basic " + Base64.getEncoder()
                 .encodeToString((user + ":" + pass).getBytes(UTF_8)));
     }

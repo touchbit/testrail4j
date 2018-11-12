@@ -1,4 +1,4 @@
-package org.touchbit.testrail4j.jackson2.feign.client.query;
+package org.touchbit.testrail4j.core.query;
 
 /**
  * Created by Oleg Shaburov on 11.11.2018

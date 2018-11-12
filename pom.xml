@@ -4,7 +4,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <name>TestRail4J</name>
     <description>TestRail API clients</description>
@@ -92,6 +92,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -105,6 +110,18 @@
             <version>3.11.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.9.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -113,17 +130,25 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>0.1.0</version>
+                <version>0.2.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>0.1.0</version>
+                <version>0.2.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>0.1.0</version>
+                <version>0.2.0</version>
+            </dependency>
+            <!-- Self Test -->
+            <dependency>
+                <groupId>org.touchbit.testrail4j</groupId>
+                <artifactId>testrail4j-core</artifactId>
+                <version>0.2.0</version>
+                <type>test-jar</type>
+                <scope>test</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.openfeign -->
             <dependency>
@@ -264,6 +289,7 @@
                                 <includeConstructors>true</includeConstructors>
                                 <annotationStyle>${model.annotation.lib}</annotationStyle>
                                 <removeOldOutput>true</removeOldOutput>
+                                <useLongIntegers>true</useLongIntegers>
                             </configuration>
                         </execution>
                     </executions>
