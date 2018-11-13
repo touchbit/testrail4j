@@ -25,3 +25,7 @@ ver: version
 
 purge:
 	mvn dependency:purge-local-repository@local-buggy
+
+build-doc
+	python _docs/setup.py
+	mkdocs build

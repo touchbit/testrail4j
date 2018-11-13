@@ -1,0 +1,19 @@
+site_author: Oleg Shaburov
+site_name: TestRail4J
+site_description: A framework based on testNG for testing automation
+
+pages:
+  - Home: index.md
+  - Contributing: CONTRIBUTING.md
+  - License: LICENSE.md
+
+theme: readthedocs
+
+use_directory_urls: false
+docs_dir: ./_docs
+site_dir: ./_site
+
+markdown_extensions:
+  - smarty
+
+copyright: Copyright © 2018 <a href="https://www.linkedin.com/in/o-shaburov/?locale=en_US">Oleg Shaburov</a>, Maintained by the TouchBIT Team.
