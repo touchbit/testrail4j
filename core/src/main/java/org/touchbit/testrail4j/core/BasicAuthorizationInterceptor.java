@@ -12,18 +12,19 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class BasicAuthorizationInterceptor extends TestRailAuthorizationInterceptor {
 
-    private final String user;
-    private final String pass;
+    private final String base64;
+
+    public BasicAuthorizationInterceptor(final String authBase64UserPass) {
+        this.base64 = authBase64UserPass;
+    }
 
     public BasicAuthorizationInterceptor(final String user, final String pass) {
-        this.user = user;
-        this.pass = pass;
+        this.base64 = Base64.getEncoder().encodeToString((user + ":" + pass).getBytes(UTF_8));
     }
 
     @Override
     public void intercept(RequestTemplate template) {
-        template.header("Authorization", "Basic " + Base64.getEncoder()
-                .encodeToString((user + ":" + pass).getBytes(UTF_8)));
+        template.header("Authorization", "Basic " + base64);
     }
 
 }

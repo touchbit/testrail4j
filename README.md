@@ -1,35 +1,36 @@
 # TestRail4J
 
-Lightweight java HTTP-client for the TestRail API.
+Lightweight java HTTP-clients for the TestRail API.
 
-Http clients (feign) are represented by the `BaseTestRailClient` interface for each type of model annotation.   
+A feign HTTP-clients are represented by the `BaseTestRailClient` interface for each type of model annotation.   
 Annotated jackson2 and gson models are generated using the jsonschema2pojo plugin from json schemas (see `schema` directory).   
 To generate models, simply build the project `mvn clean package`.
 
 ## Modules 
 
-* core (testrail4j-core) - basic implementations for clients.
-* feign4jackson2 (jackson2-feign-client) - jackson2 annotated client interface
+* **feign4jackson2** (jackson2-feign-client) - `jackson2` annotated interface for the `feign` http-client
     ```xml
     <dependencies>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>jackson2-feign-client</artifactId>
     </dependencies>
     ```
-* model4jackson2 (jackson2-api-model) - jackson2 annotated models
+* **model4jackson2** (jackson2-api-model) - `jackson2` annotated models
     ```xml
     <dependencies>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>jackson2-api-model</artifactId>
     </dependencies>
     ```
-* model4gson (gson-api-model) - gson annotated models
+* **model4gson** (gson-api-model) - `gson` annotated models
     ```xml
     <dependencies>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>gson-api-model</artifactId>
     </dependencies>
     ```
+* **core** (testrail4j-core) - basic implementations for http-clients.
+* **util** (testrail4j-util) - utility solutions for data processing.
 
 ## Usage
 
