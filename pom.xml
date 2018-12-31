@@ -79,7 +79,9 @@
         <testrail4j.sonar.exclusions>
             *.xml,
             src/main/java/org/touchbit/testrail4j/**/model/*,
-            src/main/java/org/touchbit/testrail4j/**/model/**/*
+            src/main/java/org/touchbit/testrail4j/**/model/**/*,
+            src/main/java/org/touchbit/testrail4j/integration/*,
+            src/main/java/org/touchbit/testrail4j/integration/**/*
         </testrail4j.sonar.exclusions>
         <sonar.exclusions>${testrail4j.sonar.exclusions}</sonar.exclusions>
         <sonar.coverage.exclusions>${testrail4j.sonar.exclusions}</sonar.coverage.exclusions>

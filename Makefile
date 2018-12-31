@@ -31,3 +31,12 @@ purge:
 build-doc:
 	python _docs/setup.py
 	mkdocs build
+
+tr-start:
+	docker-compose -f .indirect/docker-compose.yml up -d
+
+tr-stop:
+	docker-compose -f .indirect/docker-compose.yml kill
+
+itest: tr-start
+	java -jar integration/target/Corvus.jar
