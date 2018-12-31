@@ -1,8 +1,6 @@
-stages:
-  - build
-  - test
-  - verify
-  - deploy
+include:
+- "https://gitlab.com/TouchBIT/testrail4j/raw/add.testrail.docker.compose/.integration.yml"
+#- "https://gitlab.com/TouchBIT/testrail4j/raw/master/.integration.yml"
 
 variables:
   SONAR_ARGS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${CI_COMMIT_REF_NAME}"
@@ -15,7 +13,25 @@ Build modules:
     # do not use -Dmaven.test.skip=true
     - mvn clean package -DskipTests
 
-JUnit run:
+TR migrations:
+  extends: .docker_image_build_push
+  variables:
+    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/migration:latest"
+    DOCKERFILE: ".indirect/migration.dockerfile"
+
+TR testrail:
+  extends: .docker_image_build_push
+  variables:
+    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/testrail:latest"
+    DOCKERFILE: ".indirect/testrail.dockerfile"
+
+TR fpm:
+  extends: .docker_image_build_push
+  variables:
+    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/fpm:latest"
+    DOCKERFILE: ".indirect/fpm.dockerfile"
+
+JUnit:
   stage: test
   tags:
     - touchbit-shell
@@ -27,10 +43,14 @@ JUnit run:
     paths:
       - "*/target/reports"
 
+Integration:
+  script:
+    - docker ps
+
 Sonar review:
   stage: verify
   dependencies:
-    - JUnit run
+    - JUnit
   tags:
     - touchbit-shell
   script:

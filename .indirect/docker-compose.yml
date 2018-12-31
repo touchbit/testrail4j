@@ -1,0 +1,45 @@
+version: "3"
+services:
+
+  testrail:
+    image: registry.gitlab.com/touchbit/testrail4j/testrail:latest
+    ports:
+      - "80:80"
+    volumes:
+      - static-content:/var/www/testrail
+    links:
+      - fpm
+      - db
+
+  fpm:
+    image: registry.gitlab.com/touchbit/testrail4j/fpm:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - static-content:/var/www/testrail
+    links:
+      - db
+
+  migration:
+    image: registry.gitlab.com/touchbit/testrail4j/migration:latest
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7.22
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: 1234
+      SKIP_GRANT_TABLES: 1
+      SKIP_NETWORKING: 1
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+
+volumes:
+  static-content:
