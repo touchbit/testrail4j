@@ -21,6 +21,12 @@
         <sonar.projectKey>org.touchbit.testrail4j:integration-tests</sonar.projectKey>
         <shaded.final.name>Corvus</shaded.final.name>
         <shaded.transformer.main.class>org.touchbit.testrail4j.integration.Corvus</shaded.transformer.main.class>
+        <testrail4j.sonar.exclusions>
+            src/main/java/org/touchbit/testrail4j/integration/*,
+            src/main/java/org/touchbit/testrail4j/integration/**/*
+        </testrail4j.sonar.exclusions>
+        <sonar.exclusions>${testrail4j.sonar.exclusions}</sonar.exclusions>
+        <sonar.coverage.exclusions>${testrail4j.sonar.exclusions}</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>

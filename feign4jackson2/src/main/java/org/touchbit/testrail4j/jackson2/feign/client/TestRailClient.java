@@ -219,11 +219,84 @@ public interface TestRailClient {
         return getProjects(false);
     }
 
-    @RequestLine(value = "GET /index.php%3F/api/v2/add_project")
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-projects#add_project
+     *
+     * Creates a new project (admin status required).
+     *
+     * @param name - The name of the project (required)
+     * @param announcement - The description of the project
+     * @param showAnnouncement - True if the announcement should be displayed
+     *                         on the project's overview page and false otherwise
+     * @param suiteMode - The suite mode of the project
+     *                  (1 for single suite mode, 2 for single suite + baselines, 3 for multiple suites)
+     *                  (added with TestRail 4.0)
+     *
+     * @return If successful, this method returns the new {@link Project}
+     * using the same response format as {@link TestRailClient#getProject(Long)}.
+     * { "id": 1, "name": "DataHub", .. }
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_project")
     Project addProject(@Param(value = "name") String name,
                        @Param(value = "announcement") String announcement,
                        @Param(value = "show_announcement", expander = BoolExp.class) Boolean showAnnouncement,
                        @Param(value = "suite_mode", expander = SuiteExp.class) SuiteMode suiteMode);
+
+    /**
+     * See {@link TestRailClient#addProject(String, String, Boolean, SuiteMode)}
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_project")
+    Project addProject(Project project);
+
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-projects#update_project
+     *
+     * Updates an existing project (admin status required;
+     * partial updates are supported, i.e. you can submit and update specific fields only).
+     *
+     * @param projectID - The ID of the project
+     * @param isCompleted - Specifies whether a project is considered completed or not
+     * @param name - The name of the project (required)
+     * @param announcement - The description of the project
+     * @param showAnnouncement - True if the announcement should be displayed
+     *                         on the project's overview page and false otherwise
+     * @param suiteMode - The suite mode of the project
+     *                  (1 for single suite mode, 2 for single suite + baselines, 3 for multiple suites)
+     *                  (added with TestRail 4.0)
+     *
+     * @return If successful, this method returns the new {@link Project}
+     * using the same response format as {@link TestRailClient#getProject(Long)}.
+     * { "id": 1, "name": "DataHub", .. }
+     *
+     * @apiNote Response codes
+     * 200 - Success, the project was updated and is returned as part of the response
+     * 400 - Invalid or unknown project
+     * 403 - No permissions to modify projects (requires admin rights)
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_project/{projectID}")
+    Project updateProject(@Param("projectID") Long projectID,
+                       @Param(value = "name") String name,
+                       @Param(value = "announcement") String announcement,
+                       @Param(value = "is_completed", expander = BoolExp.class) Boolean isCompleted,
+                       @Param(value = "show_announcement", expander = BoolExp.class) Boolean showAnnouncement,
+                       @Param(value = "suite_mode", expander = SuiteExp.class) SuiteMode suiteMode);
+
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-projects#delete_project
+     *
+     * Deletes an existing project (admin status required).
+     * Please note: Deleting a project cannot be undone and also permanently deletes all test suites & cases,
+     * test runs & results and everything else that is part of the project.
+     *
+     * @param projectID - The ID of the project
+     *
+     * @apiNote Response codes
+     * 200 - Success, the project was deleted
+     * 400 - Invalid or unknown project
+     * 403 - No permissions to delete projects (requires admin rights)
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_project/{projectID}")
+    Project deleteProject(@Param("projectID") Long projectID);
 
     /*
      * API: Runs

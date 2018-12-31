@@ -19,6 +19,8 @@ package org.touchbit.testrail4j.integration.config;
 import org.touchbit.buggy.core.config.PrimaryConfig;
 
 /**
+ * Test configuration for local testing with docker-compose
+ *
  * Created by Oleg Shaburov on 31.12.2018
  * shaburov.o.a@gmail.com
  */
@@ -29,6 +31,7 @@ public class Config implements PrimaryConfig {
 
     public Config() {
         setPrintLogFile(true);
+        setPrintSuite(true);
     }
 
     public static String getHost() {

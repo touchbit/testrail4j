@@ -16,8 +16,8 @@
 
 package org.touchbit.testrail4j.integration.tests;
 
+import feign.FeignException;
 import org.slf4j.Logger;
-import org.testng.annotations.BeforeSuite;
 import org.touchbit.buggy.core.Buggy;
 import org.touchbit.buggy.core.test.BaseBuggyTest;
 import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener;
@@ -36,13 +36,15 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Java6Assertions.assertThat;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
  * shaburov.o.a@gmail.com
  */
 
+@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 public class BaseCorvusTest extends BaseBuggyTest {
 
     protected static final TestRailClient CLIENT;
@@ -56,6 +58,28 @@ public class BaseCorvusTest extends BaseBuggyTest {
         waitMigrations();
         CLIENT = TestRailClientBuilder
                 .build(new BasicAuthorizationInterceptor(Config.getAuth()),Config.getHost(), new FeignCallLogger(log));
+    }
+
+    protected FeignException execute(Executable executable) {
+        return execute(executable, FeignException.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> T execute(Executable executable, Class<T> exceptionClass) {
+        Throwable throwable = null;
+        try {
+            executable.execute();
+        } catch (Throwable e) {
+            throwable = e;
+        }
+        assertThat(throwable).isNotNull();
+        assertThat(throwable).isInstanceOf(exceptionClass);
+        return (T) throwable;
+    }
+
+    @FunctionalInterface
+    public interface Executable {
+        void execute() throws Throwable;
     }
 
     private static void waitMigrations() {
@@ -78,12 +102,8 @@ public class BaseCorvusTest extends BaseBuggyTest {
                 }
                 long count = lines.stream().filter(l -> l.toLowerCase().contains("migration")).count();
                 if (count > 0) {
-                    try {
-                        log.info("Waiting for migration to complete...");
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    log.info("Waiting for migration to complete...");
+                    Thread.sleep(500);
                 } else {
                     log.info("Migration container not found. Running tests.");
                     migrationContains = false;
@@ -94,6 +114,8 @@ public class BaseCorvusTest extends BaseBuggyTest {
             }
         } catch (IOException e) {
             Buggy.getExitHandler().exitRun(1, "'docker ps' call fail", e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
