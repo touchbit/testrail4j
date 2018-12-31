@@ -162,7 +162,7 @@ public class ProjectTests extends BaseCorvusTest {
         String name = UUID.randomUUID().toString();
         String announcement = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
-        return CLIENT.addProject(name, announcement, true, SINGLE);
+        return CLIENT.addProject(name, announcement, true, MULTIPLE);
     }
 
 }

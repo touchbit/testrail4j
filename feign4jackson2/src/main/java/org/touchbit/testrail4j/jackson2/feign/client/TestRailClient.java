@@ -380,4 +380,65 @@ public interface TestRailClient {
     @RequestLine(value = "GET /index.php%3F/api/v2/get_suites/{project_id}")
     List<Suite> getSuites(@Param("project_id") Long projectID);
 
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-suites#add_suite
+     *
+     * Creates a new test suite.
+     *
+     * @param projectID - The ID of the project
+     *
+     * @return If successful, this method returns the new test suite using
+     * the same response format as {@link TestRailClient#getSuite(Long)}.
+     *
+     * @apiNote Response codes
+     * 200 - Success, the test suite was created and is returned as part of the response
+     * 400 - Invalid or unknown project
+     * 404 - No permissions to add test suites or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_suite/{project_id}")
+    Suite addSuite(Suite suite, @Param("project_id") Long projectID);
+
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-suites#update_suite
+     *
+     * Updates an existing test suite (partial updates are supported,
+     * i.e. you can submit and update specific fields only).
+     *
+     * @param suiteID - The ID of the test suite
+     *
+     * @return If successful, this method returns the new test suite using
+     * the same response format as {@link TestRailClient#getSuite(Long)}.
+     *
+     * @apiNote Response codes
+     * 200 - Success, the test suite was updated and is returned as part of the response
+     * 400 - Invalid or unknown test suite
+     * 404 - No permissions to modify test suites or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_suite/{suite_id}")
+    Suite updateSuite(Suite suite, @Param("suite_id") Long suiteID);
+
+    /**
+     * See {@link TestRailClient#updateSuite(Suite, Long)}
+     */
+    default Suite updateSuite(Suite suite) {
+        return updateSuite(suite, suite.getId());
+    }
+
+    /**
+     * http://docs.gurock.com/testrail-api2/reference-suites#delete_suite
+     *
+     * Deletes an existing test suite.
+     * Please note: Deleting a test suite cannot be undone and also deletes all active
+     * test runs & results, i.e. test runs & results that weren't closed (archived) yet.
+     *
+     * @param suiteID - The ID of the test suite
+     *
+     * @apiNote Response codes
+     * 200 - Success, the test suite and all active test runs & results were deleted
+     * 400 - Invalid or unknown test suite
+     * 404 - No permissions to delete test suites or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_suite/{suite_id}")
+    void deleteSuite(@Param("suite_id") Long suiteID);
+
 }
