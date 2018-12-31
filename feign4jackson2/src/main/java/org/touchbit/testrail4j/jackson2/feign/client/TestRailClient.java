@@ -1,8 +1,29 @@
+/*
+ * Copyright © 2018 Shaburov Oleg
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.touchbit.testrail4j.jackson2.feign.client;
 
-import feign.*;
+import feign.Headers;
+import feign.Param;
+import feign.QueryMap;
+import feign.RequestLine;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.jackson2.feign.client.expander.BoolExp;
+import org.touchbit.testrail4j.jackson2.feign.client.expander.SuiteExp;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
@@ -189,7 +210,7 @@ public interface TestRailClient {
      * ]
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_projects&is_completed={is_completed}")
-    List<Project> getProjects(@Param("is_completed") Boolean isCompleted);
+    List<Project> getProjects(@Param(value = "is_completed", expander = BoolExp.class) Boolean isCompleted);
 
     /**
      * See {@link TestRailClient#getProjects(Boolean)}
@@ -197,6 +218,12 @@ public interface TestRailClient {
     default List<Project> getProjects() {
         return getProjects(false);
     }
+
+    @RequestLine(value = "GET /index.php%3F/api/v2/add_project")
+    Project addProject(@Param(value = "name") String name,
+                       @Param(value = "announcement") String announcement,
+                       @Param(value = "show_announcement", expander = BoolExp.class) Boolean showAnnouncement,
+                       @Param(value = "suite_mode", expander = SuiteExp.class) SuiteMode suiteMode);
 
     /*
      * API: Runs

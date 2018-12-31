@@ -10,12 +10,14 @@ $(eval $(VERSION):;@:)
 clean:
 	mvn clean
 
+# do not use -Dmaven.test.skip=true
 install: clean
 	mvn install -DskipTests
 
 test: clean
 	mvn test
 
+# do not use -Dmaven.test.skip=true
 deploy:
 	mvn deploy -DskipTests
 

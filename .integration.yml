@@ -14,7 +14,7 @@ stages:
   before_script:
     - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
   script:
-    - docker build -f ${DOCKERFILE} -t ${REGISTRY_IMAGE} .
+    - docker build --no-cache -f ${DOCKERFILE} -t ${REGISTRY_IMAGE} .
     - docker push ${REGISTRY_IMAGE}
 
 Integration:
@@ -27,3 +27,5 @@ Integration:
     - docker-compose -f .indirect/docker-compose.yml kill &
     - docker-compose -f .indirect/docker-compose.yml pull
     - docker-compose -f .indirect/docker-compose.yml up -d
+  after_script:
+    - docker-compose -f .indirect/docker-compose.yml kill &

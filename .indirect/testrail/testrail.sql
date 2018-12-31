@@ -546,7 +546,7 @@ CREATE TABLE `preferences` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_preferences_name` (`user_id`,`name`),
   KEY `ix_preferences_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -555,6 +555,7 @@ CREATE TABLE `preferences` (
 
 LOCK TABLES `preferences` WRITE;
 /*!40000 ALTER TABLE `preferences` DISABLE KEYS */;
+INSERT INTO `preferences` VALUES (1,1,'todos_overview_user_ids','1'),(2,1,'todos_overview_status_ids','3,4,5');
 /*!40000 ALTER TABLE `preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -721,7 +722,7 @@ CREATE TABLE `projects` (
   `reference_plugin` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reference_config` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -967,7 +968,7 @@ CREATE TABLE `sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_sessions_session_id` (`session_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -976,7 +977,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('e67f3bfe-2358-4dc0-a0db-bbbb283d8b50','','',1546206313,'{\"user_id\":1,\"last_login\":1546206313,\"rememberme\":true,\"csrf\":\"fgjV8brgoUz5ucA2k3uo\"}',1);
+INSERT INTO `sessions` VALUES ('e67f3bfe-2358-4dc0-a0db-bbbb283d8b50','','',1546225987,'{\"user_id\":1,\"last_login\":1546206313,\"rememberme\":true,\"csrf\":\"fgjV8brgoUz5ucA2k3uo\"}',1),('2756df94-8e56-45ae-aedc-40fe35b3e489','','',1546222995,NULL,2),('adef0c9e-141f-4c0f-943c-7755d6c091e1','','',1546223390,NULL,3),('146419e9-4d6f-4fcc-a448-edad58a0ec38','','',1546223513,NULL,4),('ca660673-fb0a-4169-8185-f7cbcee5bde6','','',1546223604,NULL,5),('4e833926-bc84-4473-9cd4-df234a62df94','','',1546224256,NULL,6),('862ade29-7a86-489d-a622-f941fb8390d9','','',1546225399,NULL,7),('baeac284-40f9-42f8-861f-cf569cc24419','','',1546225768,NULL,8),('62191236-5a32-4fd2-a8cd-1a3411a1b2d7','','',1546225798,NULL,9),('7f0ada11-4891-4e32-93c7-50758eff5b94','','',1546225857,NULL,10),('9e32fc19-0c54-4514-b418-20fa1fc238ef','','',1546225871,NULL,11),('8b051892-b2e4-467a-9b04-c2ee1fa48f6a','','',1546225923,NULL,12),('f2191041-0bb4-4b8d-970d-b713590c51c4','','',1546225945,NULL,13),('e3ec1487-4957-4828-bb38-3dae6cedf277','','',1546226024,NULL,14),('16844128-47bd-42e5-a488-e991b178c965','','',1546226444,NULL,15),('b4f5b2a4-3c08-4d8e-97ce-cd431492ef3f','','',1546226491,NULL,16),('47a6c784-7e92-4fab-8808-81409b29a099','','',1546226604,NULL,17),('2458e873-8159-4cb2-b5e7-498bde5048b9','','',1546226648,NULL,18),('b76b6d11-f06a-4218-a25b-2b250c3b4e19','','',1546226957,NULL,19),('4c9c7eb1-b874-4b5d-801d-08be4b988480','','',1546226957,NULL,20),('d91f1822-9781-40a0-9f8b-f5b7e0a859bb','','',1546227051,NULL,21),('e746ac48-4987-411b-bf02-c82ad0f80d8e','','',1546227051,NULL,22);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -993,7 +994,7 @@ CREATE TABLE `settings` (
   `value` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_settings_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1002,7 +1003,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'session_policy','0'),(2,'session_absolute_policy','0'),(3,'session_remember_me_disabled','0'),(4,'is_fallback_enabled','0'),(5,'create_account_on_first_login','0'),(6,'login_type','local'),(7,'current_sso_integration','none'),(8,'database_version','189'),(9,'installation_name','TestRail QA'),(10,'installation_url','http://localhost/'),(11,'attachment_dir','/var/www/testrail/attachments'),(12,'report_dir','/var/www/testrail/reports'),(13,'default_language','en'),(14,'default_locale','en-us'),(15,'default_timezone',NULL),(16,'email_server',NULL),(17,'email_ssl',NULL),(18,'email_from',NULL),(19,'email_user','testrail@testrail.testrail'),(20,'email_pass','testrail'),(21,'email_notifications',NULL),(22,'license_key','jGoxrctxLleoWDiS9ekkKqjds5KgRH5iEJaHTSzto5LcZcvJGIlBUvxmGf3M\r\nn8gXOlqMFerHVpS2QMTbJzECjZuNoTvWTCJlfbA/7oumRc2juuLOJManLNE7\r\n3jI0cgURCstkNUL/dmfVojiIrlDw4+57g9N8+6vSmFurdmz4BK1asEdxnlSw\r\nVoW3LIcGu5ErJ5lE4UDJm1IGDMx/nQGy3WbnRokYb0ygwLOVYaBA86EU8Bas\r\nipoC4hU+Nign68z0');
+INSERT INTO `settings` VALUES (1,'session_policy',''),(2,'session_absolute_policy',''),(3,'session_remember_me_disabled','0'),(4,'is_fallback_enabled','0'),(5,'create_account_on_first_login','0'),(6,'login_type','local'),(7,'current_sso_integration','none'),(8,'database_version','189'),(9,'installation_name','TestRail QA'),(10,'installation_url','http://localhost/'),(11,'attachment_dir',NULL),(12,'report_dir',NULL),(13,'default_language','en'),(14,'default_locale','en-us'),(15,'default_timezone',NULL),(16,'email_server',NULL),(17,'email_ssl','0'),(18,'email_from',NULL),(19,'email_user','testrail@testrail.testrail'),(20,'email_pass','testrail'),(21,'email_notifications','1'),(22,'license_key','jGoxrctxLleoWDiS9ekkKqjds5KgRH5iEJaHTSzto5LcZcvJGIlBUvxmGf3M\r\nn8gXOlqMFerHVpS2QMTbJzECjZuNoTvWTCJlfbA/7oumRc2juuLOJManLNE7\r\n3jI0cgURCstkNUL/dmfVojiIrlDw4+57g9N8+6vSmFurdmz4BK1asEdxnlSw\r\nVoW3LIcGu5ErJ5lE4UDJm1IGDMx/nQGy3WbnRokYb0ygwLOVYaBA86EU8Bas\r\nipoC4hU+Nign68z0'),(35,'login_text',NULL),(38,'password_policy',NULL),(39,'password_policy_custom','.{15,}\r\n[a-z]\r\n[A-Z]\r\n[0-9]\r\n[`~!@#$%^&*()\\-_=+[\\]|;:\'\",<>./?]'),(40,'password_policy_desc','Minimum of 15 characters, at least one lower & upper case character, a number and a special character.'),(41,'forgot_password','1'),(42,'invite_users','1'),(43,'ip_check','0'),(44,'ip_policy','; You can use simple IP addresses:\r\n; 192.168.1.1\r\n; Or entire networks:\r\n; 192.168.1.0/24'),(45,'check_for_updates','1'),(46,'edit_mode','86400'),(47,'name_format','0'),(48,'partial_count','500'),(49,'apiv2_enabled','1'),(50,'apiv2_session_enabled','1');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1122,7 +1123,7 @@ CREATE TABLE `suites` (
   PRIMARY KEY (`id`),
   KEY `ix_suites_project_id` (`project_id`),
   KEY `ix_suites_copyof_id` (`copyof_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1131,6 +1132,7 @@ CREATE TABLE `suites` (
 
 LOCK TABLES `suites` WRITE;
 /*!40000 ALTER TABLE `suites` DISABLE KEYS */;
+INSERT INTO `suites` VALUES (1,'Master',1,NULL,1546225399,1,0,NULL,1,0,NULL,0,NULL),(2,'Master',2,NULL,1546225768,1,0,NULL,1,0,NULL,0,NULL),(3,'Master',3,NULL,1546225798,1,0,NULL,1,0,NULL,0,NULL),(4,'Master',4,NULL,1546225857,1,0,NULL,1,0,NULL,0,NULL),(5,'Master',5,NULL,1546225872,1,0,NULL,1,0,NULL,0,NULL),(6,'Master',6,NULL,1546225924,1,0,NULL,1,0,NULL,0,NULL),(7,'Master',14,NULL,1546227051,1,0,NULL,1,0,NULL,0,NULL);
 /*!40000 ALTER TABLE `suites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1557,7 +1559,7 @@ CREATE TABLE `user_logins` (
   `current_auth` varchar(10) COLLATE utf8_unicode_ci DEFAULT 'local',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_user_logins_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1566,7 +1568,7 @@ CREATE TABLE `user_logins` (
 
 LOCK TABLES `user_logins` WRITE;
 /*!40000 ALTER TABLE `user_logins` DISABLE KEYS */;
-INSERT INTO `user_logins` VALUES (1,'testrail@testrail.testrail',1546206313,1546206313,0,'local');
+INSERT INTO `user_logins` VALUES (1,'testrail@testrail.testrail',1546206313,1546227051,0,'local');
 /*!40000 ALTER TABLE `user_logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1667,7 +1669,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'testrail','testrail@testrail.testrail',1,'','1:$2y$10$YGKjb39C5jIedZxflt496.BVKjiyq4.15Hq0XTTjBIIAp8ZrwMsoi',1,'',NULL,NULL,0,'',1,NULL,NULL,NULL,1546206313,0,NULL,0,1);
+INSERT INTO `users` VALUES (1,'testrail','testrail@testrail.testrail',1,'','1:$2y$10$YGKjb39C5jIedZxflt496.BVKjiyq4.15Hq0XTTjBIIAp8ZrwMsoi',1,'',NULL,NULL,0,'',1,NULL,NULL,NULL,1546225987,0,NULL,0,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1680,4 +1682,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-30 21:49:38
+-- Dump completed on 2018-12-31  4:11:30

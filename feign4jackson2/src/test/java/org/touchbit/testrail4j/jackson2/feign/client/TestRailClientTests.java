@@ -106,7 +106,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20181112151002() {
             CLIENT.getProjects(true);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString())
-                    .contains(GET_API + "/get_projects&is_completed=true");
+                    .contains(GET_API + "/get_projects&is_completed=1");
         }
 
         @Test
@@ -114,7 +114,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20181112151227() {
             CLIENT.getProjects();
             assertThat(TEST_LOGGER.takeLoggedMessages().toString())
-                    .contains(GET_API + "/get_projects&is_completed=false");
+                    .contains(GET_API + "/get_projects&is_completed=0");
         }
     }
 

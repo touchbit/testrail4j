@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.touchbit.buggy</groupId>
+        <artifactId>buggy</artifactId>
+        <version>0.2.23</version>
+    </parent>
+
+    <groupId>org.touchbit.testrail4j</groupId>
+    <artifactId>testrail4j-tests</artifactId>
+    <name>Testrail4J integration tests</name>
+    <version>0.4.4</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <sonar.projectKey>org.touchbit.testrail4j:integration-tests</sonar.projectKey>
+        <shaded.final.name>Corvus</shaded.final.name>
+        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.Corvus</shaded.transformer.main.class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.touchbit.buggy</groupId>
+            <artifactId>buggy-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.touchbit.buggy</groupId>
+            <artifactId>buggy-feign</artifactId>
+        </dependency>
+        <!-- TODO remove -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>10.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.touchbit.testrail4j</groupId>
+            <artifactId>jackson2-feign-client</artifactId>
+            <version>0.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>touchbit.org.repository</id>
+            <url>https://touchbit.org/repository/</url>
+        </repository>
+    </repositories>
+</project>

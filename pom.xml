@@ -4,7 +4,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.4</version>
 
     <name>TestRail4J</name>
     <description>TestRail API clients</description>
@@ -16,6 +16,7 @@
         <module>feign4jackson2</module>
         <module>model4gson</module>
         <module>model4jackson2</module>
+        <module>integration</module>
     </modules>
 
     <licenses>
@@ -131,32 +132,42 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>0.4.1</version>
+                <version>0.4.4</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-util</artifactId>
-                <version>0.4.1</version>
+                <version>0.4.4</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>0.4.1</version>
+                <version>0.4.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.touchbit.testrail4j</groupId>
+                <artifactId>jackson2-feign-client</artifactId>
+                <version>0.4.4</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>0.4.1</version>
+                <version>0.4.4</version>
             </dependency>
             <!-- Self Test -->
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>0.4.1</version>
+                <version>0.4.4</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.openfeign -->
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-jackson</artifactId>
@@ -165,11 +176,6 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-gson</artifactId>
-                <version>${feign.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.openfeign</groupId>
-                <artifactId>feign-core</artifactId>
                 <version>${feign.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
@@ -400,4 +406,10 @@
             <url>${distributionRepository}</url>
         </repository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>touchbit.org.repository</id>
+            <url>${distributionRepository}</url>
+        </repository>
+    </repositories>
 </project>

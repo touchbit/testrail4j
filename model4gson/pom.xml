@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>0.4.1</version>
+        <version>0.4.4</version>
     </parent>
 
     <artifactId>gson-api-model</artifactId>
     <name>Gson models</name>
     <description>Gson annotation models for TestRail API</description>
-    <version>0.4.1</version>
+    <version>0.4.4</version>
     <packaging>jar</packaging>
 
     <properties>
