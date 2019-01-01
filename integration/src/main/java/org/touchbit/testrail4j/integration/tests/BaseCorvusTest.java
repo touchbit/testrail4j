@@ -24,9 +24,15 @@ import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener
 import org.touchbit.buggy.core.utils.log.BuggyLog;
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
+import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.integration.config.Config;
+import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
+import org.touchbit.testrail4j.jackson2.model.Case;
+import org.touchbit.testrail4j.jackson2.model.Project;
+import org.touchbit.testrail4j.jackson2.model.Section;
+import org.touchbit.testrail4j.jackson2.model.Suite;
 import sun.misc.Unsafe;
 
 import java.io.BufferedReader;
@@ -36,8 +42,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.MULTIPLE;
+import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
@@ -47,7 +56,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 public class BaseCorvusTest extends BaseBuggyTest {
 
-    protected static final TestRailClient CLIENT;
+    protected static final TestRailTestClient CLIENT;
 
     static {
         if (!IntellijIdeaTestNgPluginListener.isIntellijIdeaTestRun() && !Buggy.isTestRun()) {
@@ -57,15 +66,159 @@ public class BaseCorvusTest extends BaseBuggyTest {
         disableWarning();
         waitMigrations();
         CLIENT = TestRailClientBuilder
-                .build(new BasicAuthorizationInterceptor(Config.getAuth()),Config.getHost(), new FeignCallLogger(log));
+                .build(new BasicAuthorizationInterceptor(Config.getAuth()),
+                        Config.getHost(),
+                        TestRailTestClient.class,
+                        new FeignCallLogger(log));
     }
 
-    protected FeignException execute(Executable executable) {
-        return execute(executable, FeignException.class);
+    /**
+     * Tests interface with Utility methods
+     */
+    public interface TestRailTestClient extends TestRailClient {
+
+        /**
+         * @return generated {@link Project}
+         */
+        default Project getNewProject(SuiteMode suiteMode) {
+            String name = UUID.randomUUID().toString();
+            String announcement = UUID.randomUUID().toString();
+            step("Add new project with name: {}", name);
+            return addProject(name, announcement, true, suiteMode);
+        }
+
+        /**
+         * @return generated multiple suite mode {@link Project}
+         */
+        default Project getNewProject() {
+            return getNewProject(MULTIPLE);
+        }
+
+        default void deleteProject(Project project) {
+            step("Delete project with ID: {}", project.getId());
+            CLIENT.deleteProject(project.getId());
+        }
+
+        default Project getProject(Project project) {
+            step("Get project with ID: {}", project.getId());
+            return getProject(project.getId());
+        }
+
+        default List<Project> getProjects() {
+            step("Get existing projects list");
+            return getProjects(false);
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        /**
+         * @return generated {@link Project} and {@link Section}
+         */
+        default Section addSection() {
+            Project project = getNewProject(SINGLE);
+            Section section = new Section()
+                    .withName(UUID.randomUUID().toString())
+                    .withDescription(UUID.randomUUID().toString());
+            return addSection(section, project);
+        }
+
+        default Section addSection(Section section, Project project) {
+            step("Adding a new section with name {} to the project with id {}", section.getName(), project.getId());
+            return addSection(section, project.getId());
+        }
+
+        default Section getSection(Section section) {
+            step("Get section with ID: {}", section.getId());
+            return CLIENT.getSection(section.getId());
+        }
+
+        default Section updateSection(Section section) {
+            step("Update section with ID: {}", section.getId());
+            return CLIENT.updateSection(section, section.getId());
+        }
+
+        default void deleteSection(Section section) {
+            step("Delete section with ID: {}", section.getId());
+            CLIENT.deleteSection(section.getId());
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default void deleteSuite(Suite suite) {
+            step("Delete suite with ID: {}", suite.getId());
+            CLIENT.deleteSuite(suite.getId());
+        }
+
+        default Suite updateSuite(Suite suite) {
+            step("Update suite with ID: {}", suite.getId());
+            return CLIENT.updateSuite(suite, suite.getId());
+        }
+
+        default Suite addNewSuite(Suite suite, Project project) {
+            step("Create new suite with name: {}", suite.getName());
+            return CLIENT.addSuite(suite, project.getId());
+        }
+
+        default Suite addNewSuite(Project project) {
+            Suite suite = new Suite().withName("name");
+            return addNewSuite(suite, project);
+        }
+
+        default Suite getSuite(Suite suite) {
+            step("Get suite with ID: {}", suite.getId());
+            return getSuite(suite.getId());
+        }
+
+        default List<Suite> getSuites(Project project) {
+            step("Get list suites for project ID: {}", project.getId());
+            return CLIENT.getSuites(project.getId());
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default Case getCase(Case caze) {
+            step("Get case with ID: {}", caze.getId());
+            return CLIENT.getCase(caze.getId());
+        }
+
+        default List<Case> getCases(Project project) {
+            step("Get cases list for project ID: {}", project.getId());
+            return CLIENT.getCases(project.getId());
+        }
+
+        default List<Case> getCases(Project project, GetCasesQueryMap queryMap) {
+            step("Get cases list with filter for project ID: {}", project.getId());
+            return CLIENT.getCases(project.getId(), queryMap);
+        }
+
+        default Case addCase() {
+            Section section = CLIENT.addSection();
+            Case caze = new Case().withTitle("test_20190101195810").withSectionId(section.getId());
+            return addCase(caze);
+        }
+
+        default Case addCase(Case caze) {
+            step("Add new case with title: {}", caze.getTitle());
+            return CLIENT.addCase(caze, caze.getSectionId());
+        }
+
+        default Case updateCase(Case caze) {
+            step("Update case with ID: {}", caze.getId());
+            return CLIENT.updateCase(caze, caze.getId());
+        }
+
+        default void deleteCase(Case caze) {
+            step("Delete case with ID: {}", caze.getId());
+            CLIENT.deleteCase(caze.getId());
+        }
+    }
+
+    protected FeignException executeThrowable(Executable executable) {
+        return executeThrowable(executable, FeignException.class);
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> T execute(Executable executable, Class<T> exceptionClass) {
+    protected <T> T executeThrowable(Executable executable, Class<T> exceptionClass) {
         Throwable throwable = null;
         try {
             executable.execute();

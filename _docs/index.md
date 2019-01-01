@@ -87,8 +87,26 @@ public class Example {
         TestRailClient client = TestRailClientBuilder
                 .build(new BasicAuthorizationInterceptor("user", "pass"), "http://localhost");
 
-        Case testCase = client.getCase(1L);
-        assert testCase.getId() == 1L;
+        Project project = client.addProject("name", "announcement", true, 3);
+        Section section = new Section()
+                .withName(UUID.randomUUID().toString())
+                .withDescription(UUID.randomUUID().toString());
+        Section section = client.addSection(section, project.getId());;
+        Case caze = new Case()
+                .withTitle("test_20190101201312")
+                .withPriorityId(CRITICAL.getId())
+                .withSuiteId(section.getSuiteId())
+                .withRefs("JIRA-123")
+                .withTypeId(ACCEPTANCE.getId())
+                .withTemplateId(TEST_CASE_TEXT.getId())
+                .withEstimate("1m 45s")
+                .withCustomPreconds("withCustomPreconds")
+                .withCustomSteps("withCustomSteps")
+                .withCustomExpected("withCustomExpected")
+                .withCustomStepsSeparated(null)
+                ;
+        Case caze = client.addCase(caze, caze.getSectionId());
+        System.out.println(caze.getId());
     }
 }
 ```

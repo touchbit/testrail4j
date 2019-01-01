@@ -32,8 +32,10 @@ build-doc:
 	python _docs/setup.py
 	mkdocs build
 
-tr-start:
+tr-start: tr-stop
 	docker-compose -f .indirect/docker-compose.yml up -d
+	docker ps
+	echo http://localhost/index.php Login: testrail@testrail.testrail Pass: testrail
 
 tr-stop:
 	docker-compose -f .indirect/docker-compose.yml kill

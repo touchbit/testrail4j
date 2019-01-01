@@ -69,6 +69,42 @@
       "type": "integer",
       "javaType" : "java.lang.Long",
       "description": "The date/time when the test case was last updated (as UNIX timestamp)"
+    },
+    "custom_steps": {
+      "type": "string",
+      "description": "Test Case (Text) template steps"
+    },
+    "custom_expected": {
+      "type": "string",
+      "description": "Test Case (Text) template expected result"
+    },
+    "custom_preconds": {
+      "type": "string",
+      "description": "Test Case (Text) template preconditions"
+    },
+    "custom_mission": {
+      "type": "string",
+      "description": "Exploratory Session template mission"
+    },
+    "custom_goals": {
+      "type": "string",
+      "description": "Exploratory Session template goals"
+    },
+    "custom_automation_type": {
+      "type": "integer",
+      "description": "Automation Type. Default values: 0 - None, 1 - Ranorex"
+    },
+    "custom_steps_separated": {
+      "type": "array",
+      "description": "Test Case (Steps) template steps",
+      "javaType": "java.util.List<Step>",
+      "items": [
+        {
+          "type": "object",
+          "javaType": "Step",
+          "$ref": "Step.json"
+        }
+      ]
     }
   }
 }

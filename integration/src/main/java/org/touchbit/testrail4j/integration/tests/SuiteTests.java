@@ -11,7 +11,6 @@ import org.touchbit.testrail4j.jackson2.model.Suite;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.touchbit.testrail4j.integration.tests.ProjectTests.getNewProject;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
@@ -24,18 +23,19 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful suite creation with required fields")
     @Details
     public void test_20181231221005() {
-        Project project = getNewProject();
+        Project project = CLIENT.getNewProject();
         Suite suite = new Suite().withName("name");
-        addSuite(suite, project);
+        Suite actualSuite = CLIENT.addNewSuite(suite, project);
+        assertThat(actualSuite.getName()).isEqualTo(suite.getName());
     }
 
     @Test(description = "Expected successful suite creation with all fields")
     @Details()
     public void test_20181231221908() {
-        Project project = getNewProject();
+        Project project = CLIENT.getNewProject();
         Suite suite = new Suite()
-                .withName("name")
-                .withDescription("description")
+                .withName("test_20181231221908_name")
+                .withDescription("test_20181231221908_description")
                 .withId(100500L)
                 .withCompletedOn(100500L)
                 .withIsBaseline(true)
@@ -43,80 +43,47 @@ public class SuiteTests extends BaseCorvusTest {
                 .withUrl("url")
                 .withProjectId(123L)
                 .withIsMaster(true);
-        addSuite(suite, project);
+        Suite actualSuite = CLIENT.addNewSuite(suite, project);
+        assertThat(actualSuite.getName()).isEqualTo(suite.getName());
     }
 
     @Test(description = "Expected successful received existing suite")
     @Details()
     public void test_20181231222652() {
-        Project project = getNewProject();
-        Suite suite = addSuite(project);
-        Suite actualSuite = getSuite(suite);
+        Project project = CLIENT.getNewProject();
+        Suite suite = CLIENT.addNewSuite(project);
+        Suite actualSuite = CLIENT.getSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
     }
 
     @Test(description = "Expected successful received list existing suites")
     @Details()
     public void test_20181231223026() {
-        Project project = getNewProject();
-        Suite suite = addSuite(project);
-        List<Suite> suiteList = getSuites(project);
+        Project project = CLIENT.getNewProject();
+        Suite suite = CLIENT.addNewSuite(project);
+        List<Suite> suiteList = CLIENT.getSuites(project);
         assertThat(suiteList).contains(suite);
     }
 
     @Test(description = "Expected successful update existing suite")
     @Details()
     public void test_20181231223730() {
-        Project project = getNewProject();
-        Suite suite = addSuite(project);
+        Project project = CLIENT.getNewProject();
+        Suite suite = CLIENT.addNewSuite(project);
         suite.setName("test_20181231223730");
-        Suite actualSuite = updateSuite(suite);
+        Suite actualSuite = CLIENT.updateSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
     }
 
     @Test(description = "Expected successful delete existing suite")
     @Details()
     public void test_20181231224319() {
-        Project project = getNewProject();
-        Suite suite = addSuite(project);
-        deleteSuite(suite);
-        FeignException exception = execute(() -> getSuite(suite));
+        Project project = CLIENT.getNewProject();
+        Suite suite = CLIENT.addNewSuite(project);
+        CLIENT.deleteSuite(suite);
+        FeignException exception = executeThrowable(() -> CLIENT.getSuite(suite));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :suite_id is not a valid test suite.\"}");
-    }
-
-    public static void deleteSuite(Suite suite) {
-        step("Delete suite with ID: {}", suite.getId());
-        CLIENT.deleteSuite(suite.getId());
-    }
-
-    public static Suite updateSuite(Suite suite) {
-        step("Update suite with ID: {}", suite.getId());
-        return CLIENT.updateSuite(suite);
-    }
-
-    public static Suite addSuite(Suite suite, Project project) {
-        step("Create new suite with name: {}", suite.getName());
-        return CLIENT.addSuite(suite, project.getId());
-    }
-
-    public static Suite addSuite(Project project) {
-        Suite suite = new Suite().withName("name");
-        return addSuite(suite, project);
-    }
-
-    public static Suite getSuite(Long suiteID) {
-        step("Get suite with ID: {}", suiteID);
-        return CLIENT.getSuite(suiteID);
-    }
-
-    public static Suite getSuite(Suite suite) {
-        return getSuite(suite.getId());
-    }
-
-    public static List<Suite> getSuites(Project project) {
-        step("Get list suites for project ID: {}", project.getId());
-        return CLIENT.getSuites(project.getId());
     }
 
 }

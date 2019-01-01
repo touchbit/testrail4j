@@ -377,7 +377,7 @@ public interface TestRailClient {
      * 403 - No permissions to delete projects (requires admin rights)
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_project/{projectID}")
-    Project deleteProject(@Param("projectID") Long projectID);
+    void deleteProject(@Param("projectID") Long projectID);
 
     /*----------------------------------------------------------------------------------------------------------------*/
     /**
@@ -505,13 +505,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/update_suite/{suite_id}")
     Suite updateSuite(Suite suite, @Param("suite_id") Long suiteID);
-
-    /**
-     * See {@link TestRailClient#updateSuite(Suite, Long)}
-     */
-    default Suite updateSuite(Suite suite) {
-        return updateSuite(suite, suite.getId());
-    }
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-suites#delete_suite

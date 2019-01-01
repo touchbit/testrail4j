@@ -81,9 +81,9 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expected successful delete existing project")
     @Details()
     public void test_20181231184200() {
-        Project project = getNewProject();
-        deleteProject(project);
-        FeignException exception = execute(() -> getProject(project));
+        Project project = CLIENT.getNewProject();
+        CLIENT.deleteProject(project);
+        FeignException exception = executeThrowable(() -> CLIENT.getProject(project));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :project_id is not a valid or accessible project.\"}");
     }
@@ -91,8 +91,8 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive existing project")
     @Details()
     public void test_20181231190218() {
-        Project project = getNewProject();
-        Project actualProject = getProject(project);
+        Project project = CLIENT.getNewProject();
+        Project actualProject = CLIENT.getProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
         assertThat(actualProject.getShowAnnouncement()).isTrue();
@@ -106,63 +106,12 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive existing projects list")
     @Details()
     public void test_20181231190411() {
-        Project project1 = getNewProject();
-        Project project2 = getNewProject();
-        List<Long> actualProject = getProjects().stream().map(Project::getId).collect(Collectors.toList());
+        Project project1 = CLIENT.getNewProject();
+        Project project2 = CLIENT.getNewProject();
+        List<Long> actualProject = CLIENT.getProjects().stream().map(Project::getId).collect(Collectors.toList());
         assertThat(actualProject).contains(project1.getId());
         assertThat(actualProject).contains(project2.getId());
     }
 
-    /**
-     * Util method
-     * Get an existing actual project
-     */
-    public static List<Project> getProjects() {
-        step("Get existing projects list");
-        return CLIENT.getProjects();
-    }
-
-    /**
-     * Util method
-     * Get an existing project
-     */
-    public static Project getProject(Long projectID) {
-        step("Get project with ID: {}", projectID);
-        return CLIENT.getProject(projectID);
-    }
-
-    /**
-     * see {@link ProjectTests#getProject(Long)}
-     */
-    public static Project getProject(Project project) {
-        return getProject(project.getId());
-    }
-
-    /**
-     * Util method
-     * Deletes an existing project
-     */
-    public static void deleteProject(Long projectID) {
-        step("Delete project with ID: {}", projectID);
-        CLIENT.deleteProject(projectID);
-    }
-
-    /**
-     * see {@link ProjectTests#deleteProject(Long)}
-     */
-    public static void deleteProject(Project project) {
-        deleteProject(project.getId());
-    }
-
-    /**
-     * Util method
-     * @return generated {@link Project}
-     */
-    public static Project getNewProject() {
-        String name = UUID.randomUUID().toString();
-        String announcement = UUID.randomUUID().toString();
-        step("Add new project with name: {}", name);
-        return CLIENT.addProject(name, announcement, true, MULTIPLE);
-    }
 
 }

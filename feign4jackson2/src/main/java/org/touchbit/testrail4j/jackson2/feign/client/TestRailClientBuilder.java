@@ -30,25 +30,49 @@ import static feign.Logger.Level.FULL;
  */
 public class TestRailClientBuilder {
 
-    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth, String target) {
-        return build(auth, target, new Logger.NoOpLogger(), FULL);
-    }
-
-    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth, String target, Logger log) {
-        return build(auth, target, log, FULL);
+    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
+                                                                                    String target
+    ) {
+        return build(auth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
     }
 
     public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
                                                                                     String target,
-                                                                                    Logger logger,
-                                                                                    Logger.Level logLevel) {
+                                                                                    Logger log
+    ) {
+        return build(auth, target, TestRailClient.class, log, FULL);
+    }
+
+    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
+                                                                                    String target,
+                                                                                    Logger log,
+                                                                                    Logger.Level logLevel
+    ) {
+        return build(auth, target, TestRailClient.class, log, logLevel);
+    }
+
+    public static <I extends TestRailAuthorizationInterceptor, C extends  TestRailClient> C build(
+            I auth, String target,
+            Class<C> c,
+            Logger log
+    ) {
+        return build(auth, target, c, log, FULL);
+    }
+
+    public static <I extends TestRailAuthorizationInterceptor, C extends  TestRailClient> C build(
+            I auth,
+            String target,
+            Class<C> c,
+            Logger logger,
+            Logger.Level logLevel
+    ) {
         return new Feign.Builder()
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .logger(logger)
                 .logLevel(logLevel)
                 .requestInterceptor(auth)
-                .target(TestRailClient.class, target);
+                .target(c, target);
     }
 
     /** Utility class. Prohibit instantiation. */
