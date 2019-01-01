@@ -22,6 +22,7 @@ import feign.QueryMap;
 import feign.RequestLine;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.GetRunsQueryMap;
 import org.touchbit.testrail4j.core.query.GetSectionsQueryMap;
 import org.touchbit.testrail4j.jackson2.feign.client.expander.BoolExp;
 import org.touchbit.testrail4j.jackson2.feign.client.expander.SuiteExp;
@@ -42,13 +43,13 @@ import java.util.List;
 public interface TestRailClient {
 
     /** Utility table of contents method for quickly navigate through categories */
-    default void TOC() {
-        APIResults();
-        APICases();
-        APIProjects();
-        APIRuns();
-        APISuites();
-        APISections();
+    default void tableOfContents() {
+        apiResults();
+        apiCases();
+        apiProjects();
+        apiRuns();
+        apiSuites();
+        apiSections();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -56,9 +57,9 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results">API: Results</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APIResults() { /* do nothing */ }
+    default void apiResults() { /* do nothing */ }
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results">API: Get results</a>
@@ -66,8 +67,8 @@ public interface TestRailClient {
      * Get the latest 10 results for test with ID 1 and statuses 4 or 5 (Retest, Failed)
      * GET /index.php?/api/v2/get_results/1&status_id=4,5&limit=10
      *
-     * @param testID - The ID of the test
-     * @param getResultsQueryMap - see {@link GetResultsQueryMap}
+     * @param testID is the ID of the test
+     * @param getResultsQueryMap is the request filter. See {@link GetResultsQueryMap}
      *
      * @return a list of test {@link Result}s for a test.
      * [
@@ -106,8 +107,8 @@ public interface TestRailClient {
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases">API: Add results for cases</a>
      *
-     * @param runID - The ID of the test run the results should be added to
-     * @param results - {@link Results} object
+     * @param runID is the ID of the test run the results should be added to
+     * @param results is the request body. See {@link Results}
      * The following listing shows a typical example request.
      * In addition to the test case, you need to specify at
      * least one of the status, comment or assignee fields for each result.
@@ -133,14 +134,14 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases">API: Cases</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APICases() { /* do nothing */ }
+    default void apiCases() { /* do nothing */ }
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#get_case">API: Get case</a>
      *
-     * @param caseID - The ID of the test case
+     * @param caseID is the ID of the test case
      *
      * @return an existing test case.
      * {
@@ -170,8 +171,8 @@ public interface TestRailClient {
      * For example get all test cases for project with ID 1, suite with ID 2 and priority 3 or 4
      * GET /index.php?/api/v2/get_cases/1&suite_id=2&priority_id=3,4
      *
-     * @param projectID - The ID of the project
-     * @param queryMap - following optional parameters and filters {@link GetCasesQueryMap}
+     * @param projectID is the ID of the project
+     * @param queryMap is the following optional parameters and filters {@link GetCasesQueryMap}
      *
      * @return a list of {@link Case} for a test suite or specific section in a test suite.
      * [
@@ -194,16 +195,16 @@ public interface TestRailClient {
      *
      * Creates a new test case.
      *
-     * @param sectionID - The ID of the section the test case should be added to
-     * @param aCase - {@link Case}
+     * @param sectionID is the ID of the section the test case should be added to
+     * @param aCase is the {@link Case}
      *
      * @return If successful, this method returns the new test case using
      * the same response format as {@link TestRailClient#getCase(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the test case was created and is returned as part of the response
-     * 400 - Invalid or unknown section
-     * 403 - No permissions to add test cases or no access to the project
+     * 200 Success, the test case was created and is returned as part of the response
+     * 400 Invalid or unknown section
+     * 403 No permissions to add test cases or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_case/{section_id}")
     Case addCase(Case aCase, @Param("section_id") Long sectionID);
@@ -215,16 +216,16 @@ public interface TestRailClient {
      * you can submit and update specific fields only).
      * This method supports the same POST fields as {@link TestRailClient#addCase(Case, Long)} (except section_id).
      *
-     * @param caseID - The ID of the test case
-     * @param aCase - {@link Case}
+     * @param caseID is the ID of the test case
+     * @param aCase is the {@link Case}
      *
      * @return If successful, this method returns the new test case using
      * the same response format as {@link TestRailClient#getCase(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the test case was updated and is returned as part of the response
-     * 400 - Invalid or unknown test case
-     * 403 - No permissions to modify test cases or no access to the project
+     * 200 Success, the test case was updated and is returned as part of the response
+     * 400 Invalid or unknown test case
+     * 403 No permissions to modify test cases or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/update_case/{case_id}")
     Case updateCase(Case aCase, @Param("case_id") Long caseID);
@@ -233,15 +234,15 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#delete_case">API: Delete case</a>
      *
      * Deletes an existing test case.
-     * Please note: Deleting a test case cannot be undone and also permanently deletes
+     * @implNote Deleting a test case cannot be undone and also permanently deletes
      * all test results in active test runs (i.e. test runs that haven't been closed (archived) yet).
      *
-     * @param caseID - The ID of the test case
+     * @param caseID is the ID of the test case
      *
      * @apiNote Response codes
-     * 200 - Success, the test case was deleted
-     * 400 - Invalid or unknown test case
-     * 403 - No permissions to delete test cases or no access to the project
+     * 200 Success, the test case was deleted
+     * 400 Invalid or unknown test case
+     * 403 No permissions to delete test cases or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_case/{case_id}")
     void deleteCase(@Param("case_id") Long caseID);
@@ -251,14 +252,14 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-projects">API: Projects</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APIProjects() { /* do nothing */ }
+    default void apiProjects() { /* do nothing */ }
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-projects#get_project
      *
-     * @param projectID - The ID of the project
+     * @param projectID is the ID of the project
      *
      * @return an existing {@link Project}.
      * {
@@ -305,11 +306,11 @@ public interface TestRailClient {
      *
      * Creates a new project (admin status required).
      *
-     * @param name - The name of the project (required)
-     * @param announcement - The description of the project
+     * @param name is the name of the project (required)
+     * @param announcement is the description of the project
      * @param showAnnouncement - True if the announcement should be displayed
      *                         on the project's overview page and false otherwise
-     * @param suiteMode - The suite mode of the project
+     * @param suiteMode is the suite mode of the project
      *                  (1 for single suite mode, 2 for single suite + baselines, 3 for multiple suites)
      *                  (added with TestRail 4.0)
      *
@@ -335,13 +336,13 @@ public interface TestRailClient {
      * Updates an existing project (admin status required;
      * partial updates are supported, i.e. you can submit and update specific fields only).
      *
-     * @param projectID - The ID of the project
-     * @param isCompleted - Specifies whether a project is considered completed or not
-     * @param name - The name of the project (required)
-     * @param announcement - The description of the project
+     * @param projectID is the ID of the project
+     * @param isCompleted is the specifies whether a project is considered completed or not
+     * @param name is the name of the project (required)
+     * @param announcement is the description of the project
      * @param showAnnouncement - True if the announcement should be displayed
      *                         on the project's overview page and false otherwise
-     * @param suiteMode - The suite mode of the project
+     * @param suiteMode is the suite mode of the project
      *                  (1 for single suite mode, 2 for single suite + baselines, 3 for multiple suites)
      *                  (added with TestRail 4.0)
      *
@@ -350,9 +351,9 @@ public interface TestRailClient {
      * { "id": 1, "name": "DataHub", .. }
      *
      * @apiNote Response codes
-     * 200 - Success, the project was updated and is returned as part of the response
-     * 400 - Invalid or unknown project
-     * 403 - No permissions to modify projects (requires admin rights)
+     * 200 Success, the project was updated and is returned as part of the response
+     * 400 Invalid or unknown project
+     * 403 No permissions to modify projects (requires admin rights)
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/update_project/{projectID}")
     Project updateProject(@Param("projectID") Long projectID,
@@ -366,15 +367,15 @@ public interface TestRailClient {
      * http://docs.gurock.com/testrail-api2/reference-projects#delete_project
      *
      * Deletes an existing project (admin status required).
-     * Please note: Deleting a project cannot be undone and also permanently deletes all test suites & cases,
+     * @implNote Deleting a project cannot be undone and also permanently deletes all test suites & cases,
      * test runs & results and everything else that is part of the project.
      *
-     * @param projectID - The ID of the project
+     * @param projectID is the ID of the project
      *
      * @apiNote Response codes
-     * 200 - Success, the project was deleted
-     * 400 - Invalid or unknown project
-     * 403 - No permissions to delete projects (requires admin rights)
+     * 200 Success, the project was deleted
+     * 400 Invalid or unknown project
+     * 403 No permissions to delete projects (requires admin rights)
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_project/{projectID}")
     void deleteProject(@Param("projectID") Long projectID);
@@ -384,16 +385,16 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs">API: Runs</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APIRuns() { /* do nothing */ }
+    default void apiRuns() { /* do nothing */ }
 
     /**
-     * http://docs.gurock.com/testrail-api2/reference-runs#get_run
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#get_run">API: Get run</a>
      *
-     * @param runID - The ID of the test run
+     * @param runID is the ID of the test run
      *
-     * @return an existing test run
+     * @return an existing test {@link Run}
      * {
      * 	"assignedto_id": 6,
      * 	"blocked_count": 0,
@@ -424,23 +425,152 @@ public interface TestRailClient {
      * 	"untested_count": 3,
      * 	"url": "http://<server>/testrail/index.php?/runs/view/81"
      * }
+     * 
+     * @apiNote Response codes
+     * 200 Success, the test run is returned as part of the response
+     * 400 Invalid or unknown test run
+     * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_run/{run_id}")
     Run getRun(@Param("run_id") Long runID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#get_runs">API: Get Runs</a>
+     *
+     * 
+     * All active test runs for project with ID 1 created by user with ID 1 or 2
+     * GET index.php?/api/v2/get_runs/1&is_completed=0&created_by=1,2
+     *
+     * @param projectID is the ID of the project
+     * @param queryMap is a request filter {@link GetRunsQueryMap}
+     *                 All active test runs for project with ID 1 created by user with ID 1 or 2
+     *                 GET index.php?/api/v2/get_runs/1&is_completed=0&created_by=1,2
+     *
+     * @return Returns a list of test {@link Run}s for a project.
+     * Only returns those test runs that are not part of a test plan (please see get_plans/get_plan for this).
+     *
+     * @apiNote Response codes
+     * 200 Success, the test runs are returned as part of the response
+     * 400 Invalid or unknown project
+     * 403 No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_runs/{project_id}")
+    List<Run> getRuns(@Param("project_id") Long projectID, @QueryMap GetRunsQueryMap queryMap);
+
+    /**
+     * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
+     */
+    default List<Run> getRuns(@Param("project_id") Long projectID) {
+        return getRuns(projectID, new GetRunsQueryMap());
+    }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#add_run">API: Add run</a>
+     *
+     * Creates a new test run.
+     * Also see the following example which shows how to create a new test run including a custom test case selection:
+     * {
+     * 	"suite_id": 1,
+     * 	"name": "This is a new test run",
+     * 	"assignedto_id": 5,
+     * 	"include_all": false,
+     * 	"case_ids": [1, 2, 3, 4, 7, 8]
+     * }
+     *
+     * @param run is the request body ({@link Run})
+     * @param projectID is the ID of the test run
+     *
+     * @return If successful, this method returns the new test {@link Run}
+     *         using the same response format as {@link TestRailClient#getRun(Long)}.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test run was created and is returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No permissions to add test runs or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_run/{project_id}")
+    Run addRun(Run run, @Param("project_id") Long projectID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#update_run">API: Update run</a>
+     *
+     * Updates an existing test run (partial updates are supported, i.e. you can submit and update specific fields only).
+     * With the exception of the suite_id and assignedto_id fields,
+     * this method supports the same POST fields as {@link TestRailClient#addRun(Run, Long)}.
+     * Request example
+     * Also see the following example which shows how to update the description and test case selection of a test run:
+     * {
+     * 	"description": "A description for the test run",
+     * 	"include_all": true
+     * }
+     * The following example updates a test run to use a manual test case selection:
+     * {
+     * 	"include_all": false,
+     * 	"case_ids": [1, 2, 3, 5, 8]
+     * }
+     *
+     * @param run is the request body ({@link Run})
+     * @param runID is the ID of the test run
+     *
+     * @return If successful, this method returns the updated test {@link Run}
+     *         using the same response format as {@link TestRailClient#getRun(Long)}}.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test run was updated and is returned as part of the response
+     * 400	Invalid or unknown test run
+     * 403	No permissions to modify test runs or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_run/{run_id}")
+    Run updateRun(Run run, @Param("run_id") Long runID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#close_run">API: Close run</a>
+     *
+     * Closes an existing test run and archives its tests & results.
+     * @implNote Closing a test run cannot be undone.
+     *
+     * @param runID is the ID of the test run
+     *
+     * @return If successful, this method returns the updated test {@link Run}
+     *         using the same response format as {@link TestRailClient#getRun(Long)}}.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test run was closed (archived) and is returned as part of the response.
+     * 400	Invalid or unknown test run
+     * 403	No permissions to close test runs or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/close_run/{run_id}")
+    Run closeRun(@Param("run_id") Long runID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#delete_run">API: Delete run</a>
+     *
+     * Deletes an existing test run.
+     * @implNote Deleting a test run cannot be undone and also permanently deletes all tests & results of the test run.
+     *
+     * @param runID is the ID of the test run
+     *
+     * @apiNote Response codes
+     * 200	Success, the test run and all its tests & results were deleted
+     * 400	Invalid or unknown test run
+     * 403	No permissions to delete test runs or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_run/{run_id}")
+    void deleteRun(@Param("run_id") Long runID);
 
     /*----------------------------------------------------------------------------------------------------------------*/
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-suites">API: Suites</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APISuites() { /* do nothing */ }
+    default void apiSuites() { /* do nothing */ }
 
     /**
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suite
      *
-     * @param suiteID - The ID of the test suite
+     * @param suiteID is the ID of the test suite
      *
      * @return an existing test {@link Suite}.
      * {
@@ -457,7 +587,7 @@ public interface TestRailClient {
     /**
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suites
      *
-     * @param projectID - The ID of the project
+     * @param projectID is the ID of the project
      *
      * @return The response includes an array of test suite. Each test suite in this
      * list follows the same format as {@link TestRailClient#getSuite(Long)}.
@@ -474,15 +604,15 @@ public interface TestRailClient {
      *
      * Creates a new test suite.
      *
-     * @param projectID - The ID of the project
+     * @param projectID is the ID of the project
      *
      * @return If successful, this method returns the new test suite using
      * the same response format as {@link TestRailClient#getSuite(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the test suite was created and is returned as part of the response
-     * 400 - Invalid or unknown project
-     * 404 - No permissions to add test suites or no access to the project
+     * 200 Success, the test suite was created and is returned as part of the response
+     * 400 Invalid or unknown project
+     * 404 No permissions to add test suites or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_suite/{project_id}")
     Suite addSuite(Suite suite, @Param("project_id") Long projectID);
@@ -493,15 +623,15 @@ public interface TestRailClient {
      * Updates an existing test suite (partial updates are supported,
      * i.e. you can submit and update specific fields only).
      *
-     * @param suiteID - The ID of the test suite
+     * @param suiteID is the ID of the test suite
      *
      * @return If successful, this method returns the new test suite using
      * the same response format as {@link TestRailClient#getSuite(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the test suite was updated and is returned as part of the response
-     * 400 - Invalid or unknown test suite
-     * 404 - No permissions to modify test suites or no access to the project
+     * 200 Success, the test suite was updated and is returned as part of the response
+     * 400 Invalid or unknown test suite
+     * 404 No permissions to modify test suites or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/update_suite/{suite_id}")
     Suite updateSuite(Suite suite, @Param("suite_id") Long suiteID);
@@ -510,15 +640,15 @@ public interface TestRailClient {
      * http://docs.gurock.com/testrail-api2/reference-suites#delete_suite
      *
      * Deletes an existing test suite.
-     * Please note: Deleting a test suite cannot be undone and also deletes all active
+     * @implNote Deleting a test suite cannot be undone and also deletes all active
      * test runs & results, i.e. test runs & results that weren't closed (archived) yet.
      *
-     * @param suiteID - The ID of the test suite
+     * @param suiteID is the ID of the test suite
      *
      * @apiNote Response codes
-     * 200 - Success, the test suite and all active test runs & results were deleted
-     * 400 - Invalid or unknown test suite
-     * 404 - No permissions to delete test suites or no access to the project
+     * 200 Success, the test suite and all active test runs & results were deleted
+     * 400 Invalid or unknown test suite
+     * 404 No permissions to delete test suites or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_suite/{suite_id}")
     void deleteSuite(@Param("suite_id") Long suiteID);
@@ -528,23 +658,23 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections">API: Sections</a>
      *
      * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#TOC()}
+     * TOC - {@link TestRailClient#tableOfContents()}
      */
-    default void APISections() { /* do nothing */ }
+    default void apiSections() { /* do nothing */ }
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#add_section">API: Add section</a>
      *
-     * @param projectID - The ID of the project
-     * @param section - request body
+     * @param projectID is the ID of the project
+     * @param section is the request body
      *
      * @return If successful, this method returns the new section using
      * the same response format as {@link TestRailClient#getSection(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the section was created and is returned as part of the response
-     * 400 - Invalid or unknown project or test suite
-     * 403 - No permissions to add sections or no access to the project
+     * 200 Success, the section was created and is returned as part of the response
+     * 400 Invalid or unknown project or test suite
+     * 403 No permissions to add sections or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_section/{project_id}")
     Section addSection(Section section, @Param("project_id") Long projectID);
@@ -554,7 +684,7 @@ public interface TestRailClient {
      *
      * Returns an existing section.
      *
-     * @param sectionID - The ID of the section
+     * @param sectionID is the ID of the section
      *
      * @return for the following fields are included in the response see {@link Section}
      * Please see below for a typical response
@@ -574,9 +704,9 @@ public interface TestRailClient {
      * The depth field therefore resembles the level in the section hierarchy.
      *
      * @apiNote Response codes
-     * 200 - Success, the section is returned as part of the response
-     * 400 - Invalid or unknown section
-     * 403 - No access to the project
+     * 200 Success, the section is returned as part of the response
+     * 400 Invalid or unknown section
+     * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_section/{section_id}")
     Section getSection(@Param("section_id") Long sectionID);
@@ -584,8 +714,8 @@ public interface TestRailClient {
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#get_sections">API: Get sections</a>
      *
-     * @param projectID - The ID of the project
-     * @param queryMap - see {@link GetSectionsQueryMap}
+     * @param projectID is the ID of the project
+     * @param queryMap is the request filter {@link GetSectionsQueryMap}
      *
      * @return a list of sections for a project and test suite.
      * <code>
@@ -603,9 +733,9 @@ public interface TestRailClient {
      * </code>
      *
      * @apiNote Response codes
-     * 200 - Success, the sections are returned as part of the response
-     * 400 - Invalid or unknown project or test suite
-     * 403 - No access to the project
+     * 200 Success, the sections are returned as part of the response
+     * 400 Invalid or unknown project or test suite
+     * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_sections/{project_id}")
     List<Section> getSections(@Param("project_id") Long projectID, @QueryMap GetSectionsQueryMap queryMap);
@@ -622,16 +752,16 @@ public interface TestRailClient {
      *
      * Updates an existing section (partial updates are supported, i.e. you can submit and update specific fields only).
      *
-     * @param sectionID - The ID of the section
-     * @param section - see {@link Section}. The following POST fields are supported: description, name
+     * @param sectionID is the ID of the section
+     * @param section is the following POST fields are supported: description, name; See {@link Section}
      *
      * @return If successful, this method returns the updated section using the
      * same response format as {@link TestRailClient#getSection(Long)}.
      *
      * @apiNote Response codes
-     * 200 - Success, the section was updated and is returned as part of the response
-     * 400 - Invalid or unknown section
-     * 403 - No permissions to modify sections or no access to the project
+     * 200 Success, the section was updated and is returned as part of the response
+     * 400 Invalid or unknown section
+     * 403 No permissions to modify sections or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/update_section/{section_id}")
     Section updateSection(Section section, @Param("section_id") Long sectionID);
@@ -640,15 +770,15 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#delete_section">API: Delete section</a>
      *
      * Deletes an existing section.
-     * Please note: Deleting a section cannot be undone and also deletes all related
+     * @implNote Deleting a section cannot be undone and also deletes all related
      * test cases as well as active tests & results, i.e. tests & results that weren't closed (archived) yet.
      *
-     * @param sectionID - The ID of the section
+     * @param sectionID is the ID of the section
      *
      * @apiNote Response codes
-     * 200 - Success, the section was deleted
-     * 400 - Invalid or unknown section
-     * 403 - No permissions to delete sections or test cases or no access to the project
+     * 200 Success, the section was deleted
+     * 400 Invalid or unknown section
+     * 403 No permissions to delete sections or test cases or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_section/{section_id}")
     void deleteSection(@Param("section_id") Long sectionID);

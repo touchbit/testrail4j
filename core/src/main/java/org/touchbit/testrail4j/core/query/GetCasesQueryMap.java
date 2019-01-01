@@ -23,32 +23,54 @@ package org.touchbit.testrail4j.core.query;
 @SuppressWarnings({"unused", "squid:S00116"})
 public class GetCasesQueryMap {
 
-    /** The ID of the test suite (optional if the project is operating in single suite mode) */
+    /**
+     * The ID of the test suite (optional if the project is operating in single suite mode)
+     */
     private Long suite_id;
-    /** The ID of the section (optional) */
+    /**
+     * The ID of the section (optional)
+     */
     private Long section_id;
-    /** Only return test cases created after this date (as UNIX timestamp). */
+    /**
+     * Only return test cases created after this date (as UNIX timestamp).
+     */
     private Long created_after;
-    /** Only return test cases created before this date (as UNIX timestamp). */
+    /**
+     * Only return test cases created before this date (as UNIX timestamp).
+     */
     private Long created_before;
-    /** Only return test cases updated after this date (as UNIX timestamp). */
+    /**
+     * Only return test cases updated after this date (as UNIX timestamp).
+     */
     private Long updated_after;
-    /** Only return test cases updated before this date (as UNIX timestamp). */
+    /**
+     * Only return test cases updated before this date (as UNIX timestamp).
+     */
     private Long updated_before;
     /**
      * A comma-separated list of milestone IDs to filter by
      * (not available if the milestone field is disabled for the project).
      */
     private Long milestone_id;
-    /** A comma-separated list of creators (user IDs) to filter by. */
+    /**
+     * A comma-separated list of creators (user IDs) to filter by.
+     */
     private Long created_by;
-    /** A comma-separated list of priority IDs to filter by. */
+    /**
+     * A comma-separated list of priority IDs to filter by.
+     */
     private Long priority_id;
-    /** A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later) */
+    /**
+     * A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later)
+     */
     private Long template_id;
-    /** A comma-separated list of case type IDs to filter by. */
+    /**
+     * A comma-separated list of case type IDs to filter by.
+     */
     private Long type_id;
-    /** A comma-separated list of users who updated test cases to filter by. */
+    /**
+     * A comma-separated list of users who updated test cases to filter by.
+     */
     private Long updated_by;
 
     public Long getCreatedAfter() {

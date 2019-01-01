@@ -28,6 +28,15 @@
         "description": "configuration ID"
       }
     },
+    "case_ids": {
+      "type": "array",
+      "description": "An array of case IDs for the custom case selection",
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "case ID"
+      }
+    },
     "created_by": {
       "type": "integer",
       "description": "The ID of the user who created the test run"

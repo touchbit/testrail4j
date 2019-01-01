@@ -23,7 +23,9 @@ package org.touchbit.testrail4j.core.query;
 @SuppressWarnings({"unused", "squid:S00116"})
 public class GetSectionsQueryMap {
 
-    /** The ID of the test suite (optional if the project is operating in single suite mode) */
+    /**
+     * The ID of the test suite (optional if the project is operating in single suite mode)
+     */
     private Long suite_id;
 
     public Long getSuiteId() {

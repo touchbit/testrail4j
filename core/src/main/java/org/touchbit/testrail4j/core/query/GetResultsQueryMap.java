@@ -23,12 +23,17 @@ package org.touchbit.testrail4j.core.query;
 @SuppressWarnings({"unused", "squid:S00116"})
 public class GetResultsQueryMap {
 
-    /** A comma-separated list of status IDs to filter by */
+    /**
+     * A comma-separated list of status IDs to filter by
+     */
     private Long status_id;
-    /** Limit the test result */
+    /**
+     * Limit the test result
+     */
     private Long limit;
-
-    /** Use to skip records */
+    /**
+     * Use to skip records
+     */
     private Long offset;
 
     public Long getStatusId() {
