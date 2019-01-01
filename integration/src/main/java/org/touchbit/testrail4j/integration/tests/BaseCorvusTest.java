@@ -29,10 +29,7 @@ import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
-import org.touchbit.testrail4j.jackson2.model.Case;
-import org.touchbit.testrail4j.jackson2.model.Project;
-import org.touchbit.testrail4j.jackson2.model.Section;
-import org.touchbit.testrail4j.jackson2.model.Suite;
+import org.touchbit.testrail4j.jackson2.model.*;
 import sun.misc.Unsafe;
 
 import java.io.BufferedReader;
@@ -211,6 +208,35 @@ public class BaseCorvusTest extends BaseBuggyTest {
             step("Delete case with ID: {}", caze.getId());
             CLIENT.deleteCase(caze.getId());
         }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default Run addRun() {
+            Project project = CLIENT.getNewProject(SINGLE);
+            Run run = new Run().withProjectId(project.getId()).withName(UUID.randomUUID().toString());
+            return addRun(run);
+        }
+
+        default Run addRun(Run run) {
+            step("Add run with name {} for project id {}", run.getName(), run.getProjectId());
+            return CLIENT.addRun(run, run.getProjectId());
+        }
+
+        default Run updateRun(Run run) {
+            step("Update run with id {}", run.getId());
+            return CLIENT.updateRun(run, run.getId());
+        }
+
+        default Run getRun(Run run) {
+            step("Get run with id {}", run.getId());
+            return CLIENT.getRun(run.getId());
+        }
+
+        default void deleteRun(Run run) {
+            step("Delete run with id {}", run.getId());
+            CLIENT.deleteRun(run.getId());
+        }
+
     }
 
     protected FeignException executeThrowable(Executable executable) {

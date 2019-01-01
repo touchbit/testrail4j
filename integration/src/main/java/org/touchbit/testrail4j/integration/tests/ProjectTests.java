@@ -24,7 +24,7 @@ import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 @Suite(service = TestRail.class, interfaze = API.class, task = "project_operations")
 public class ProjectTests extends BaseCorvusTest {
 
-    @Test(description = "Expected successful project creation with required fields")
+    @Test(description = "Expecting successful the project creation with required fields")
     @Details()
     public void test_20181231050759() {
         String name = UUID.randomUUID().toString();
@@ -40,7 +40,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(project.getSuiteMode()).isEqualTo(MULTIPLE.id());
     }
 
-    @Test(description = "Expected successful project creation with all fields")
+    @Test(description = "Expecting successful the project creation with all fields")
     @Details()
     public void test_20181231062525() {
         String name = UUID.randomUUID().toString();
@@ -57,7 +57,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(project.getUrl()).isNotEmpty();
     }
 
-    @Test(description = "Expected successful project creation with Project json object")
+    @Test(description = "Expecting successful the project creation with Project json object")
     @Details()
     public void test_20181231181048() {
         Project project = new Project()
@@ -78,7 +78,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(actualProject.getUrl()).isNotEmpty();
     }
 
-    @Test(description = "Expected successful delete existing project")
+    @Test(description = "Expecting successful delete the existing project")
     @Details()
     public void test_20181231184200() {
         Project project = CLIENT.getNewProject();
@@ -88,7 +88,7 @@ public class ProjectTests extends BaseCorvusTest {
                 .isEqualTo("{\"error\":\"Field :project_id is not a valid or accessible project.\"}");
     }
 
-    @Test(description = "Expected successful receive existing project")
+    @Test(description = "Expecting successful receive the existing project")
     @Details()
     public void test_20181231190218() {
         Project project = CLIENT.getNewProject();
@@ -103,7 +103,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(actualProject.getUrl()).isNotEmpty();
     }
 
-    @Test(description = "Expected successful receive existing projects list")
+    @Test(description = "Expecting successful receive the existing projects list")
     @Details()
     public void test_20181231190411() {
         Project project1 = CLIENT.getNewProject();
