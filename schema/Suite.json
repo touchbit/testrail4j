@@ -8,10 +8,12 @@
     },
     "id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The unique ID of the test suite"
     },
     "completed_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the test suite was closed (as UNIX timestamp) (added with TestRail 4.0)"
     },
     "name": {
@@ -20,6 +22,7 @@
     },
     "project_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the project this test suite belongs to"
     },
     "is_baseline": {

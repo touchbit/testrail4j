@@ -12,6 +12,7 @@
     },
     "completed_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the test run was closed (as UNIX timestamp)"
     },
     "config": {
@@ -23,6 +24,7 @@
       "description": "The array of IDs of the configurations of the test run (if part of a test plan)",
       "items": {
         "type": "integer",
+        "javaType" : "java.lang.Long",
         "description": "configuration ID"
       }
     },
@@ -32,6 +34,7 @@
     },
     "created_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the test run was created (as UNIX timestamp)"
     },
     "custom_status1_count": {
@@ -80,6 +83,7 @@
     },
     "id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The unique ID of the test run"
     },
     "include_all": {
@@ -92,6 +96,7 @@
     },
     "milestone_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the milestone this test run belongs to"
     },
     "name": {
@@ -104,10 +109,12 @@
     },
     "plan_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the test plan this test run belongs to"
     },
     "project_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the project this test run belongs to"
     },
     "retest_count": {
@@ -116,6 +123,7 @@
     },
     "suite_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the test suite this test run is derived from"
     },
     "untested_count": {

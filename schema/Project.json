@@ -8,10 +8,12 @@
     },
     "completed_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the project was marked as completed (as UNIX timestamp)"
     },
     "id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The unique ID of the project"
     },
     "is_completed": {

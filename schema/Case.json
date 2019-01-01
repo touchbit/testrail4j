@@ -8,6 +8,7 @@
     },
     "created_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the test case was created (as UNIX timestamp)"
     },
     "estimate": {
@@ -20,10 +21,12 @@
     },
     "id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The unique ID of the test case"
     },
     "milestone_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the milestone that is linked to the test case"
     },
     "priority_id": {
@@ -36,10 +39,12 @@
     },
     "section_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the section the test case belongs to"
     },
     "suite_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the suite the test case belongs to"
     },
     "title": {
@@ -48,10 +53,12 @@
     },
     "type_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the test case type that is linked to the test case"
     },
     "template_id": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The ID of the template (field layout) the test case uses (requires TestRail 5.2 or later)"
     },
     "updated_by": {
@@ -60,6 +67,7 @@
     },
     "updated_on": {
       "type": "integer",
+      "javaType" : "java.lang.Long",
       "description": "The date/time when the test case was last updated (as UNIX timestamp)"
     }
   }

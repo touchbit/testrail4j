@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "The depth, display_order and parent fields determine the hierarchy of the sections in a test suite. The depth field is 0 for all sections on the root level and greater than 0 for all child sections. The depth field therefore resembles the level in the section hierarchy. Also see get_sections for an example.",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "The description of the section (added with TestRail 4.0)"
+    },
+    "id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the section"
+    },
+    "suite_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test suite (ignored if the project is operating in single suite mode, required otherwise)"
+    },
+    "parent_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the parent section (to build section hierarchies)"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the section (required)"
+    },
+    "depth": {
+      "type": "integer",
+      "description": "The level in the section hierarchy of the test suite"
+    },
+    "display_order": {
+      "type": "integer",
+      "description": "The order in the test suite"
+    }
+  }
+}
