@@ -10,6 +10,14 @@
     "expected": {
       "type": "string",
       "description": "Step expected result"
+    },
+    "actual": {
+      "type": "string",
+      "description": "Step actual result"
+    },
+    "status_id": {
+      "type": "string",
+      "description": "The ID of the test step status."
     }
   }
 }

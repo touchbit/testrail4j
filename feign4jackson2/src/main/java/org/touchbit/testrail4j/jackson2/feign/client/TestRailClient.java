@@ -69,8 +69,13 @@ public interface TestRailClient {
      *
      * @param testID is the ID of the test
      * @param getResultsQueryMap is the request filter. See {@link GetResultsQueryMap}
+     *                           The latest 10 results for test with ID 1 and statuses 4 or 5 (Retest, Failed)
+     *                           GET index.php?/api/v2/get_results/1&status_id=4,5&limit=10
+     *
      *
      * @return a list of test {@link Result}s for a test.
+     * Custom fields are also included in the response and use their system name prefixed with 'custom_'
+     * as their field identifier. Please see add_result for a full list of available custom field types.
      * [
      *   {
      *     "assignedto_id": 1,
@@ -93,7 +98,11 @@ public interface TestRailClient {
      *     ]
      *   }
      * ]
-     * */
+     * @apiNote Response codes
+     * 200	Success, the test results are returned as part of the response
+     * 400	Invalid or unknown test
+     * 403	No access to the project
+     */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{test_id}")
     List<Result> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap getResultsQueryMap);
 
@@ -105,26 +114,218 @@ public interface TestRailClient {
     }
 
     /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases">API: Add results for cases</a>
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results_for_case">API: Get results for case</a>
      *
-     * @param runID is the ID of the test run the results should be added to
-     * @param results is the request body. See {@link Results}
-     * The following listing shows a typical example request.
-     * In addition to the test case, you need to specify at
-     * least one of the status, comment or assignee fields for each result.
+     * Returns a list of test results for a test run and case combination.
+     *
+     * The difference to get_results is that this method expects a test run + test case instead of a test.
+     * In TestRail, tests are part of a test run and the test cases are part of the related test suite.
+     * So, when you create a new test run, TestRail creates a test for each test case found in the test
+     * suite of the run. You can therefore think of a test as an “instance” of a test case which can
+     * have test results, comments and a test status. Please also see TestRail's getting started guide
+     * for more details about the differences between test cases and tests.
+     *
+     * All results for test run with ID 1 and test case with ID 2
+     * GET index.php?/api/v2/get_results_for_case/1/2
+     *
+     * @param runID is the ID of the test run
+     * @param caseID is the ID of the test case
+     * @param getResultsQueryMap is the request filter. See {@link GetResultsQueryMap}
+     *
+     * @return This method uses the same response format as {@link TestRailClient#getResults(Long, GetResultsQueryMap)}.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test results are returned as part of the response
+     * 400	Invalid or unknown test run or case
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_case/{run_id}/{case_id}")
+    List<Result> getResultsForCase(@Param("run_id") Long runID,
+                                   @Param("case_id") Long caseID,
+                                   @QueryMap GetResultsQueryMap getResultsQueryMap);
+
+    /**
+     * See {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
+     */
+    default List<Result> getResultsForCase(@Param("run_id") Long runID, @Param("case_id") Long caseID) {
+        return getResultsForCase(runID, caseID, new GetResultsQueryMap());
+    }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results_for_run">API: Get results for run</a>
+     *
+     * Returns a list of test results for a test run.
+     *
+     * @param runID is the ID of the test run
+     * @param getResultsQueryMap is the request filter. See {@link GetResultsQueryMap}
+     *
+     * @return a list of test {@link Result}s for a test run.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test results are returned as part of the response
+     * 400	Invalid or unknown test run
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_run/{run_id}")
+    List<Result> getResultsForRun(@Param("run_id") Long runID, @QueryMap GetResultsQueryMap getResultsQueryMap);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result">API: Add result</a>
+     *
+     * Adds a new test result, comment or assigns a test.
+     * It's recommended to use add_results instead if you plan to add results for multiple tests.
+     *
+     * Request example
+     * @implNote Also see the following example which shows how to submit step results with
+     * the <a href="http://docs.gurock.com/testrail-faq/config-steps">structured steps custom field</a>
      * {
-     *   "results": [
-     *     {
-     *       "case_id": 1,
-     *       "status_id": 5,
-     *       "comment": "This test failed",
-     *       "defects": "TR-7"
-     *     }
-     *   ]
+     * 	"status_id": 5,
+     * 	"comment": "This test failed",
+     * 	"elapsed": "15s",
+     * 	"defects": "TR-7",
+     * 	"version": "1.0 RC1 build 3724",
+     * 	...
+     * 	"custom_step_results": [
+     * 		{
+     * 			"content": "Step 1",
+     * 			"expected": "Expected Result 1",
+     * 			"actual": "Actual Result 1",
+     * 			"status_id": 1
+     * 		},
+     * 		{
+     * 			"content": "Step 2",
+     * 			"expected": "Expected Result 2",
+     * 			"actual": "Actual Result 2",
+     * 			"status_id": 2
+     * 		},
+     * 		..
+     * 	]
+     * 	..
      * }
-     * @return if successful, this method returns the new list of test {@link Result}s
-     *  using the same response format as {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
-     *  and in the same order as the list of the request.
+     *
+     * @param testID is the ID of the test the result should be added to
+     *
+     * @return the new test {@link Result} using the same response format as
+     *         {@link TestRailClient#getResults(Long, GetResultsQueryMap)},
+     *         but with a single result instead of a list of results.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test result was created and is returned as part of the response
+     * 400	Invalid or unknown test
+     * 403	No permissions to add test results or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_result/{test_id}")
+    List<Result> addResult(@Param("test_id") Long testID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result_for_case">API: Add result for case</a>
+     *
+     * Adds a new test result, comment or assigns a test (for a test run and case combination).
+     * It's recommended to use {@link TestRailClient#addResultsForCases(Results, Long)}
+     * instead if you plan to add results for multiple test cases.
+     *
+     * The difference to {@link TestRailClient#addResult(Long)} is that this method expects a test run + test case
+     * instead of a test. In TestRail, tests are part of a test run and the test cases are part of the related
+     * test suite. So, when you create a new test run, TestRail creates a test for each test case found in the test
+     * suite of the run. You can therefore think of a test as an “instance” of a test case which can have test
+     * results, comments and a test status. Please also see TestRail's getting started guide for more details
+     * about the differences between test cases and tests.
+     *
+     * @param runID is the ID of the test run
+     * @param caseID is the ID of the test case
+     *
+     * @return the new test {@link Result} using the same response format as
+     *         {@link TestRailClient#getResults(Long, GetResultsQueryMap)},
+     *         but with a single result instead of a list of results.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test result was created and is returned as part of the response
+     * 400	Invalid or unknown test run or case
+     * 403	No permissions to add test results or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_result_for_case/{run_id}/{case_id}")
+    List<Result> addResultForCase(@Param("run_id") Long runID, @Param("case_id") Long caseID);
+
+    /**
+     * @see <a href="">API: </a>
+     *
+     * Adds one or more new test results, comments or assigns one or more tests.
+     * Ideal for test automation to bulk-add multiple test results in one step.
+     * This method expects an array of test results (via the 'results' field, please see below).
+     * Each test result must specify the test ID and can pass in the same fields
+     * as {@link TestRailClient#addResult(Long)}, namely all test related system and custom fields.
+     *
+     * Please note that all referenced tests must belong to the same test run.
+     *
+     * The following listing shows a typical example request.
+     * In addition to the test, you need to specify at least one of the
+     * status, comment or assignee fields for each result.
+     *
+     * {
+     * 	"results": [
+     * 		{
+     * 			"test_id": 101,
+     * 			"status_id": 5,
+     * 			"comment": "This test failed",
+     * 			"defects": "TR-7"
+     *
+     * 		}
+     * 	]
+     * }
+     *
+     * @param runID is ID of the test run the results should be added to
+     *
+     * @return the new test {@link Result}s using the same response format
+     * as {@link TestRailClient#getResults(Long, GetResultsQueryMap)} and in the same order as the list of the request.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test results were created and are returned as part of the response
+     * 400	Invalid or unknown test run/tests
+     * 403	No permissions to add test results or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_results/{run_id}")
+    List<Result> addResults(@Param("run_id") Long runID);
+
+    /**
+     * @see <a href="">API: </a>
+     *
+     * Adds one or more new test results, comments or assigns one or more tests (using the case IDs).
+     * Ideal for test automation to bulk-add multiple test results in one step.
+     *
+     * This method expects an array of test results (via the 'results' field, please see below).
+     * Each test result must specify the test case ID and can pass in the same fields
+     * as {@link TestRailClient#addResult(Long)}, namely all test related system and custom fields.
+     *
+     * The difference to add_results is that this method expects test case IDs instead of test IDs.
+     * Please see {@link TestRailClient#addResultForCase(Long, Long)} for details.
+     *
+     * Please note that all referenced tests must belong to the same test run.
+     *
+     * The following listing shows a typical example request.
+     * In addition to the test case, you need to specify at least one of the status,
+     * comment or assignee fields for each result.
+     *
+     * {
+     * 	"results": [
+     * 		{
+     * 			"case_id": 1,
+     * 			"status_id": 5,
+     * 			"comment": "This test failed",
+     * 			"defects": "TR-7"
+     *
+     * 		}
+     * 	]
+     * }
+     *
+     * @param runID the test run the results should be added to
+     *
+     * @return the new test {@link Result}s using the same response format
+     * as {@link TestRailClient#getResults(Long, GetResultsQueryMap)} and in the same order as the list of the request.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test results were created and are returned as part of the response
+     * 400	Invalid or unknown test run/cases
+     * 403	No permissions to add test results or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_results_for_cases/{run_id}")
     List<Result> addResultsForCases(Results results, @Param("run_id") Long runID);
@@ -160,6 +361,8 @@ public interface TestRailClient {
      *   "updated_by": 1,
      *   "updated_on": 1393586511
      * }
+     * @apiNote Response codes
+     *
      * */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_case/{case_id}")
     Case getCase(@Param("case_id") Long caseID);
@@ -179,6 +382,8 @@ public interface TestRailClient {
      * 	{ "id": 1, "title": "..", .. },
      * 	{ "id": 2, "title": "..", .. }
      * ]
+     * @apiNote Response codes
+     *
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_cases/{project_id}")
     List<Case> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);

@@ -27,14 +27,55 @@ public class GetResultsQueryMap {
      * A comma-separated list of status IDs to filter by
      */
     private Long status_id;
+
     /**
      * Limit the test result
      */
     private Long limit;
+
     /**
      * Use to skip records
      */
     private Long offset;
+
+    /**
+     * Only return test results created after this date (as UNIX timestamp).
+     */
+    private Long created_after;
+
+    /**
+     * Only return test results created before this date (as UNIX timestamp).
+     */
+    private Long created_before;
+
+    /**
+     * A comma-separated list of creators (user IDs) to filter by.
+     */
+    private String created_by;
+
+    public Long getCreatedAfter() {
+        return created_after;
+    }
+
+    public void setCreatedAfter(Long created_after) {
+        this.created_after = created_after;
+    }
+
+    public Long getCreatedBefore() {
+        return created_before;
+    }
+
+    public void setCreatedBefore(Long created_before) {
+        this.created_before = created_before;
+    }
+
+    public String getCreatedBy() {
+        return created_by;
+    }
+
+    public void setCreatedBy(String created_by) {
+        this.created_by = created_by;
+    }
 
     public Long getStatusId() {
         return status_id;

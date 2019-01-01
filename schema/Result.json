@@ -50,6 +50,18 @@
     "assignedto_id": {
       "type": "integer",
       "description": "The ID of the assignee (user) of the test result"
+    },
+    "custom_step_results": {
+      "type": "array",
+      "description": "Test Case (Steps) template results",
+      "javaType": "java.util.List<Step>",
+      "items": [
+        {
+          "type": "object",
+          "javaType": "Step",
+          "$ref": "Step.json"
+        }
+      ]
     }
   }
 }

@@ -52,27 +52,27 @@ public class GetRunsQueryMap {
      */
     private String suite_id;
 
-    public Long getCreated_after() {
+    public Long getCreatedAfter() {
         return created_after;
     }
 
-    public void setCreated_after(Long created_after) {
+    public void setCreatedAfter(Long created_after) {
         this.created_after = created_after;
     }
 
-    public Long getCreated_before() {
+    public Long getCreatedBefore() {
         return created_before;
     }
 
-    public void setCreated_before(Long created_before) {
+    public void setCreatedBefore(Long created_before) {
         this.created_before = created_before;
     }
 
-    public String getCreated_by() {
+    public String getCreatedBy() {
         return created_by;
     }
 
-    public void setCreated_by(String created_by) {
+    public void setCreatedBy(String created_by) {
         this.created_by = created_by;
     }
 
@@ -100,19 +100,19 @@ public class GetRunsQueryMap {
         this.offset = offset;
     }
 
-    public String getMilestone_id() {
+    public String getMilestoneId() {
         return milestone_id;
     }
 
-    public void setMilestone_id(String milestone_id) {
+    public void setMilestoneId(String milestone_id) {
         this.milestone_id = milestone_id;
     }
 
-    public String getSuite_id() {
+    public String getSuiteId() {
         return suite_id;
     }
 
-    public void setSuite_id(String suite_id) {
+    public void setSuiteId(String suite_id) {
         this.suite_id = suite_id;
     }
 
