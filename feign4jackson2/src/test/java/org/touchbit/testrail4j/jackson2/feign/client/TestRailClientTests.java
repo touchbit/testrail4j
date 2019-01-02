@@ -8,8 +8,8 @@ import org.touchbit.testrail4j.core.ExecutionLogger;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 import org.touchbit.testrail4j.helpful.Auth;
-import org.touchbit.testrail4j.jackson2.model.Result;
-import org.touchbit.testrail4j.jackson2.model.Results;
+import org.touchbit.testrail4j.jackson2.model.TRResult;
+import org.touchbit.testrail4j.jackson2.model.TRResults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +49,9 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#addResultsForCases(Results, Integer)")
         void unitTest_20181112132609() {
-            Results results = new Results();
-            List<Result> resultList = new ArrayList<>();
-            resultList.add(new Result() {{ setId(1L); }});
+            TRResults results = new TRResults();
+            List<TRResult> resultList = new ArrayList<>();
+            resultList.add(new TRResult() {{ setId(1L); }});
             results.setResults(resultList);
             CLIENT.addResultsForCases(results, 2609L);
             String loggedMessages = TEST_LOGGER.takeLoggedMessages().toString();

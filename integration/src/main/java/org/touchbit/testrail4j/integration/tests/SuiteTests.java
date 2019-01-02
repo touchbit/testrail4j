@@ -5,8 +5,8 @@ import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.Project;
-import org.touchbit.testrail4j.jackson2.model.Suite;
+import org.touchbit.testrail4j.jackson2.model.TRProject;
+import org.touchbit.testrail4j.jackson2.model.TRSuite;
 
 import java.util.List;
 
@@ -23,17 +23,17 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful suite creation with required fields")
     @Details
     public void test_20181231221005() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = new Suite().withName("name");
-        Suite actualSuite = CLIENT.addNewSuite(suite, project);
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = new TRSuite().withName("name");
+        TRSuite actualSuite = CLIENT.addNewSuite(suite, project);
         assertThat(actualSuite.getName()).isEqualTo(suite.getName());
     }
 
     @Test(description = "Expected successful suite creation with all fields")
     @Details()
     public void test_20181231221908() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = new Suite()
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = new TRSuite()
                 .withName("test_20181231221908_name")
                 .withDescription("test_20181231221908_description")
                 .withId(100500L)
@@ -43,43 +43,43 @@ public class SuiteTests extends BaseCorvusTest {
                 .withUrl("url")
                 .withProjectId(123L)
                 .withIsMaster(true);
-        Suite actualSuite = CLIENT.addNewSuite(suite, project);
+        TRSuite actualSuite = CLIENT.addNewSuite(suite, project);
         assertThat(actualSuite.getName()).isEqualTo(suite.getName());
     }
 
     @Test(description = "Expected successful received existing suite")
     @Details()
     public void test_20181231222652() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = CLIENT.addNewSuite(project);
-        Suite actualSuite = CLIENT.getSuite(suite);
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite actualSuite = CLIENT.getSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
     }
 
     @Test(description = "Expected successful received list existing suites")
     @Details()
     public void test_20181231223026() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = CLIENT.addNewSuite(project);
-        List<Suite> suiteList = CLIENT.getSuites(project);
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = CLIENT.addNewSuite(project);
+        List<TRSuite> suiteList = CLIENT.getSuites(project);
         assertThat(suiteList).contains(suite);
     }
 
     @Test(description = "Expected successful update existing suite")
     @Details()
     public void test_20181231223730() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = CLIENT.addNewSuite(project);
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = CLIENT.addNewSuite(project);
         suite.setName("test_20181231223730");
-        Suite actualSuite = CLIENT.updateSuite(suite);
+        TRSuite actualSuite = CLIENT.updateSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
     }
 
     @Test(description = "Expected successful delete existing suite")
     @Details()
     public void test_20181231224319() {
-        Project project = CLIENT.getNewProject();
-        Suite suite = CLIENT.addNewSuite(project);
+        TRProject project = CLIENT.getNewProject();
+        TRSuite suite = CLIENT.addNewSuite(project);
         CLIENT.deleteSuite(suite);
         FeignException exception = executeThrowable(() -> CLIENT.getSuite(suite));
         assertThat(exception.contentUTF8())

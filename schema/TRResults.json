@@ -4,12 +4,12 @@
   "properties": {
     "results": {
       "type": "array",
-      "javaType": "java.util.List<Result>",
+      "javaType": "java.util.List<TRResult>",
       "items": [
         {
           "type": "object",
-          "javaType": "Result",
-          "$ref": "Result.json"
+          "javaType": "TRResult",
+          "$ref": "TRResult.json"
         }
       ]
     }

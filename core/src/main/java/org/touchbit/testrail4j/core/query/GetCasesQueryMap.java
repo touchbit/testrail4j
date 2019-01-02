@@ -21,7 +21,7 @@ package org.touchbit.testrail4j.core.query;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetCasesQueryMap {
+public class GetCasesQueryMap extends BaseQueryMap {
 
     /**
      * The ID of the test suite (optional if the project is operating in single suite mode)
@@ -51,122 +51,182 @@ public class GetCasesQueryMap {
      * A comma-separated list of milestone IDs to filter by
      * (not available if the milestone field is disabled for the project).
      */
-    private Long milestone_id;
+    private String milestone_id;
     /**
      * A comma-separated list of creators (user IDs) to filter by.
      */
-    private Long created_by;
+    private String created_by;
     /**
      * A comma-separated list of priority IDs to filter by.
      */
-    private Long priority_id;
+    private String priority_id;
     /**
      * A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later)
      */
-    private Long template_id;
+    private String template_id;
     /**
      * A comma-separated list of case type IDs to filter by.
      */
-    private Long type_id;
+    private String type_id;
     /**
      * A comma-separated list of users who updated test cases to filter by.
      */
-    private Long updated_by;
+    private String updated_by;
 
     public Long getCreatedAfter() {
         return created_after;
-    }
-
-    public void setCreatedAfter(Long createdAfter) {
-        this.created_after = createdAfter;
     }
 
     public Long getCreatedBefore() {
         return created_before;
     }
 
-    public void setCreatedBefore(Long createdBefore) {
-        this.created_before = createdBefore;
-    }
-
     public Long getUpdatedAfter() {
         return updated_after;
-    }
-
-    public void setUpdatedAfter(Long updatedAfter) {
-        this.updated_after = updatedAfter;
     }
 
     public Long getUpdatedBefore() {
         return updated_before;
     }
 
-    public void setUpdatedBefore(Long updatedBefore) {
-        this.updated_before = updatedBefore;
-    }
-
-    public Long getCreatedBy() {
+    public String getCreatedBy() {
         return created_by;
     }
 
-    public void setCreatedBy(Long createdBy) {
-        this.created_by = createdBy;
-    }
-
-    public Long getMilestoneId() {
+    public String getMilestoneId() {
         return milestone_id;
     }
 
-    public void setMilestoneId(Long milestoneId) {
-        this.milestone_id = milestoneId;
-    }
-
-    public Long getPriorityId() {
+    public String getPriorityId() {
         return priority_id;
     }
 
-    public void setPriorityId(Long priorityId) {
-        this.priority_id = priorityId;
-    }
-
-    public Long getTemplateId() {
+    public String getTemplateId() {
         return template_id;
     }
 
-    public void setTemplateId(Long templateId) {
-        this.template_id = templateId;
-    }
-
-    public Long getTypeId() {
+    public String getTypeId() {
         return type_id;
     }
 
-    public void setTypeId(Long typeId) {
-        this.type_id = typeId;
-    }
-
-    public Long getUpdatedBy() {
+    public String getUpdatedBy() {
         return updated_by;
-    }
-
-    public void setUpdatedBy(Long updatedBy) {
-        this.updated_by = updatedBy;
     }
 
     public Long getSuiteId() {
         return suite_id;
     }
 
-    public void setSuiteId(Long suiteId) {
-        this.suite_id = suiteId;
-    }
-
     public Long getSectionId() {
         return section_id;
     }
 
+    public void setCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+    }
+
+    public void setCreatedBefore(Long createdBefore) {
+        this.created_before = createdBefore;
+    }
+
+    public void setUpdatedAfter(Long updatedAfter) {
+        this.updated_after = updatedAfter;
+    }
+
+    public void setUpdatedBefore(Long updatedBefore) {
+        this.updated_before = updatedBefore;
+    }
+
+    public void setCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+    }
+
+    public void setMilestoneId(Long... milestoneId) {
+        this.milestone_id = toCommaSeparatedString(milestoneId);
+    }
+
+    public void setPriorityId(Long... priorityId) {
+        this.priority_id = toCommaSeparatedString(priorityId);
+    }
+
+    public void setUpdatedBy(Long... updatedBy) {
+        this.updated_by = toCommaSeparatedString(updatedBy);
+    }
+
+    public void setTemplateId(Long... templateId) {
+        this.template_id = toCommaSeparatedString(templateId);
+    }
+
+    public void setTypeId(Long... typeId) {
+        this.type_id = toCommaSeparatedString(typeId);
+    }
+
+    public void setSuiteId(Long suiteId) {
+        this.suite_id = suiteId;
+    }
+
     public void setSectionId(Long sectionId) {
         this.section_id = sectionId;
+    }
+
+    public GetCasesQueryMap withCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+        return this;
+    }
+
+    public GetCasesQueryMap withCreatedBefore(Long createdBefore) {
+        this.created_before = createdBefore;
+        return this;
+    }
+
+    public GetCasesQueryMap withUpdatedAfter(Long updatedAfter) {
+        this.updated_after = updatedAfter;
+        return this;
+    }
+
+    public GetCasesQueryMap withUpdatedBefore(Long updatedBefore) {
+        this.updated_before = updatedBefore;
+        return this;
+    }
+
+    public GetCasesQueryMap withCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+        return this;
+    }
+
+    public GetCasesQueryMap withMilestoneId(Long... milestoneId) {
+        this.milestone_id = toCommaSeparatedString(milestoneId);
+        return this;
+    }
+
+    public GetCasesQueryMap withPriorityId(Long... priorityId) {
+        this.priority_id = toCommaSeparatedString(priorityId);
+        return this;
+    }
+
+    public GetCasesQueryMap withUpdatedBy(Long... updatedBy) {
+        this.updated_by = toCommaSeparatedString(updatedBy);
+        return this;
+    }
+
+    public GetCasesQueryMap withTemplateId(Long... templateId) {
+        this.template_id = toCommaSeparatedString(templateId);
+        return this;
+    }
+
+    public GetCasesQueryMap withTypeId(Long... typeId) {
+        this.type_id = toCommaSeparatedString(typeId);
+        return this;
+    }
+
+    public GetCasesQueryMap withSuiteId(Long suiteId) {
+        this.suite_id = suiteId;
+        return this;
+    }
+
+    public GetCasesQueryMap withSectionId(Long sectionId) {
+        this.section_id = sectionId;
+        return this;
     }
 
 }

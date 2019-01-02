@@ -54,12 +54,12 @@
     "custom_step_results": {
       "type": "array",
       "description": "Test Case (Steps) template results",
-      "javaType": "java.util.List<Step>",
+      "javaType": "java.util.List<TRStep>",
       "items": [
         {
           "type": "object",
-          "javaType": "Step",
-          "$ref": "Step.json"
+          "javaType": "TRStep",
+          "$ref": "TRStep.json"
         }
       ]
     }

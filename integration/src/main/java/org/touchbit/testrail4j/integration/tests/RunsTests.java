@@ -6,8 +6,8 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.Project;
-import org.touchbit.testrail4j.jackson2.model.Run;
+import org.touchbit.testrail4j.jackson2.model.TRProject;
+import org.touchbit.testrail4j.jackson2.model.TRRun;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
@@ -22,31 +22,38 @@ public class RunsTests extends BaseCorvusTest {
     @Test(description = "Expecting successful of the run creation")
     @Details()
     public void test_20190102004538() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Run run = new Run().withProjectId(project.getId()).withName("test_20190102004538");
-        Run actualRun = CLIENT.addRun(run);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRRun run = new TRRun().withProjectId(project.getId()).withName("test_20190102004538");
+        TRRun actualRun = CLIENT.addRun(run);
         assertThat(actualRun.getName()).isEqualTo(run.getName());
     }
 
     @Test(description = "Expecting successful update of the existing run")
     @Details()
     public void test_20190102010136() {
-        Run run = CLIENT.addRun().withName("test_20190102010136");
-        Run actualRun = CLIENT.updateRun(run);
+        TRRun run = CLIENT.addRun().withName("test_20190102010136");
+        TRRun actualRun = CLIENT.updateRun(run);
         assertThat(actualRun.getName()).isEqualTo(run.getName());
     }
 
     @Test(description = "Expecting successful receive of the existing run")
     @Details()
     public void test_20190102010512() {
-        Run run = CLIENT.addRun();
+        TRRun run = CLIENT.addRun();
         CLIENT.getRun(run);
+    }
+
+    @Test(description = "Expecting successful receive of the existing runs list")
+    @Details()
+    public void test_20190102013324() {
+        TRRun run = CLIENT.addRun();
+        CLIENT.getRuns(run);
     }
 
     @Test(description = "Expecting successful delete of the existing run")
     @Details()
     public void test_20190102010623() {
-        Run run = CLIENT.addRun();
+        TRRun run = CLIENT.addRun();
         CLIENT.deleteRun(run);
         FeignException exception = executeThrowable(() -> CLIENT.getRun(run));
         assertThat(exception.contentUTF8())

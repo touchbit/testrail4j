@@ -6,7 +6,7 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.Project;
+import org.touchbit.testrail4j.jackson2.model.TRProject;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class ProjectTests extends BaseCorvusTest {
     public void test_20181231050759() {
         String name = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
-        Project project = CLIENT.addProject(name, null, null, null);
+        TRProject project = CLIENT.addProject(name, null, null, null);
         assertThat(project.getAnnouncement()).isNull();
         assertThat(project.getCompletedOn()).isNull();
         assertThat(project.getIsCompleted()).isFalse();
@@ -46,7 +46,7 @@ public class ProjectTests extends BaseCorvusTest {
         String name = UUID.randomUUID().toString();
         String announcement = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
-        Project project = CLIENT.addProject(name, announcement, true, SINGLE);
+        TRProject project = CLIENT.addProject(name, announcement, true, SINGLE);
         assertThat(project.getName()).isEqualTo(name);
         assertThat(project.getAnnouncement()).isEqualTo(announcement);
         assertThat(project.getShowAnnouncement()).isTrue();
@@ -60,14 +60,14 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful the project creation with Project json object")
     @Details()
     public void test_20181231181048() {
-        Project project = new Project()
+        TRProject project = new TRProject()
                 .withAnnouncement(UUID.randomUUID().toString())
                 .withName(UUID.randomUUID().toString())
                 .withSuiteMode(2L)
                 .withIsCompleted(false)
                 .withShowAnnouncement(true);
         step("Add new project with name: {}", project.getName());
-        Project actualProject = CLIENT.addProject(project);
+        TRProject actualProject = CLIENT.addProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
         assertThat(actualProject.getShowAnnouncement()).isTrue();
@@ -81,7 +81,7 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful delete the existing project")
     @Details()
     public void test_20181231184200() {
-        Project project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getNewProject();
         CLIENT.deleteProject(project);
         FeignException exception = executeThrowable(() -> CLIENT.getProject(project));
         assertThat(exception.contentUTF8())
@@ -91,8 +91,8 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing project")
     @Details()
     public void test_20181231190218() {
-        Project project = CLIENT.getNewProject();
-        Project actualProject = CLIENT.getProject(project);
+        TRProject project = CLIENT.getNewProject();
+        TRProject actualProject = CLIENT.getProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
         assertThat(actualProject.getShowAnnouncement()).isTrue();
@@ -106,9 +106,9 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing projects list")
     @Details()
     public void test_20181231190411() {
-        Project project1 = CLIENT.getNewProject();
-        Project project2 = CLIENT.getNewProject();
-        List<Long> actualProject = CLIENT.getProjects().stream().map(Project::getId).collect(Collectors.toList());
+        TRProject project1 = CLIENT.getNewProject();
+        TRProject project2 = CLIENT.getNewProject();
+        List<Long> actualProject = CLIENT.getProjects().stream().map(TRProject::getId).collect(Collectors.toList());
         assertThat(actualProject).contains(project1.getId());
         assertThat(actualProject).contains(project2.getId());
     }

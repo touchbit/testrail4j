@@ -21,12 +21,17 @@ package org.touchbit.testrail4j.core.query;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetResultsQueryMap {
+public class GetResultsQueryMap extends BaseQueryMap {
 
     /**
      * A comma-separated list of status IDs to filter by
      */
-    private Long status_id;
+    private String status_id;
+
+    /**
+     * A comma-separated list of creators (user IDs) to filter by.
+     */
+    private String created_by;
 
     /**
      * Limit the test result
@@ -48,57 +53,83 @@ public class GetResultsQueryMap {
      */
     private Long created_before;
 
-    /**
-     * A comma-separated list of creators (user IDs) to filter by.
-     */
-    private String created_by;
+
+    public String getCreatedBy() {
+        return created_by;
+    }
 
     public Long getCreatedAfter() {
         return created_after;
-    }
-
-    public void setCreatedAfter(Long created_after) {
-        this.created_after = created_after;
     }
 
     public Long getCreatedBefore() {
         return created_before;
     }
 
-    public void setCreatedBefore(Long created_before) {
-        this.created_before = created_before;
-    }
-
-    public String getCreatedBy() {
-        return created_by;
-    }
-
-    public void setCreatedBy(String created_by) {
-        this.created_by = created_by;
-    }
-
-    public Long getStatusId() {
+    public String getStatusId() {
         return status_id;
-    }
-
-    public void setStatusId(Long statusId) {
-        this.status_id = statusId;
     }
 
     public Long getLimit() {
         return limit;
     }
 
-    public void setLimit(Long limit) {
-        this.limit = limit;
-    }
-
     public Long getOffset() {
         return offset;
     }
 
+    public void setCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+    }
+
+    public void setCreatedBefore(Long createdBefore) {
+        this.created_before = createdBefore;
+    }
+
+    public void setCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+    }
+
+    public void setStatusId(Long... statusId) {
+        this.status_id = toCommaSeparatedString(statusId);
+    }
+
+    public void setLimit(Long limit) {
+        this.limit = limit;
+    }
+
     public void setOffset(Long offset) {
         this.offset = offset;
+    }
+
+    public GetResultsQueryMap withCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+        return this;
+    }
+
+    public GetResultsQueryMap withCreatedBefore(Long createdBefore) {
+        this.created_before = createdBefore;
+        return this;
+    }
+
+    public GetResultsQueryMap withCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+        return this;
+    }
+
+    public GetResultsQueryMap withStatusId(Long... statusId) {
+        this.status_id = toCommaSeparatedString(statusId);
+        return this;
+    }
+
+    public GetResultsQueryMap withLimit(Long limit) {
+        this.limit = limit;
+        return this;
+    }
+
+    public GetResultsQueryMap withOffset(Long offset) {
+        this.offset = offset;
+        return this;
     }
 
 }

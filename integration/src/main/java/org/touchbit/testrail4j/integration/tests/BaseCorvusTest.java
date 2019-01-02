@@ -75,9 +75,9 @@ public class BaseCorvusTest extends BaseBuggyTest {
     public interface TestRailTestClient extends TestRailClient {
 
         /**
-         * @return generated {@link Project}
+         * @return generated {@link TRProject}
          */
-        default Project getNewProject(SuiteMode suiteMode) {
+        default TRProject getNewProject(SuiteMode suiteMode) {
             String name = UUID.randomUUID().toString();
             String announcement = UUID.randomUUID().toString();
             step("Add new project with name: {}", name);
@@ -85,23 +85,23 @@ public class BaseCorvusTest extends BaseBuggyTest {
         }
 
         /**
-         * @return generated multiple suite mode {@link Project}
+         * @return generated multiple suite mode {@link TRProject}
          */
-        default Project getNewProject() {
+        default TRProject getNewProject() {
             return getNewProject(MULTIPLE);
         }
 
-        default void deleteProject(Project project) {
+        default void deleteProject(TRProject project) {
             step("Delete project with ID: {}", project.getId());
             CLIENT.deleteProject(project.getId());
         }
 
-        default Project getProject(Project project) {
+        default TRProject getProject(TRProject project) {
             step("Get project with ID: {}", project.getId());
             return getProject(project.getId());
         }
 
-        default List<Project> getProjects() {
+        default List<TRProject> getProjects() {
             step("Get existing projects list");
             return getProjects(false);
         }
@@ -109,132 +109,165 @@ public class BaseCorvusTest extends BaseBuggyTest {
         /* ---------------------------------------------------------------------------------------------------------- */
 
         /**
-         * @return generated {@link Project} and {@link Section}
+         * @return generated {@link TRProject} and {@link TRSection}
          */
-        default Section addSection() {
-            Project project = getNewProject(SINGLE);
-            Section section = new Section()
+        default TRSection addSection() {
+            TRProject project = getNewProject(SINGLE);
+            TRSection section = new TRSection()
                     .withName(UUID.randomUUID().toString())
                     .withDescription(UUID.randomUUID().toString());
             return addSection(section, project);
         }
 
-        default Section addSection(Section section, Project project) {
+        default TRSection addSection(TRProject project) {
+            TRSection section = new TRSection()
+                    .withName(UUID.randomUUID().toString())
+                    .withDescription(UUID.randomUUID().toString());
+            return addSection(section, project);
+        }
+
+        default TRSection addSection(TRSection section, TRProject project) {
             step("Adding a new section with name {} to the project with id {}", section.getName(), project.getId());
             return addSection(section, project.getId());
         }
 
-        default Section getSection(Section section) {
+        default TRSection getSection(TRSection section) {
             step("Get section with ID: {}", section.getId());
             return CLIENT.getSection(section.getId());
         }
 
-        default Section updateSection(Section section) {
+        default TRSection updateSection(TRSection section) {
             step("Update section with ID: {}", section.getId());
             return CLIENT.updateSection(section, section.getId());
         }
 
-        default void deleteSection(Section section) {
+        default void deleteSection(TRSection section) {
             step("Delete section with ID: {}", section.getId());
             CLIENT.deleteSection(section.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
-        default void deleteSuite(Suite suite) {
+        default void deleteSuite(TRSuite suite) {
             step("Delete suite with ID: {}", suite.getId());
             CLIENT.deleteSuite(suite.getId());
         }
 
-        default Suite updateSuite(Suite suite) {
+        default TRSuite updateSuite(TRSuite suite) {
             step("Update suite with ID: {}", suite.getId());
             return CLIENT.updateSuite(suite, suite.getId());
         }
 
-        default Suite addNewSuite(Suite suite, Project project) {
+        default TRSuite addNewSuite(TRSuite suite, TRProject project) {
             step("Create new suite with name: {}", suite.getName());
             return CLIENT.addSuite(suite, project.getId());
         }
 
-        default Suite addNewSuite(Project project) {
-            Suite suite = new Suite().withName("name");
+        default TRSuite addNewSuite(TRProject project) {
+            TRSuite suite = new TRSuite().withName("name");
             return addNewSuite(suite, project);
         }
 
-        default Suite getSuite(Suite suite) {
+        default TRSuite getSuite(TRSuite suite) {
             step("Get suite with ID: {}", suite.getId());
             return getSuite(suite.getId());
         }
 
-        default List<Suite> getSuites(Project project) {
+        default List<TRSuite> getSuites(TRProject project) {
             step("Get list suites for project ID: {}", project.getId());
             return CLIENT.getSuites(project.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
-        default Case getCase(Case caze) {
+        default TRCase getCase(TRCase caze) {
             step("Get case with ID: {}", caze.getId());
             return CLIENT.getCase(caze.getId());
         }
 
-        default List<Case> getCases(Project project) {
+        default List<TRCase> getCases(TRProject project) {
             step("Get cases list for project ID: {}", project.getId());
             return CLIENT.getCases(project.getId());
         }
 
-        default List<Case> getCases(Project project, GetCasesQueryMap queryMap) {
+        default List<TRCase> getCases(TRProject project, GetCasesQueryMap queryMap) {
             step("Get cases list with filter for project ID: {}", project.getId());
             return CLIENT.getCases(project.getId(), queryMap);
         }
 
-        default Case addCase() {
-            Section section = CLIENT.addSection();
-            Case caze = new Case().withTitle("test_20190101195810").withSectionId(section.getId());
-            return addCase(caze);
+        default TRCase addCase() {
+            TRSection section = CLIENT.addSection();
+            return addCase(section);
         }
 
-        default Case addCase(Case caze) {
+        default TRCase addCase(TRSection section) {
+            TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
             step("Add new case with title: {}", caze.getTitle());
             return CLIENT.addCase(caze, caze.getSectionId());
         }
 
-        default Case updateCase(Case caze) {
+        default TRCase addCase(TRCase caze) {
+            step("Add new case with title: {}", caze.getTitle());
+            return CLIENT.addCase(caze, caze.getSectionId());
+        }
+
+        default TRCase updateCase(TRCase caze) {
             step("Update case with ID: {}", caze.getId());
             return CLIENT.updateCase(caze, caze.getId());
         }
 
-        default void deleteCase(Case caze) {
+        default void deleteCase(TRCase caze) {
             step("Delete case with ID: {}", caze.getId());
             CLIENT.deleteCase(caze.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
-        default Run addRun() {
-            Project project = CLIENT.getNewProject(SINGLE);
-            Run run = new Run().withProjectId(project.getId()).withName(UUID.randomUUID().toString());
+        default TRRun addRun() {
+            TRProject project = CLIENT.getNewProject(SINGLE);
+            return addRun(project);
+        }
+
+        default TRRun addRun(TRProject project) {
+            TRRun run = new TRRun().withProjectId(project.getId()).withName(UUID.randomUUID().toString());
             return addRun(run);
         }
 
-        default Run addRun(Run run) {
+        default TRRun addRun(TRRun run) {
             step("Add run with name {} for project id {}", run.getName(), run.getProjectId());
             return CLIENT.addRun(run, run.getProjectId());
         }
 
-        default Run updateRun(Run run) {
+        default TRRun updateRun(TRRun run) {
             step("Update run with id {}", run.getId());
             return CLIENT.updateRun(run, run.getId());
         }
 
-        default Run getRun(Run run) {
+        default TRRun getRun(TRRun run) {
             step("Get run with id {}", run.getId());
             return CLIENT.getRun(run.getId());
         }
 
-        default void deleteRun(Run run) {
+        default List<TRRun> getRuns(TRRun run) {
+            step("Get run list with project id {}", run.getProjectId());
+            return CLIENT.getRuns(run.getProjectId());
+        }
+
+        default void deleteRun(TRRun run) {
             step("Delete run with id {}", run.getId());
             CLIENT.deleteRun(run.getId());
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default TRTest getTest(TRTest test) {
+            step("Get test with id {}", test.getId());
+            return CLIENT.getTest(test.getId());
+        }
+
+        default List<TRTest> getTests(TRRun run) {
+            step("Get test with id {}", run.getId());
+            return CLIENT.getTests(run.getId());
         }
 
     }

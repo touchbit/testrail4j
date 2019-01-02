@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "created_by": {
+      "type": "integer",
+      "description": "The ID of the user who created the test case"
+    },
+    "created_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test case was created (as UNIX timestamp)"
+    },
+    "estimate": {
+      "type": "string",
+      "description": "The estimate, e.g. '30s' or '1m 45s'"
+    },
+    "estimate_forecast": {
+      "type": "string",
+      "description": "The estimate forecast, e.g. '30s' or '1m 45s'"
+    },
+    "id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The unique ID of the test case"
+    },
+    "milestone_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the milestone that is linked to the test case"
+    },
+    "priority_id": {
+      "type": "integer",
+      "description": "The ID of the priority that is linked to the test case"
+    },
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements"
+    },
+    "section_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the section the test case belongs to"
+    },
+    "suite_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the suite the test case belongs to"
+    },
+    "title": {
+      "type": "string",
+      "description": "The title of the test case"
+    },
+    "type_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test case type that is linked to the test case"
+    },
+    "template_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the template (field layout) the test case uses (requires TestRail 5.2 or later)"
+    },
+    "updated_by": {
+      "type": "integer",
+      "description": "The ID of the user who last updated the test case"
+    },
+    "updated_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test case was last updated (as UNIX timestamp)"
+    },
+    "custom_steps": {
+      "type": "string",
+      "description": "Test Case (Text) template steps"
+    },
+    "custom_expected": {
+      "type": "string",
+      "description": "Test Case (Text) template expected result"
+    },
+    "custom_preconds": {
+      "type": "string",
+      "description": "Test Case (Text) template preconditions"
+    },
+    "custom_mission": {
+      "type": "string",
+      "description": "Exploratory Session template mission"
+    },
+    "custom_goals": {
+      "type": "string",
+      "description": "Exploratory Session template goals"
+    },
+    "custom_automation_type": {
+      "type": "integer",
+      "description": "Automation Type. Default values: 0 - None, 1 - Ranorex"
+    },
+    "custom_steps_separated": {
+      "type": "array",
+      "description": "Test Case (Steps) template steps",
+      "javaType": "java.util.List<TRStep>",
+      "items": [
+        {
+          "type": "object",
+          "javaType": "TRStep",
+          "$ref": "TRStep.json"
+        }
+      ]
+    }
+  }
+}

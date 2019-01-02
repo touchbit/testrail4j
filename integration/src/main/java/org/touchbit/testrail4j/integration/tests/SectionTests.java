@@ -5,9 +5,9 @@ import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.Project;
-import org.touchbit.testrail4j.jackson2.model.Section;
-import org.touchbit.testrail4j.jackson2.model.Suite;
+import org.touchbit.testrail4j.jackson2.model.TRProject;
+import org.touchbit.testrail4j.jackson2.model.TRSection;
+import org.touchbit.testrail4j.jackson2.model.TRSuite;
 
 import java.util.UUID;
 
@@ -26,18 +26,18 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation with required fields")
     @Details()
     public void test_20190101160155() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = new Section().withName(UUID.randomUUID().toString());
-        Section actualSection = CLIENT.addSection(section, project);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = new TRSection().withName(UUID.randomUUID().toString());
+        TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
     }
 
     @Test(description = "Expected successful section creation with all fields")
     @Details()
     public void test_20190101161936() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = genSection();
-        Section actualSection = CLIENT.addSection(section, project);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = genSection();
+        TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
         assertThat(actualSection.getDescription()).isEqualTo(section.getDescription());
     }
@@ -45,11 +45,11 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful subsection creation")
     @Details()
     public void test_20190101195318() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = genSection();
-        Section actualSection = CLIENT.addSection(section, project);
-        Section subSection = genSection().withParentId(actualSection.getId());
-        Section actualSubSection = CLIENT.addSection(subSection, project);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = genSection();
+        TRSection actualSection = CLIENT.addSection(section, project);
+        TRSection subSection = genSection().withParentId(actualSection.getId());
+        TRSection actualSubSection = CLIENT.addSection(subSection, project);
         assertThat(actualSubSection.getName()).isEqualTo(subSection.getName());
         assertThat(actualSubSection.getDescription()).isEqualTo(subSection.getDescription());
         assertThat(actualSubSection.getParentId()).isEqualTo(subSection.getParentId());
@@ -58,10 +58,10 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation for project with multiple suite mode")
     @Details()
     public void test_20190101162032() {
-        Project project = CLIENT.getNewProject(MULTIPLE);
-        Suite suite = CLIENT.addNewSuite(project);
-        Section section = genSection().withSuiteId(suite.getId());
-        Section actualSection = CLIENT.addSection(section, project);
+        TRProject project = CLIENT.getNewProject(MULTIPLE);
+        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSection section = genSection().withSuiteId(suite.getId());
+        TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
         assertThat(actualSection.getDescription()).isEqualTo(section.getDescription());
         assertThat(actualSection.getSuiteId()).isEqualTo(suite.getId());
@@ -70,35 +70,35 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive existing section")
     @Details()
     public void test_20190101162834() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = CLIENT.addSection(genSection(), project);
-        Section actualSection = CLIENT.getSection(section);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = CLIENT.addSection(genSection(), project);
+        TRSection actualSection = CLIENT.getSection(section);
         assertThat(actualSection).isEqualTo(section);
     }
 
     @Test(description = "Expected successful update existing section")
     @Details()
     public void test_20190101194252() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = CLIENT.addSection(genSection(), project);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = CLIENT.addSection(genSection(), project);
         section.setName("test_20190101194252");
-        Section actualSection = CLIENT.updateSection(section);
+        TRSection actualSection = CLIENT.updateSection(section);
         assertThat(actualSection).isEqualTo(section);
     }
 
     @Test(description = "Expected successful delete existing section")
     @Details()
     public void test_20190101194905() {
-        Project project = CLIENT.getNewProject(SINGLE);
-        Section section = CLIENT.addSection(genSection(), project);
+        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRSection section = CLIENT.addSection(genSection(), project);
         CLIENT.deleteSection(section);
         FeignException exception = executeThrowable(() -> CLIENT.getSection(section));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :section_id is not a valid section.\"}");
     }
 
-    public static Section genSection() {
-        return new Section()
+    public static TRSection genSection() {
+        return new TRSection()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString());
     }

@@ -10,7 +10,7 @@ package org.touchbit.testrail4j.core.query;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetRunsQueryMap {
+public class GetRunsQueryMap extends BaseQueryMap {
 
     /**
      * Only return test runs created after this date (as UNIX timestamp).
@@ -20,7 +20,7 @@ public class GetRunsQueryMap {
     /**
      * Only return test runs created before this date (as UNIX timestamp).
      */
-    private Long created_before;
+    private Long createdBefore;
 
     /**
      * A comma-separated list of creators (user IDs) to filter by.
@@ -30,17 +30,17 @@ public class GetRunsQueryMap {
     /**
      * 1 to return completed test runs only. 0 to return active test runs only.
      */
-    private int is_completed;
+    private Integer is_completed;
 
     /**
      * Limit the result to :limit test runs. Use :offset to skip records.
      */
-    private int limit;
+    private Integer limit;
 
     /**
      * Limit the result to :limit test runs. Use :offset to skip records.
      */
-    private int offset;
+    private Integer offset;
 
     /**
      * A comma-separated list of milestone IDs to filter by.
@@ -56,64 +56,104 @@ public class GetRunsQueryMap {
         return created_after;
     }
 
-    public void setCreatedAfter(Long created_after) {
-        this.created_after = created_after;
-    }
-
     public Long getCreatedBefore() {
-        return created_before;
-    }
-
-    public void setCreatedBefore(Long created_before) {
-        this.created_before = created_before;
+        return createdBefore;
     }
 
     public String getCreatedBy() {
         return created_by;
     }
 
-    public void setCreatedBy(String created_by) {
-        this.created_by = created_by;
-    }
-
-    public int getIs_completed() {
+    public Integer getIs_completed() {
         return is_completed;
     }
 
-    public void setIs_completed(int is_completed) {
-        this.is_completed = is_completed;
-    }
-
-    public int getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
-    public int getOffset() {
+    public Integer getOffset() {
         return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
     }
 
     public String getMilestoneId() {
         return milestone_id;
     }
 
-    public void setMilestoneId(String milestone_id) {
-        this.milestone_id = milestone_id;
-    }
-
     public String getSuiteId() {
         return suite_id;
     }
 
-    public void setSuiteId(String suite_id) {
-        this.suite_id = suite_id;
+    public void setCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+    }
+
+    public void setCreatedBefore(Long createdBefore) {
+        this.createdBefore = createdBefore;
+    }
+
+    public void setIs_completed(Integer isCompleted) {
+        this.is_completed = isCompleted;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public void setMilestoneId(Long... milestoneId) {
+        this.milestone_id = toCommaSeparatedString(milestoneId);
+    }
+
+    public void setSuiteId(Long... suiteId) {
+        this.suite_id = toCommaSeparatedString(suiteId);
+    }
+
+    public void setCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+    }
+
+    public GetRunsQueryMap withCreatedAfter(Long createdAfter) {
+        this.created_after = createdAfter;
+        return this;
+    }
+
+    public GetRunsQueryMap withCreatedBefore(Long createdBefore) {
+        this.createdBefore = createdBefore;
+        return this;
+    }
+
+    public GetRunsQueryMap withIs_completed(Integer isCompleted) {
+        this.is_completed = isCompleted;
+        return this;
+    }
+
+    public GetRunsQueryMap withLimit(Integer limit) {
+        this.limit = limit;
+        return this;
+    }
+
+    public GetRunsQueryMap withOffset(Integer offset) {
+        this.offset = offset;
+        return this;
+    }
+
+    public GetRunsQueryMap withMilestoneId(Long... milestoneId) {
+        this.milestone_id = toCommaSeparatedString(milestoneId);
+        return this;
+    }
+
+    public GetRunsQueryMap withSuiteId(Long... suiteId) {
+        this.suite_id = toCommaSeparatedString(suiteId);
+        return this;
+    }
+
+    public GetRunsQueryMap withCreatedBy(Long... createdBy) {
+        this.created_by = toCommaSeparatedString(createdBy);
+        return this;
     }
 
 }
