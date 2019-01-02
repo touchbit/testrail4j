@@ -64,7 +64,7 @@ public class GetRunsQueryMap extends BaseQueryMap {
         return created_by;
     }
 
-    public Integer getIs_completed() {
+    public Integer getIsCompleted() {
         return is_completed;
     }
 
@@ -92,7 +92,7 @@ public class GetRunsQueryMap extends BaseQueryMap {
         this.createdBefore = createdBefore;
     }
 
-    public void setIs_completed(Integer isCompleted) {
+    public void setIsCompleted(Integer isCompleted) {
         this.is_completed = isCompleted;
     }
 
@@ -126,7 +126,7 @@ public class GetRunsQueryMap extends BaseQueryMap {
         return this;
     }
 
-    public GetRunsQueryMap withIs_completed(Integer isCompleted) {
+    public GetRunsQueryMap withIsCompleted(Integer isCompleted) {
         this.is_completed = isCompleted;
         return this;
     }

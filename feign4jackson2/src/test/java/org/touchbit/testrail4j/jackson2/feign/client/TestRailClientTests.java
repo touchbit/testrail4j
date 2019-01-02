@@ -56,7 +56,7 @@ class TestRailClientTests extends BaseUnitTest {
             CLIENT.addResultsForCases(results, 2609L);
             String loggedMessages = TEST_LOGGER.takeLoggedMessages().toString();
             assertThat(loggedMessages).contains(POST_API + "/add_results_for_cases/2609");
-            assertThat(loggedMessages).contains("{\n  \"results\" : [ {\n    \"id\" : 1\n  } ]");
+            assertThat(loggedMessages).contains("{\n  \"results\" : [ {\n    \"id\" : 1,\n    \"custom_step_results\" : [ ]\n  } ]");
         }
 
     }

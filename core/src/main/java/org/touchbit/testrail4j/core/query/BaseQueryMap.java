@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 public abstract class BaseQueryMap {
 
     protected String toCommaSeparatedString(Object[] array) {
-        if (array == null) {
+        if (array == null || array.length == 0) {
             return null;
         }
         StringJoiner sj = new StringJoiner(",");

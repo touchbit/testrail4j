@@ -19,26 +19,26 @@ class QueryMapsTests {
         GetCasesQueryMap map = new GetCasesQueryMap();
         map.setCreatedAfter(1L);
         map.setCreatedBefore(2L);
-        map.setCreatedBy(3L);
-        map.setMilestoneId(4L);
-        map.setPriorityId(5L);
-        map.setTemplateId(6L);
-        map.setTypeId(7L);
+        map.setCreatedBy(3L, 1L);
+        map.setMilestoneId(4L, 1L);
+        map.setPriorityId(5L, 1L);
+        map.setTemplateId(6L, 1L);
+        map.setTypeId(7L, 1L);
         map.setUpdatedAfter(8L);
         map.setUpdatedBefore(9L);
-        map.setUpdatedBy(10L);
+        map.setUpdatedBy(10L, 1L);
         map.setSuiteId(11L);
         map.setSectionId(12L);
         assertThat(map.getCreatedAfter()).isEqualTo(1);
         assertThat(map.getCreatedBefore()).isEqualTo(2);
-        assertThat(map.getCreatedBy()).isEqualTo(3);
-        assertThat(map.getMilestoneId()).isEqualTo(4);
-        assertThat(map.getPriorityId()).isEqualTo(5);
-        assertThat(map.getTemplateId()).isEqualTo(6);
-        assertThat(map.getTypeId()).isEqualTo(7);
+        assertThat(map.getCreatedBy()).isEqualTo("3,1");
+        assertThat(map.getMilestoneId()).isEqualTo("4,1");
+        assertThat(map.getPriorityId()).isEqualTo("5,1");
+        assertThat(map.getTemplateId()).isEqualTo("6,1");
+        assertThat(map.getTypeId()).isEqualTo("7,1");
         assertThat(map.getUpdatedAfter()).isEqualTo(8);
         assertThat(map.getUpdatedBefore()).isEqualTo(9);
-        assertThat(map.getUpdatedBy()).isEqualTo(10);
+        assertThat(map.getUpdatedBy()).isEqualTo("10,1");
         assertThat(map.getSuiteId()).isEqualTo(11);
         assertThat(map.getSectionId()).isEqualTo(12);
     }
@@ -52,7 +52,7 @@ class QueryMapsTests {
         map.setStatusId(3L);
         assertThat(map.getLimit()).isEqualTo(1);
         assertThat(map.getOffset()).isEqualTo(2);
-        assertThat(map.getStatusId()).isEqualTo(3);
+        assertThat(map.getStatusId()).isEqualTo("3");
     }
 
     @Test

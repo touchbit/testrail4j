@@ -212,7 +212,7 @@ public interface TestRailClient {
      * 403	No permissions to add test results or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_result/{test_id}")
-    List<TRResult> addResult(@Param("test_id") Long testID);
+    TRResult addResult(TRResult result, @Param("test_id") Long testID);
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result_for_case">API: Add result for case</a>
@@ -221,10 +221,10 @@ public interface TestRailClient {
      * It's recommended to use {@link TestRailClient#addResultsForCases(TRResults, Long)}
      * instead if you plan to add results for multiple test cases.
      *
-     * The difference to {@link TestRailClient#addResult(Long)} is that this method expects a test run + test case
-     * instead of a test. In TestRail, tests are part of a test run and the test cases are part of the related
-     * test suite. So, when you create a new test run, TestRail creates a test for each test case found in the test
-     * suite of the run. You can therefore think of a test as an “instance” of a test case which can have test
+     * The difference to {@link TestRailClient#addResult(TRResult, Long)} is that this method expects a test run +
+     * test case instead of a test. In TestRail, tests are part of a test run and the test cases are part of the
+     * related test suite. So, when you create a new test run, TestRail creates a test for each test case found in
+     * the test suite of the run. You can therefore think of a test as an “instance” of a test case which can have test
      * results, comments and a test status. Please also see TestRail's getting started guide for more details
      * about the differences between test cases and tests.
      *
@@ -244,13 +244,13 @@ public interface TestRailClient {
     List<TRResult> addResultForCase(@Param("run_id") Long runID, @Param("case_id") Long caseID);
 
     /**
-     * @see <a href="">API: </a>
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results">API: Add results</a>
      *
      * Adds one or more new test results, comments or assigns one or more tests.
      * Ideal for test automation to bulk-add multiple test results in one step.
      * This method expects an array of test results (via the 'results' field, please see below).
      * Each test result must specify the test ID and can pass in the same fields
-     * as {@link TestRailClient#addResult(Long)}, namely all test related system and custom fields.
+     * as {@link TestRailClient#addResult(TRResult, Long)}, namely all test related system and custom fields.
      *
      * Please note that all referenced tests must belong to the same test run.
      *
@@ -284,14 +284,14 @@ public interface TestRailClient {
     List<TRResult> addResults(@Param("run_id") Long runID);
 
     /**
-     * @see <a href="">API: </a>
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases">API: Add results for cases</a>
      *
      * Adds one or more new test results, comments or assigns one or more tests (using the case IDs).
      * Ideal for test automation to bulk-add multiple test results in one step.
      *
      * This method expects an array of test results (via the 'results' field, please see below).
      * Each test result must specify the test case ID and can pass in the same fields
-     * as {@link TestRailClient#addResult(Long)}, namely all test related system and custom fields.
+     * as {@link TestRailClient#addResult(TRResult, Long)}, namely all test related system and custom fields.
      *
      * The difference to add_results is that this method expects test case IDs instead of test IDs.
      * Please see {@link TestRailClient#addResultForCase(Long, Long)} for details.

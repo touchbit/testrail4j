@@ -7,6 +7,10 @@ import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.*;
 
+import java.util.List;
+
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.touchbit.testrail4j.core.type.Statuses.FAILED;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 
 /**
@@ -23,8 +27,12 @@ public class ResultTests extends BaseCorvusTest {
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
-
-//        List<TRResult> results = CLIENT.addResult(1);
-
+        List<TRTest> trTests = CLIENT.getTests(run);
+        for (TRTest trTest : trTests) {
+            TRResult result = new TRResult().withStatusId(FAILED.getId());
+            TRResult expResult = CLIENT.addResult(result, trTest.getId());
+            assertThat(expResult.getStatusId()).isEqualTo(result.getStatusId());
+        }
     }
+
 }

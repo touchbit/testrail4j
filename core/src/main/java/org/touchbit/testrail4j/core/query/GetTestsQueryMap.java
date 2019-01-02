@@ -4,6 +4,7 @@ package org.touchbit.testrail4j.core.query;
  * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */
+@SuppressWarnings({"unused", "squid:S00116"})
 public class GetTestsQueryMap extends BaseQueryMap {
 
     /**
