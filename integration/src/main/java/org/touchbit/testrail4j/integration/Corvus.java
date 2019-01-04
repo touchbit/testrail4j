@@ -21,6 +21,7 @@ public class Corvus extends Buggy {
 
     public static void main(String[] args) {
         setProgramName("Corvus");
+        Buggy.prepare(args);
         disableWarning();
         waitMigrations();
         Buggy.main(args);
