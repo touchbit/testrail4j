@@ -1,5 +1,11 @@
 FROM nginx:latest
 
+COPY --from=andy23512/faketime-machine  /usr/local/lib/faketime/libfaketime.so.1 /usr/local/lib/faketime/libfaketime.so.1
+
+ENV LD_PRELOAD=/usr/local/lib/faketime/libfaketime.so.1
+ENV DONT_FAKE_MONOTONIC 1
+ENV FAKETIME "2019-01-05 02:22:22"
+
 ENV TR /var/www/testrail
 
 RUN apt -yqq update
