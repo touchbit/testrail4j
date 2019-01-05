@@ -1,8 +1,8 @@
 version: "3"
 services:
 
-  testrail:
-    image: registry.gitlab.com/touchbit/testrail4j/testrail:latest
+  web:
+    image: registry.gitlab.com/touchbit/image/testrail/web:latest
     ports:
       - "80:80"
     volumes:
@@ -12,7 +12,7 @@ services:
       - db
 
   fpm:
-    image: registry.gitlab.com/touchbit/testrail4j/fpm:latest
+    image: registry.gitlab.com/touchbit/image/testrail/fpm:latest
     ports:
       - "9000:9000"
     volumes:
@@ -21,7 +21,7 @@ services:
       - db
 
   migration:
-    image: registry.gitlab.com/touchbit/testrail4j/migration:latest
+    image: registry.gitlab.com/touchbit/image/testrail/migration:latest
     links:
       - db
     depends_on:

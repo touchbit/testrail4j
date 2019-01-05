@@ -1,6 +1,8 @@
-include:
-- "https://gitlab.com/TouchBIT/testrail4j/raw/add.testrail.docker.compose/.integration.yml"
-#- "https://gitlab.com/TouchBIT/testrail4j/raw/master/.integration.yml"
+stages:
+- build
+- test
+- verify
+- deploy
 
 variables:
   SONAR_ARGS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${CI_COMMIT_REF_NAME}"
@@ -18,24 +20,6 @@ Build modules:
       - Corvus.jar
     expire_in: 30 days
 
-TR migrations:
-  extends: .docker_image_build_push
-  variables:
-    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/migration:latest"
-    DOCKERFILE: ".indirect/migration.dockerfile"
-
-TR testrail:
-  extends: .docker_image_build_push
-  variables:
-    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/testrail:latest"
-    DOCKERFILE: ".indirect/testrail.dockerfile"
-
-TR fpm:
-  extends: .docker_image_build_push
-  variables:
-    REGISTRY_IMAGE: "${CI_REGISTRY_IMAGE}/fpm:latest"
-    DOCKERFILE: ".indirect/fpm.dockerfile"
-
 JUnit:
   stage: test
   tags:
@@ -52,8 +36,18 @@ JUnit:
 Integration:
   dependencies:
    - Build modules
+  tags:
+    - touchbit-shell
+  before_script:
+    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+    - docker-compose -f .indirect/docker-compose.yml kill
+    - docker-compose -f .indirect/docker-compose.yml pull
+    - docker-compose -f .indirect/docker-compose.yml up -d
   script:
     - java -jar Corvus.jar --artifacts-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/file/"
+  after_script:
+    - docker-compose -f .indirect/docker-compose.yml kill
+    - docker-compose -f .indirect/docker-compose.yml rm -f
   artifacts:
     when: always
     paths:
