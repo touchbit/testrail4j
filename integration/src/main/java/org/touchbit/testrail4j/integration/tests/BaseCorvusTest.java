@@ -23,6 +23,7 @@ import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
@@ -280,6 +281,58 @@ public class BaseCorvusTest extends BaseBuggyTest {
         default List<TRTest> getTests(TRRun run) {
             step("Get test with id {}", run.getId());
             return CLIENT.getTests(run.getId());
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default TRResult addResult(TRResult trResult, TRTest trTest) {
+            step("Add test result for test id {}", trTest.getId());
+            return CLIENT.addResult(trResult, trTest.getId());
+        }
+
+        default TRResult addResultForCase(TRResult trResult, TRRun trRun, TRCase trCase) {
+            step("Add test result for run id {} and case id {}", trCase.getId(), trCase.getId());
+            return CLIENT.addResultForCase(trResult, trRun.getId(), trCase.getId());
+        }
+
+        default List<TRResult> addResults(TRResults trResults, TRRun trRun) {
+            step("Add test results for run id {}", trRun.getId());
+            return CLIENT.addResults(trResults, trRun.getId());
+        }
+
+        default List<TRResult> addResultsForCases(TRResults trResults, TRRun trRun) {
+            step("Add test results for cases with run id {}", trRun.getId());
+            return CLIENT.addResultsForCases(trResults, trRun.getId());
+        }
+
+        default List<TRResult> getResultsForRun(TRRun trRun) {
+            step("Get test results for run id {}", trRun.getId());
+            return CLIENT.getResultsForRun(trRun.getId());
+        }
+
+        default List<TRResult> getResultsForRun(TRRun trRun, GetResultsQueryMap resultsQueryMap) {
+            step("Get test results with filter for run id {}", trRun.getId());
+            return CLIENT.getResultsForRun(trRun.getId(), resultsQueryMap);
+        }
+
+        default List<TRResult> getResultsForCase(TRRun trRun, TRCase trCase) {
+            step("Get test results for case id {} with run id {}", trCase.getId(), trRun.getId());
+            return CLIENT.getResultsForCase(trRun.getId(), trCase.getId());
+        }
+
+        default List<TRResult> getResultsForCase(TRRun trRun, TRCase trCase, GetResultsQueryMap queryMap) {
+            step("Get test results with filter for case id {} with run id {}", trCase.getId(), trRun.getId());
+            return CLIENT.getResultsForCase(trRun.getId(), trCase.getId(), queryMap);
+        }
+
+        default List<TRResult> getResults(TRTest trTest) {
+            step("Get test results for test id {}", trTest.getId());
+            return CLIENT.getResults(trTest.getId());
+        }
+
+        default List<TRResult> getResults(TRTest trTest, GetResultsQueryMap queryMap) {
+            step("Get test results with filter for test id {}", trTest.getId());
+            return CLIENT.getResults(trTest.getId(), queryMap);
         }
 
     }

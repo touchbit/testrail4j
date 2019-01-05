@@ -18,6 +18,7 @@ package org.touchbit.testrail4j.core;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import feign.template.UriUtils;
 
 /**
  * Created by Oleg Shaburov on 12.11.2018
@@ -32,17 +33,19 @@ public abstract class TestRailAuthorizationInterceptor implements RequestInterce
     @Override
     public final void apply(RequestTemplate template) {
         String url = template.url();
-        if (!url.contains("/index.php%3F/")) {
-            throw new IllegalArgumentException("Invalid url value. " +
-                    "Expected contains '/index.php%3F/'. Received url: " + url);
+        if (!UriUtils.isAbsolute(url)) {
+            if (!url.contains("/index.php%3F/")) {
+                throw new IllegalArgumentException("Invalid url value. " +
+                        "Expected contains '/index.php%3F/'. Received url: " + url);
+            }
+            int parameter = url.indexOf('=');
+            int question = url.indexOf('?');
+            if (question < parameter) {
+                url = url.replaceFirst("\\?", "&");
+            }
+            String fixIssue838 = url.replace("index.php%3F", "index.php?");
+            template.uri(fixIssue838);
         }
-        int parameter = url.indexOf('=');
-        int question = url.indexOf('?');
-        if (question < parameter) {
-            url = url.replaceFirst("\\?", "&");
-        }
-        String fixIssue838 = url.replace("index.php%3F", "index.php?");
-        template.uri(fixIssue838);
         intercept(template);
     }
 

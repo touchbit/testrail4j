@@ -167,6 +167,13 @@ public interface TestRailClient {
     List<TRResult> getResultsForRun(@Param("run_id") Long runID, @QueryMap GetResultsQueryMap getResultsQueryMap);
 
     /**
+     * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
+     */
+    default List<TRResult> getResultsForRun(@Param("run_id") Long runID) {
+        return getResultsForRun(runID, new GetResultsQueryMap());
+    }
+
+    /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result">API: Add result</a>
      *
      * Adds a new test result, comment or assigns a test.
@@ -241,7 +248,7 @@ public interface TestRailClient {
      * 403	No permissions to add test results or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_result_for_case/{run_id}/{case_id}")
-    List<TRResult> addResultForCase(@Param("run_id") Long runID, @Param("case_id") Long caseID);
+    TRResult addResultForCase(TRResult result, @Param("run_id") Long runID, @Param("case_id") Long caseID);
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results">API: Add results</a>
@@ -281,7 +288,7 @@ public interface TestRailClient {
      * 403	No permissions to add test results or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_results/{run_id}")
-    List<TRResult> addResults(@Param("run_id") Long runID);
+    List<TRResult> addResults(TRResults results, @Param("run_id") Long runID);
 
     /**
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases">API: Add results for cases</a>
@@ -294,7 +301,7 @@ public interface TestRailClient {
      * as {@link TestRailClient#addResult(TRResult, Long)}, namely all test related system and custom fields.
      *
      * The difference to add_results is that this method expects test case IDs instead of test IDs.
-     * Please see {@link TestRailClient#addResultForCase(Long, Long)} for details.
+     * Please see {@link TestRailClient#addResultForCase(TRResult, Long, Long)} for details.
      *
      * Please note that all referenced tests must belong to the same test run.
      *
