@@ -35,7 +35,8 @@ JUnit:
 
 Integration:
   dependencies:
-   - Build modules
+    - Build modules
+  stage: test
   tags:
     - touchbit-shell
   before_script:
