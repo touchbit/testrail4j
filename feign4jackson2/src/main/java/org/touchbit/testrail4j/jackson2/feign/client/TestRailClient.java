@@ -73,6 +73,10 @@ import java.util.List;
  * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities">API: Priorities</a>
  *      {@link TestRailClient#getPriorities()}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-users">API: Users</a>
+ *      {@link TestRailClient#getUsers()}
+ *      {@link TestRailClient#getUser(Long)}
+ *      {@link TestRailClient#getUserByEmail(String)}
  *
  *
  * Created by Oleg Shaburov on 11.11.2018
@@ -95,6 +99,7 @@ public interface TestRailClient {
         apiCaseTypes();
         apiMilestones();
         apiPriorities();
+        apiUsers();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -1531,7 +1536,7 @@ public interface TestRailClient {
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities#get_priorities">API: Get priorities</a>
      *
-     * @return a list of available {@link RTPriority}.
+     * @return a list of available {@link TRPriority}.
      * The response include an array of priorities.
      * Each priority has a unique ID, a name and a short version of the name.
      * The priority field determines the order of the priorities.
@@ -1549,6 +1554,56 @@ public interface TestRailClient {
      * 200	Success, the available priorities are returned as part of the response
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_priorities")
-    List<RTPriority> getPriorities();
+    List<TRPriority> getPriorities();
 
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-users">API: Users</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiUsers() { /* do nothing */ }
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-users#get_user">API: Get user</a>
+     *
+     * @param userID is the ID of the user
+     *
+     * @return an existing {@link TRUser}.
+     *
+     * @apiNote Response codes
+     * 200	Success, the user is returned as part of the response
+     * 400	Invalid or unknown user
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_user/{user_id}")
+    TRUser getUser(@Param("user_id") Long userID);
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-users#get_user_by_email">API: Get user by email</a>
+     *
+     * @param email is the email address to get the user for
+     *
+     * @return an existing {@link TRUser} by his/her email address.
+     *
+     * @apiNote Response codes
+     * 200	Success, the user is returned as part of the response
+     * 400/404	Invalid or unknown email address
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_user_by_email/&email={email}")
+    TRUser getUserByEmail(@Param("email") String email);
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-users#get_users">API: Get users</a>
+     *
+     * @return a list of {@link TRUser}s.
+     *
+     * @apiNote Response codes
+     * 200	Success, the users are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_users")
+    List<TRUser> getUsers();
 }

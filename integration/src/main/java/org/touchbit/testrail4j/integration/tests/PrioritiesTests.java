@@ -5,7 +5,7 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.RTPriority;
+import org.touchbit.testrail4j.jackson2.model.TRPriority;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class PrioritiesTests extends BaseCorvusTest {
     @Details()
     public void test_20190106065007() {
         step("Get available priorities");
-        List<RTPriority> priorities = CLIENT.getPriorities();
+        List<TRPriority> priorities = CLIENT.getPriorities();
         assertThat(priorities).isNotNull();
     }
 
