@@ -22,7 +22,7 @@ public class TestTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing tests")
     @Details()
     public void test_20190102023252() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);

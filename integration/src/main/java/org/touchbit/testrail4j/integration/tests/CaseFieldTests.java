@@ -23,7 +23,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @Suite(service = TestRail.class, interfaze = API.class, task = "case_fields_operations")
 public class CaseFieldTests extends BaseCorvusTest {
 
-    @Test(description = "Expecting successful receive of existing case fields")
+    @Test(description = "Expecting a successful receive of the existing case fields")
     @Details()
     public void test_20190106014139() {
         List<TRCaseField> fields = CLIENT.getTRCaseFields();
@@ -33,7 +33,7 @@ public class CaseFieldTests extends BaseCorvusTest {
         }
     }
 
-    @Test(description = "Expecting successful add new custom case field")
+    @Test(description = "Expecting a successful add new custom case field")
     @Details()
     public void test_20190106015332() {
         TRCaseFieldConfig config = new TRCaseFieldConfig()

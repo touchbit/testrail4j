@@ -93,7 +93,7 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case list")
     @Details()
     public void test_20190102011912() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = new TRSection()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString());
@@ -108,7 +108,7 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case list with filter")
     @Details()
     public void test_20190102012601() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = new TRSection()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString());

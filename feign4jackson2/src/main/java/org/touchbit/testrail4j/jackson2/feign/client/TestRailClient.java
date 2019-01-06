@@ -62,6 +62,15 @@ import java.util.List;
  *      {@link TestRailClient#updateConfig(TRProjectConfig, Long)}
  *      {@link TestRailClient#deleteConfig(Long)}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones">API: Milestones</a>
+ *      {@link TestRailClient#getMilestone(Long)}
+ *      {@link TestRailClient#getMilestones(Long)}
+ *      {@link TestRailClient#getMilestones(Long, MilestonesQueryMap)}
+ *      {@link TestRailClient#addMilestone(TRMilestone, Long)}
+ *      {@link TestRailClient#updateMilestone(TRMilestone, Long)}
+ *      {@link TestRailClient#deleteMilestone(Long)}
+ *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities">API: Priorities</a>
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -80,6 +89,7 @@ public interface TestRailClient {
         apiTests();
         apiCasesFields();
         apiCaseTypes();
+        apiMilestones();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -1341,5 +1351,107 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_config/{config_id}")
     void deleteConfig(@Param("config_id") Long configID);
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones">API: Milestones</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiMilestones() { /* do nothing */ }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#get_milestone">API: Get milestone</a>
+     *
+     * @param milestoneID is the ID of the milestone
+     *
+     * @return an existing milestone {@link TRMilestone}
+     *
+     * @apiNote Response codes
+     * 200	Success, the milestone is returned as part of the response
+     * 400	Invalid or unknown milestone
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_milestone/{milestone_id}")
+    TRMilestone getMilestone(@Param("milestone_id") Long milestoneID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#get_milestones">API: Get milestones</a>
+     *
+     * @param projectID is the ID of the project
+     *
+     * @return the list of {@link TRMilestone} for a project.
+     *
+     * @apiNote Response codes
+     * 200	Success, the milestones are returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_milestones/{project_id}")
+    List<TRMilestone> getMilestones(@Param("project_id") Long projectID, @QueryMap MilestonesQueryMap queryMap);
+
+    /**
+     * See {@link TestRailClient#getMilestones(Long, MilestonesQueryMap)}
+     */
+    default List<TRMilestone> getMilestones(@Param("project_id") Long projectID) {
+        return getMilestones(projectID, new MilestonesQueryMap());
+    }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#add_milestone">API: Add milestone</a>
+     *
+     * Creates a new milestone.
+     *
+     * @param projectID is the ID of the project the milestone should be added to
+     * @param milestone is the request body {@link TRMilestone}
+     *
+     * @return a new {@link TRMilestone}
+     *
+     * @apiNote Response codes
+     * 200	Success, the milestone was created and is returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No permissions to add milestones or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_milestone/{project_id}")
+    TRMilestone addMilestone(TRMilestone milestone, @Param("project_id") Long projectID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#update_milestone">API: Update milestone</a>
+     *
+     * Updates an existing milestone (partial updates are supported, i.e. you can submit and update specific fields only).
+     *
+     * @param milestoneID is the ID of the milestone
+     * @param milestone is the request body {@link TRMilestone}
+     *
+     * Request fields
+     * is_completed	- True if a milestone is considered completed and false otherwise
+     * is_started - True if a milestone is considered started and false otherwise
+     * parent_id - The ID of the parent milestone, if any (for sub-milestones) (available since TestRail 5.3)
+     * start_on	- The scheduled start date of the milestone (as UNIX timestamp) (available since TestRail 5.3)
+     *
+     * @return updated {@link TRMilestone}
+     *
+     * @apiNote Response codes
+     * 200	Success, the milestone was updated and is returned as part of the response
+     * 400	Invalid or unknown milestone
+     * 403	No permissions to modify milestones or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_milestone/{milestone_id}")
+    TRMilestone updateMilestone(TRMilestone milestone, @Param("milestone_id") Long milestoneID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#delete_milestone">API: Delete milestone</a>
+     *
+     * Deletes an existing milestone.
+     * @implNote Deleting a milestone cannot be undone.
+     *
+     * @apiNote Response codes
+     * 200	Success, the milestone was deleted
+     * 400	Invalid or unknown milestone
+     * 403	No permissions to delete milestones or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_milestone/{milestone_id}")
+    void deleteMilestone(@Param("milestone_id") Long milestoneID);
 
 }

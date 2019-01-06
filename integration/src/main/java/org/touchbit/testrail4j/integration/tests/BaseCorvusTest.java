@@ -24,6 +24,7 @@ import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.MilestonesQueryMap;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
@@ -115,7 +116,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
         /**
          * @return generated {@link TRProject}
          */
-        default TRProject getNewProject(SuiteMode suiteMode) {
+        default TRProject getProject(SuiteMode suiteMode) {
             String name = UUID.randomUUID().toString();
             String announcement = UUID.randomUUID().toString();
             step("Add new project with name: {}", name);
@@ -125,8 +126,8 @@ public class BaseCorvusTest extends BaseBuggyTest {
         /**
          * @return generated multiple suite mode {@link TRProject}
          */
-        default TRProject getNewProject() {
-            return getNewProject(MULTIPLE);
+        default TRProject getProject() {
+            return getProject(MULTIPLE);
         }
 
         default void deleteProject(TRProject project) {
@@ -150,7 +151,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
          * @return generated {@link TRProject} and {@link TRSection}
          */
         default TRSection addSection() {
-            TRProject project = getNewProject(SINGLE);
+            TRProject project = getProject(SINGLE);
             TRSection section = new TRSection()
                     .withName(UUID.randomUUID().toString())
                     .withDescription(UUID.randomUUID().toString());
@@ -262,7 +263,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default TRRun addRun() {
-            TRProject project = CLIENT.getNewProject(SINGLE);
+            TRProject project = CLIENT.getProject(SINGLE);
             return addRun(project);
         }
 
@@ -420,5 +421,43 @@ public class BaseCorvusTest extends BaseBuggyTest {
             step("Delete configuration with ID {}", config.getId());
             CLIENT.deleteConfig(config.getId());
         }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default TRMilestone getMilestone(TRMilestone milestone) {
+            step("Get milestone with ID {}", milestone.getId());
+            return CLIENT.getMilestone(milestone.getId());
+        }
+
+        default List<TRMilestone> getMilestones(TRProject project) {
+            step("Get milestones for project with ID {}", project.getId());
+            return CLIENT.getMilestones(project.getId());
+        }
+
+        default List<TRMilestone> getMilestones(TRProject project, MilestonesQueryMap queryMap) {
+            step("Get milestones with filter for project with ID {}", project.getId(), queryMap);
+            return CLIENT.getMilestones(project.getId(), queryMap);
+        }
+
+        default TRMilestone addMilestone(TRMilestone milestone, TRProject project) {
+            step("Add milestone {} to the project with ID {}", milestone.getName(), project.getId());
+            return CLIENT.addMilestone(milestone, project.getId());
+        }
+
+        default TRMilestone addMilestone(TRProject project) {
+            TRMilestone milestone = new TRMilestone().withName(UUID.randomUUID().toString());
+            return addMilestone(milestone, project.getId());
+        }
+
+        default TRMilestone updateMilestone(TRMilestone milestone) {
+            step("Update milestone with ID {}", milestone.getId());
+            return CLIENT.updateMilestone(milestone, milestone.getId());
+        }
+
+        default void deleteMilestone(TRMilestone milestone) {
+            step("Delete milestone with ID {}", milestone.getId());
+            CLIENT.deleteMilestone(milestone.getId());
+        }
+
     }
 }

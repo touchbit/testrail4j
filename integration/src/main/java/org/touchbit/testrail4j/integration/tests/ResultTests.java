@@ -26,7 +26,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful adding result for test")
     @Details()
     public void test_20190102011809() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -41,7 +41,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful adding result for test case")
     @Details()
     public void test_20190105231426() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -53,7 +53,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful adding results for test run")
     @Details()
     public void test_20190105234446() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -71,7 +71,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful adding results for test cases")
     @Details()
     public void test_20190105235310() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -86,7 +86,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful reserve test results for test run")
     @Details()
     public void test_20190106002859() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -104,7 +104,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful reserve test results for test case")
     @Details()
     public void test_20190106003350() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);
@@ -122,7 +122,7 @@ public class ResultTests extends BaseCorvusTest {
     @Test(description = "Expecting successful reserve test results for test")
     @Details()
     public void test_20190106003453() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(project);
         TRCase caze = CLIENT.addCase(section);
         TRRun run = CLIENT.addRun(project);

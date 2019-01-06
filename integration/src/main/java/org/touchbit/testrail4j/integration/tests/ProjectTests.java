@@ -81,7 +81,7 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful delete the existing project")
     @Details()
     public void test_20181231184200() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         CLIENT.deleteProject(project);
         FeignException exception = executeThrowable(() -> CLIENT.getProject(project));
         assertThat(exception.contentUTF8())
@@ -91,7 +91,7 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing project")
     @Details()
     public void test_20181231190218() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProject actualProject = CLIENT.getProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
@@ -106,8 +106,8 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing projects list")
     @Details()
     public void test_20181231190411() {
-        TRProject project1 = CLIENT.getNewProject();
-        TRProject project2 = CLIENT.getNewProject();
+        TRProject project1 = CLIENT.getProject();
+        TRProject project2 = CLIENT.getProject();
         List<Long> actualProject = CLIENT.getProjects().stream().map(TRProject::getId).collect(Collectors.toList());
         assertThat(actualProject).contains(project1.getId());
         assertThat(actualProject).contains(project2.getId());

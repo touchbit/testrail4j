@@ -23,7 +23,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful creation of the configuration group")
     @Details()
     public void test_20190106045215() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = new TRProjectConfigGroup().withName("test_20190106045215");
         TRProjectConfigGroup actConfigGroup = CLIENT.addConfigGroup(configGroup, project);
         assertThat(actConfigGroup.getName()).isEqualTo(configGroup.getName());
@@ -33,7 +33,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful update of the existing configuration group")
     @Details()
     public void test_20190106050310() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = new TRProjectConfigGroup().withName("test");
         TRProjectConfigGroup actConfigGroup = CLIENT.addConfigGroup(configGroup, project);
         assertThat(actConfigGroup.getName()).isEqualTo(configGroup.getName());
@@ -48,7 +48,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful delete of the existing configuration group")
     @Details()
     public void test_20190106050730() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = new TRProjectConfigGroup().withName("test");
         TRProjectConfigGroup actConfigGroup = CLIENT.addConfigGroup(configGroup, project);
         CLIENT.deleteConfigGroup(actConfigGroup);
@@ -57,7 +57,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful creation of the project configuration")
     @Details()
     public void test_20190106050831() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = CLIENT.addConfigGroup(project);
         TRProjectConfig config = new TRProjectConfig().withName("test_20190106050831");
         TRProjectConfig actConf = CLIENT.addConfig(config, configGroup);
@@ -68,7 +68,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful update of the project configuration")
     @Details()
     public void test_20190106051135() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = CLIENT.addConfigGroup(project);
         TRProjectConfig config = new TRProjectConfig().withName("test");
         TRProjectConfig actConf = CLIENT.addConfig(config, configGroup);
@@ -84,7 +84,7 @@ public class ConfigTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful delete of the existing project configuration")
     @Details()
     public void test_20190106051249() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup configGroup = CLIENT.addConfigGroup(project);
         TRProjectConfig config = new TRProjectConfig().withName("test");
         TRProjectConfig actConf = CLIENT.addConfig(config, configGroup);
@@ -96,7 +96,7 @@ public class ConfigTests extends BaseCorvusTest {
     public void test_20190106051421() {
         TRProjectConfigGroup configGroup = new TRProjectConfigGroup().withName("test_20190106051421");
         TRProjectConfig config = new TRProjectConfig().withName("test_20190106051421");
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRProjectConfigGroup actConfigGroup = CLIENT.addConfigGroup(configGroup, project);
         CLIENT.addConfig(config, actConfigGroup);
         List<TRProjectConfigGroup> configGroupList = CLIENT.getConfigs(project);

@@ -23,7 +23,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful suite creation with required fields")
     @Details
     public void test_20181231221005() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = new TRSuite().withName("name");
         TRSuite actualSuite = CLIENT.addNewSuite(suite, project);
         assertThat(actualSuite.getName()).isEqualTo(suite.getName());
@@ -32,7 +32,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful suite creation with all fields")
     @Details()
     public void test_20181231221908() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = new TRSuite()
                 .withName("test_20181231221908_name")
                 .withDescription("test_20181231221908_description")
@@ -50,7 +50,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful received existing suite")
     @Details()
     public void test_20181231222652() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = CLIENT.addNewSuite(project);
         TRSuite actualSuite = CLIENT.getSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
@@ -59,7 +59,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful received list existing suites")
     @Details()
     public void test_20181231223026() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = CLIENT.addNewSuite(project);
         List<TRSuite> suiteList = CLIENT.getSuites(project);
         assertThat(suiteList).contains(suite);
@@ -68,7 +68,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful update existing suite")
     @Details()
     public void test_20181231223730() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = CLIENT.addNewSuite(project);
         suite.setName("test_20181231223730");
         TRSuite actualSuite = CLIENT.updateSuite(suite);
@@ -78,7 +78,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Test(description = "Expected successful delete existing suite")
     @Details()
     public void test_20181231224319() {
-        TRProject project = CLIENT.getNewProject();
+        TRProject project = CLIENT.getProject();
         TRSuite suite = CLIENT.addNewSuite(project);
         CLIENT.deleteSuite(suite);
         FeignException exception = executeThrowable(() -> CLIENT.getSuite(suite));

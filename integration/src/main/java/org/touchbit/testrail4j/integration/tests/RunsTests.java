@@ -22,7 +22,7 @@ public class RunsTests extends BaseCorvusTest {
     @Test(description = "Expecting successful of the run creation")
     @Details()
     public void test_20190102004538() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRRun run = new TRRun().withProjectId(project.getId()).withName("test_20190102004538");
         TRRun actualRun = CLIENT.addRun(run);
         assertThat(actualRun.getName()).isEqualTo(run.getName());

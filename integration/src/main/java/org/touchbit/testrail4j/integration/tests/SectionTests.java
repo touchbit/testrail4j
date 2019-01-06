@@ -26,7 +26,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation with required fields")
     @Details()
     public void test_20190101160155() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = new TRSection().withName(UUID.randomUUID().toString());
         TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
@@ -35,7 +35,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation with all fields")
     @Details()
     public void test_20190101161936() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = genSection();
         TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
@@ -45,7 +45,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful subsection creation")
     @Details()
     public void test_20190101195318() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = genSection();
         TRSection actualSection = CLIENT.addSection(section, project);
         TRSection subSection = genSection().withParentId(actualSection.getId());
@@ -58,7 +58,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation for project with multiple suite mode")
     @Details()
     public void test_20190101162032() {
-        TRProject project = CLIENT.getNewProject(MULTIPLE);
+        TRProject project = CLIENT.getProject(MULTIPLE);
         TRSuite suite = CLIENT.addNewSuite(project);
         TRSection section = genSection().withSuiteId(suite.getId());
         TRSection actualSection = CLIENT.addSection(section, project);
@@ -70,7 +70,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive existing section")
     @Details()
     public void test_20190101162834() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(genSection(), project);
         TRSection actualSection = CLIENT.getSection(section);
         assertThat(actualSection).isEqualTo(section);
@@ -79,7 +79,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful update existing section")
     @Details()
     public void test_20190101194252() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(genSection(), project);
         section.setName("test_20190101194252");
         TRSection actualSection = CLIENT.updateSection(section);
@@ -89,7 +89,7 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful delete existing section")
     @Details()
     public void test_20190101194905() {
-        TRProject project = CLIENT.getNewProject(SINGLE);
+        TRProject project = CLIENT.getProject(SINGLE);
         TRSection section = CLIENT.addSection(genSection(), project);
         CLIENT.deleteSection(section);
         FeignException exception = executeThrowable(() -> CLIENT.getSection(section));
