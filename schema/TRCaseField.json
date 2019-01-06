@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Case custom field. See http://docs.gurock.com/testrail-api2/reference-cases-fields#add_case_field",
+  "properties": {
+    "configs": {
+      "description": "Remove this piece of shit with anyOf after solving https://discuss.gurock.com/t/bug-api-different-types-of-returned-data-for-case-fields-configs/10598",
+      "anyOf": [
+        {
+          "type": "array",
+          "javaType": "java.util.List<TRCaseFieldConfig>",
+          "description": "An object wrapped in an array with two default keys, 'context' and 'options'",
+          "items": [
+            {
+              "type": [
+                "object",
+                "string"
+              ],
+              "javaType": "TRCaseFieldConfig",
+              "$ref": "TRCaseFieldConfig.json"
+            }
+          ]
+        },
+        { "type": "string" }
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "The description for the new custom field"
+    },
+    "display_order": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "is_multi": {
+      "type": "integer"
+    },
+    "is_active": {
+      "type": "boolean"
+    },
+    "status_id": {
+      "type": "integer"
+    },
+    "is_system": {
+      "type": "integer"
+    },
+    "entity_id": {
+      "type": "integer"
+    },
+    "label": {
+      "type": "string",
+      "description": "The label for custom field"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for custom field"
+    },
+    "system_name": {
+      "type": "string",
+      "description": "The system name for custom field"
+    },
+    "type": {
+      "type": "string",
+      "description": "See {@link org.touchbit.testrail4j.core.type.FieldTypes} You can pass the number of the type as well as the word, e.g. 5, string, String, Dropdown, 12. The numbers must be sent as a string e.g {type: \"5\"} not {type: 5}, otherwise you will get a 400 (Bad Request) response."
+    },
+    "type_id": {
+      "type": "integer",
+      "description": "See {@link org.touchbit.testrail4j.core.type.FieldTypes}"
+    },
+    "location_id": {
+      "type": "integer",
+      "description": "See {@link org.touchbit.testrail4j.core.type.FieldTypes}"
+    },
+    "include_all": {
+      "type": "boolean",
+      "description": "Set flag to true if you want the new custom field included for all templates. Otherwise (false) specify the ID's of templates to be included as the next parameter (template_ids)"
+    },
+    "template_ids": {
+      "type": "array",
+      "description": "ID's of templates new custom field will apply to if include_all is set to false",
+      "items": [
+        {
+          "type": "integer"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type_id",
+    "name",
+    "label"
+  ]
+}

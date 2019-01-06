@@ -62,6 +62,7 @@ public class CaseTests extends BaseCorvusTest {
                 .withCustomStepsSeparated(null)
                 ;
         TRCase actualCaze = CLIENT.addCase(caze);
+        actualCaze.getAdditionalProperties().clear();
         caze.setId(actualCaze.getId());
         caze.setUpdatedOn(actualCaze.getUpdatedOn());
         caze.setCreatedOn(actualCaze.getCreatedOn());

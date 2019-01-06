@@ -31,6 +31,7 @@ import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -78,8 +79,30 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
     @FunctionalInterface
     public interface Executable {
-
         void execute() throws Throwable;
+    }
+
+    public static String getRandomString(int length) {
+        return getRandomString(length, true);
+    }
+
+    public static String getRandomString(int length, boolean withLowerCase) {
+        String str = generateString("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm", length);
+        return withLowerCase ? str.toLowerCase() : str;
+    }
+
+    private static String generateString(String characters, int length) {
+        if (length < 1) {
+            throw new IllegalArgumentException("The length of the generated string must be positive. Received: " + length);
+        } else {
+            char[] text = new char[length];
+
+            for(int i = 0; i < length; ++i) {
+                text[i] = characters.charAt((new Random()).nextInt(characters.length()));
+            }
+
+            return new String(text);
+        }
     }
 
     /**
@@ -333,6 +356,18 @@ public class BaseCorvusTest extends BaseBuggyTest {
         default List<TRResult> getResults(TRTest trTest, GetResultsQueryMap queryMap) {
             step("Get test results with filter for test id {}", trTest.getId());
             return CLIENT.getResults(trTest.getId(), queryMap);
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default List<TRCaseField> getTRCaseFields() {
+            step("Get existing case fields");
+            return CLIENT.getCaseFields();
+        }
+
+        default TRCaseField addTRCaseField(TRCaseField caseField) {
+            step("Add new case field with name {}", caseField.getName());
+            return CLIENT.addCaseField(caseField);
         }
 
     }

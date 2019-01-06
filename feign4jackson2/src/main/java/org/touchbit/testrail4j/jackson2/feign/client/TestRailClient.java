@@ -21,6 +21,7 @@ import feign.Param;
 import feign.QueryMap;
 import feign.RequestLine;
 import org.touchbit.testrail4j.core.query.*;
+import org.touchbit.testrail4j.core.type.FieldTypes;
 import org.touchbit.testrail4j.jackson2.feign.client.expander.BoolExp;
 import org.touchbit.testrail4j.jackson2.feign.client.expander.SuiteExp;
 import org.touchbit.testrail4j.jackson2.model.*;
@@ -47,6 +48,8 @@ public interface TestRailClient {
         apiRuns();
         apiSuites();
         apiSections();
+        apiTests();
+        apiCasesFields();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -1074,4 +1077,88 @@ public interface TestRailClient {
     default List<TRTest> getTests(@Param("run_id") Long runID) {
         return getTests(runID, new GetTestsQueryMap());
     }
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields">API: Cases fields</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiCasesFields() { /* do nothing */ }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields#get_case_fields">API: Get case fields</a>
+     *
+     * @return a list of available test case custom fields {@link TRCaseField}.
+     * The response includes an array of custom field definitions. Please see below for a typical response:
+     * [
+     * 	{
+     * 		"configs": [
+     * 		{
+     * 			"context": {
+     * 				"is_global": true,
+     * 				"project_ids": null
+     * 			},
+     * 			"id": "..",
+     * 			"options": {
+     * 				"default_value": "",
+     * 				"format": "markdown",
+     * 				"is_required": false,
+     * 				"rows": "5"
+     * 			}
+     * 		}
+     * 		],
+     * 		"description": "The preconditions of this test case. ..",
+     * 		"display_order": 1,
+     * 		"id": 1,
+     * 		"label": "Preconditions",
+     * 		"name": "preconds",
+     * 		"system_name": "custom_preconds",
+     * 		"type_id": 3
+     * 	}
+     * ]
+     * The following list shows the available custom field types (type_id field): {@link FieldTypes}
+     *
+     * @apiNote Response codes
+     * 200	Success, the available custom fields are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_case_fields")
+    List<TRCaseField> getCaseFields();
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields#add_case_field">API: Add case field</a>
+     *
+     * Creates a new test case custom field.
+     *
+     * @param caseField is the request body
+     *
+     * @return the new custom field.
+     * {
+     *   "id":33,
+     *   "name":"my_multiselect",
+     *   "system_name":"custom_my_multiselect",
+     *   "entity_id":1,
+     *   "label":"My Multiselect",
+     *   "description":"my custom Multiselect description",
+     *   "type_id":12,
+     *   "location_id":2,
+     *   "display_order":7,
+     *   "configs":[{"context":{"is_global":true,"project_ids":""},"options":{"is_required":false,"items":"1, One\\n2, Two"},"id":"9f105ba2-1ed0-45e0-b459-18d890bad86e"}],
+     *   "is_multi":1,
+     *   "is_active":1,
+     *   "status_id":1,
+     *   "is_system":0,
+     *   "include_all":1,
+     *   "template_ids":[]
+     * }
+     *
+     * @apiNote Response codes
+     * 200	Success, the new custom field is returned in the response
+     * 400	Bad request, check the error message for diagnostics
+     * 404	Not found, bad parameter passed
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/add_case_field")
+    TRCaseField addCaseField(TRCaseField caseField);
+
 }
