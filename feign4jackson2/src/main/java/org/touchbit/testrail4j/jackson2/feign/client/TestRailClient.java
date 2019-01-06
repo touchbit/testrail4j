@@ -78,6 +78,9 @@ import java.util.List;
  *      {@link TestRailClient#getUser(Long)}
  *      {@link TestRailClient#getUserByEmail(String)}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-templates">API: Templates</a>
+ *      {@link TestRailClient#getTemplates(Long)}
+ *
  *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
@@ -85,31 +88,6 @@ import java.util.List;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 @Headers("Content-Type: application/json; charset=utf-8")
 public interface TestRailClient {
-
-    /** Utility table of contents method for quickly navigate through categories */
-    default void tableOfContents() {
-        apiResults();
-        apiCases();
-        apiProjects();
-        apiRuns();
-        apiSuites();
-        apiSections();
-        apiTests();
-        apiCasesFields();
-        apiCaseTypes();
-        apiMilestones();
-        apiPriorities();
-        apiUsers();
-    }
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results">API: Results</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiResults() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -397,15 +375,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/add_results_for_cases/{run_id}")
     List<TRResult> addResultsForCases(TRResults results, @Param("run_id") Long runID);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases">API: Cases</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiCases() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#get_case">API: Get case</a>
@@ -524,15 +493,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_case/{case_id}")
     void deleteCase(@Param("case_id") Long caseID);
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-projects">API: Projects</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiProjects() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -664,15 +624,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_project/{projectID}")
     void deleteProject(@Param("projectID") Long projectID);
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs">API: Runs</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiRuns() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -850,15 +801,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_run/{run_id}")
     void deleteRun(@Param("run_id") Long runID);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-suites">API: Suites</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiSuites() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suite
@@ -949,15 +891,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_suite/{suite_id}")
     void deleteSuite(@Param("suite_id") Long suiteID);
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections">API: Sections</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiSections() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -1085,15 +1018,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_section/{section_id}")
     void deleteSection(@Param("section_id") Long sectionID);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-tests">API: Tests</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiTests() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-tests#get_test">API: Get test</a>
@@ -1171,15 +1095,6 @@ public interface TestRailClient {
         return getTests(runID, new GetTestsQueryMap());
     }
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields">API: Cases fields</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiCasesFields() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields#get_case_fields">API: Get case fields</a>
@@ -1256,15 +1171,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/add_case_field")
     TRCaseField addCaseField(TRCaseField caseField);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-types">API: Cases types</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiCaseTypes() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-types#get_case_types">API: Get case types</a>
@@ -1278,16 +1184,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_case_types")
     List<TRCaseType> getCaseTypes();
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * {@link TestRailClient}
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs">API: Configs</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiConfigurations() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -1416,15 +1312,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_config/{config_id}")
     void deleteConfig(@Param("config_id") Long configID);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones">API: Milestones</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiMilestones() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#get_milestone">API: Get milestone</a>
@@ -1523,15 +1410,6 @@ public interface TestRailClient {
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_milestone/{milestone_id}")
     void deleteMilestone(@Param("milestone_id") Long milestoneID);
 
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities">API: Priorities</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiPriorities() { /* do nothing */ }
-
     /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities#get_priorities">API: Get priorities</a>
@@ -1555,15 +1433,6 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_priorities")
     List<TRPriority> getPriorities();
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    /**
-     * @see <a href="http://docs.gurock.com/testrail-api2/reference-users">API: Users</a>
-     *
-     * Utility empty method for quickly navigate through categories.
-     * TOC - {@link TestRailClient#tableOfContents()}
-     */
-    default void apiUsers() { /* do nothing */ }
 
     /**
      * {@link TestRailClient}
@@ -1606,4 +1475,25 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_users")
     List<TRUser> getUsers();
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-templates#get_templates">API: Get templates</a>
+     *
+     * Returns a list of available templates (requires TestRail 5.2 or later).
+     * The response includes an array of templates (field layouts). Each template has a unique ID and a name.
+     * The is_default field is true for the default template and false otherwise.
+     *
+     * @param projectID is the ID of the project
+     *
+     * @return a list of available templates (requires TestRail 5.2 or later).
+     *
+     * @apiNote Response codes
+     * 200	Success, the templates are returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_templates/{project_id}")
+    List<TRTemplate> getTemplates(@Param("project_id") Long projectID);
+
 }

@@ -19,7 +19,7 @@ import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 @Suite(service = TestRail.class, interfaze = API.class, task = "test_operations")
 public class TestTests extends BaseCorvusTest {
 
-    @Test(description = "Expecting successful receive of existing tests")
+    @Test(description = "Expecting a successful receive of existing tests")
     @Details()
     public void test_20190102023252() {
         TRProject project = CLIENT.getProject(SINGLE);

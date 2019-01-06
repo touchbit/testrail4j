@@ -3,6 +3,7 @@ package org.touchbit.testrail4j.integration.tests;
 import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
+import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings("WeakerAccess")
-@org.touchbit.buggy.core.model.Suite(service = TestRail.class, interfaze = API.class, task = "suite_operations")
+@Suite(service = TestRail.class, interfaze = API.class, task = "suite_operations")
 public class SuiteTests extends BaseCorvusTest {
 
     @Test(description = "Expected successful suite creation with required fields")

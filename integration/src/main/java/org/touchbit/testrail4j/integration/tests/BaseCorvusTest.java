@@ -459,5 +459,10 @@ public class BaseCorvusTest extends BaseBuggyTest {
             CLIENT.deleteMilestone(milestone.getId());
         }
 
+        default List<TRTemplate> getTemplates(TRProject project) {
+            step("Get existing templates for project ID {}", project.getId());
+            return CLIENT.getTemplates(project.getId());
+        }
+
     }
 }
