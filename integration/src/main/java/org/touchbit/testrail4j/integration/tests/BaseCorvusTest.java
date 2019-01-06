@@ -22,19 +22,14 @@ import org.touchbit.buggy.core.test.BaseBuggyTest;
 import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener;
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
-import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
-import org.touchbit.testrail4j.core.query.GetProjectsQueryMap;
-import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
-import org.touchbit.testrail4j.core.query.GetMilestonesQueryMap;
+import org.touchbit.testrail4j.core.query.*;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
 import org.touchbit.testrail4j.jackson2.model.*;
 
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.MULTIPLE;
@@ -271,6 +266,14 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return addRun(project);
         }
 
+        default TRRun addRun(TRProject project, TRSuite suite) {
+            TRRun run = new TRRun()
+                    .withProjectId(project.getId())
+                    .withName(UUID.randomUUID().toString())
+                    .withSuiteId(suite.getId());
+            return addRun(run);
+        }
+
         default TRRun addRun(TRProject project) {
             TRRun run = new TRRun().withProjectId(project.getId()).withName(UUID.randomUUID().toString());
             return addRun(run);
@@ -466,6 +469,81 @@ public class BaseCorvusTest extends BaseBuggyTest {
         default List<TRTemplate> getTemplates(TRProject project) {
             step("Get existing templates for project ID {}", project.getId());
             return CLIENT.getTemplates(project.getId());
+        }
+
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default TRPlan getPlan(TRPlan plan) {
+            step("Get plan with ID {}", plan.getId());
+            return getPlan(plan.getId());
+        }
+
+        default List<TRPlan> getPlans(TRProject project) {
+            step("Get plan for project ID {}", project.getId());
+            return getPlans(project.getId(), new GetPlansQueryMap());
+        }
+
+        default <Q extends GetPlansQueryMap> List<TRPlan> getPlans(TRProject project, Q queryMap) {
+            step("Get plan for project ID {} with filter", project.getId());
+            return getPlans(project.getId(), queryMap);
+        }
+
+        default TRPlan addPlan(TRProject project) {
+            TRPlan plan = new TRPlan()
+                    .withName("test_20190106180117")
+                    .withDescription("test_20190106180117");
+            return addPlan(plan, project.getId());
+        }
+
+        default TRPlan addPlan(TRPlan plan, TRProject project) {
+            step("Add plan with name {} for project ID {}", plan.getName(), project.getId());
+            return addPlan(plan, project.getId());
+        }
+
+        default TRPlan updatePlan(TRPlan plan) {
+            step("Update plan with ID {}", plan.getId());
+            return updatePlan(plan, plan.getId());
+        }
+
+        default TRPlan closePlan(TRPlan plan) {
+            step("Close plan with ID {}", plan.getId());
+            return closePlan(plan.getId());
+        }
+
+        default void deletePlan(TRPlan plan) {
+            step("Delete plan with ID {}", plan.getId());
+            deletePlan(plan.getId());
+        }
+
+        default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan) {
+            step("Add plan entry with name {} for plan ID {}", plan.getName(), plan.getId());
+            return addPlanEntry(entry, plan.getId());
+        }
+
+        default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan, TRRun... runs) {
+            return addPlanEntry(entry.withRuns(Arrays.asList(runs)), plan);
+        }
+
+        default TRPlanEntry addPlanEntry(TRPlan plan, TRSuite suite, TRRun... runs) {
+            List<TRRun> runList = new ArrayList<>(Arrays.asList(runs));
+            TRPlanEntry entry = new TRPlanEntry()
+                    .withName("test_20190106181613")
+                    .withAssignedtoId(1L)
+                    .withDescription("test_20190106181613")
+                    .withIncludeAll(true)
+                    .withSuiteId(suite.getId())
+                    .withRuns(runList);
+            return addPlanEntry(entry, plan);
+        }
+
+        default TRPlanEntry updatePlanEntry(TRPlanEntry entry, TRPlan plan) {
+            step("Update plan entry with ID {} for plan ID {}", entry.getId(), plan.getId());
+            return updatePlanEntry(entry, plan.getId(), entry.getId());
+        }
+
+        default void deletePlanEntry(TRPlan plan, TRPlanEntry entry) {
+            step("Delete plan entry with ID {} for plan ID {}", entry.getId(), plan.getId());
+            deletePlanEntry(plan.getId(), entry.getId());
         }
 
     }

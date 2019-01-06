@@ -19,8 +19,18 @@
       "type": "string",
       "description": "The configuration of the test run as string (if part of a test plan)"
     },
+    "entry_id": {
+      "type": "string",
+      "description": "Test plan entry UUID"
+    },
+    "entry_index": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "Test plan entry index"
+    },
     "config_ids": {
       "type": "array",
+      "javaType": "java.util.List<Long>",
       "description": "The array of IDs of the configurations of the test run (if part of a test plan)",
       "items": {
         "type": "integer",
@@ -30,6 +40,7 @@
     },
     "case_ids": {
       "type": "array",
+      "javaType": "java.util.List<Long>",
       "description": "An array of case IDs for the custom case selection",
       "items": {
         "type": "integer",

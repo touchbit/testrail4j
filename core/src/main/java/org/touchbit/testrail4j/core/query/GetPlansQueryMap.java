@@ -79,8 +79,8 @@ public class GetPlansQueryMap extends BaseQueryMap {
         this.created_before = createdBefore;
     }
 
-    public void setIsCompleted(Integer isCompleted) {
-        this.is_completed = isCompleted;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
     }
 
     public void setLimit(Integer limit) {
@@ -109,8 +109,8 @@ public class GetPlansQueryMap extends BaseQueryMap {
         return this;
     }
 
-    public GetPlansQueryMap withIsCompleted(Integer isCompleted) {
-        this.is_completed = isCompleted;
+    public GetPlansQueryMap withIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
         return this;
     }
 

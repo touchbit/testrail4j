@@ -13,8 +13,10 @@
     },
     "template_ids": {
       "type": "array",
+      "javaType": "java.util.List<Long>",
       "items": {
-        "type": "integer"
+        "type": "integer",
+        "javaType" : "java.lang.Long"
       }
     },
     "description": {

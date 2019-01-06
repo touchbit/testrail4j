@@ -24,6 +24,7 @@ import org.touchbit.testrail4j.core.query.*;
 import org.touchbit.testrail4j.core.type.FieldTypes;
 import org.touchbit.testrail4j.jackson2.model.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -204,8 +205,8 @@ import java.util.List;
  *      {@link TestRailClient#closePlan(Long)}
  *      {@link TestRailClient#deletePlan(Long)}
  *      {@link TestRailClient#addPlanEntry(TRPlanEntry, Long)}
- *      {@link TestRailClient#updatePlanEntry(TRPlanEntry, Long, Long)}
- *      {@link TestRailClient#deletePlanEntry(Long, Long)}
+ *      {@link TestRailClient#updatePlanEntry(TRPlanEntry, Long, String)}
+ *      {@link TestRailClient#deletePlanEntry(Long, String)}
  *      Default
  *      {@link TestRailClient#getPlan(TRPlan)}
  *      {@link TestRailClient#getPlans(TRProject)}
@@ -216,6 +217,8 @@ import java.util.List;
  *      {@link TestRailClient#closePlan(TRPlan)}
  *      {@link TestRailClient#deletePlan(TRPlan)}
  *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan)}
+ *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan, TRRun...)}
+ *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan, TRSuite, TRRun...)}
  *      {@link TestRailClient#updatePlanEntry(TRPlanEntry, TRPlan)}
  *      {@link TestRailClient#deletePlanEntry(TRPlan, TRPlanEntry)}
  *
@@ -2219,6 +2222,20 @@ public interface TestRailClient {
     }
 
     /**
+     * See {@link TestRailClient#addPlanEntry(TRPlanEntry, Long)}
+     */
+    default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan, TRRun... runs) {
+        return addPlanEntry(entry.withRuns(Arrays.asList(runs)), plan.getId());
+    }
+
+    /**
+     * See {@link TestRailClient#addPlanEntry(TRPlanEntry, Long)}
+     */
+    default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan, TRSuite suite, TRRun... runs) {
+        return addPlanEntry(entry.withRuns(Arrays.asList(runs)).withSuiteId(suite.getId()), plan.getId());
+    }
+
+    /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-plans#update_plan_entry">API: Update plan entry</a>
      *
@@ -2235,10 +2252,10 @@ public interface TestRailClient {
      * 403	No permissions to modify test plans or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_plan_entry/{plan_id}/{entry_id}")
-    TRPlanEntry updatePlanEntry(TRPlanEntry entry, @Param("plan_id") Long planID, @Param("entry_id") Long entryID);
+    TRPlanEntry updatePlanEntry(TRPlanEntry entry, @Param("plan_id") Long planID, @Param("entry_id") String entryID);
 
     /**
-     * See {@link TestRailClient#updatePlanEntry(TRPlanEntry, Long, Long)}
+     * See {@link TestRailClient#updatePlanEntry(TRPlanEntry, Long, String)}
      */
     default TRPlanEntry updatePlanEntry(TRPlanEntry entry, TRPlan plan) {
         return updatePlanEntry(entry, plan.getId(), entry.getId());
@@ -2260,10 +2277,10 @@ public interface TestRailClient {
      * 403	No permissions to modify test plans or no access to the project
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_plan_entry/{plan_id}/{entry_id}")
-    void deletePlanEntry(@Param("plan_id") Long planID, @Param("entry_id") Long entryID);
+    void deletePlanEntry(@Param("plan_id") Long planID, @Param("entry_id") String entryID);
 
     /**
-     * See {@link TestRailClient#deletePlanEntry(Long, Long)}
+     * See {@link TestRailClient#deletePlanEntry(Long, String)}
      */
     default void deletePlanEntry(TRPlan plan, TRPlanEntry entry) {
         deletePlanEntry(plan.getId(), entry.getId());

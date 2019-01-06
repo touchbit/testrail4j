@@ -76,10 +76,12 @@
     },
     "template_ids": {
       "type": "array",
+      "javaType": "java.util.List<Long>",
       "description": "ID's of templates new custom field will apply to if include_all is set to false",
       "items": [
         {
-          "type": "integer"
+          "type": "integer",
+          "javaType" : "java.lang.Long"
         }
       ]
     }
