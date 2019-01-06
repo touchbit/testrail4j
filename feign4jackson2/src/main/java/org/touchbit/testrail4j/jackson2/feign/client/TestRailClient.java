@@ -50,6 +50,7 @@ public interface TestRailClient {
         apiSections();
         apiTests();
         apiCasesFields();
+        apiCaseTypes();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -1158,7 +1159,29 @@ public interface TestRailClient {
      * 400	Bad request, check the error message for diagnostics
      * 404	Not found, bad parameter passed
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/add_case_field")
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_case_field")
     TRCaseField addCaseField(TRCaseField caseField);
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-types">API: Cases types</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiCaseTypes() { /* do nothing */ }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-types#get_case_types">API: Get case types</a>
+     *
+     * @return a list of available case types.
+     * The response includes an array of test case types. Each case type has a unique ID and a name.
+     * The is_default field is true for the default case type and false otherwise.
+     *
+     * @apiNote Response codes
+     * 200	Success, the case types are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_case_types")
+    List<TRCaseType> getCaseTypes();
 
 }

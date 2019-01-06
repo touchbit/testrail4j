@@ -370,5 +370,12 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.addCaseField(caseField);
         }
 
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default List<TRCaseType> getTRCaseTypes() {
+            step("Get existing case types");
+            return CLIENT.getCaseTypes();
+        }
+
     }
 }
