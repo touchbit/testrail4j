@@ -4,7 +4,7 @@
   "description": "Case custom field. See http://docs.gurock.com/testrail-api2/reference-cases-fields#add_case_field",
   "properties": {
     "configs": {
-      "description": "Remove this piece of shit with anyOf after solving https://discuss.gurock.com/t/bug-api-different-types-of-returned-data-for-case-fields-configs/10598",
+      "description": "Remove this piece of shit with 'anyOf' after solving https://discuss.gurock.com/t/bug-api-different-types-of-returned-data-for-case-fields-configs/10598",
       "anyOf": [
         {
           "type": "array",
@@ -12,10 +12,7 @@
           "description": "An object wrapped in an array with two default keys, 'context' and 'options'",
           "items": [
             {
-              "type": [
-                "object",
-                "string"
-              ],
+              "type": ["object"],
               "javaType": "TRCaseFieldConfig",
               "$ref": "TRCaseFieldConfig.json"
             }

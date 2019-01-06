@@ -110,6 +110,8 @@ public class BaseCorvusTest extends BaseBuggyTest {
      */
     public interface TestRailTestClient extends TestRailClient {
 
+        /* ---------------------------------------------------------------------------------------------------------- */
+
         /**
          * @return generated {@link TRProject}
          */
@@ -377,5 +379,46 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.getCaseTypes();
         }
 
+        /* ---------------------------------------------------------------------------------------------------------- */
+
+        default List<TRProjectConfigGroup> getConfigs(TRProject project) {
+            step("Get configurations for project ID {}", project.getId());
+            return CLIENT.getConfigs(project.getId());
+        }
+
+        default TRProjectConfigGroup addConfigGroup(TRProject project) {
+            TRProjectConfigGroup configGroup = new TRProjectConfigGroup().withName(UUID.randomUUID().toString());
+            return addConfigGroup(configGroup, project);
+        }
+
+        default TRProjectConfigGroup addConfigGroup(TRProjectConfigGroup cGroup, TRProject project) {
+            step("Add configuration group for project ID {}", project.getId());
+            return CLIENT.addConfigGroup(cGroup, project.getId());
+        }
+
+        default TRProjectConfigGroup updateConfigGroup(TRProjectConfigGroup cGroup) {
+            step("Update configuration group with ID {}", cGroup.getId());
+            return CLIENT.updateConfigGroup(cGroup, cGroup.getId());
+        }
+
+        default void deleteConfigGroup(TRProjectConfigGroup cGroup) {
+            step("Delete configuration group with ID {}", cGroup.getId());
+            CLIENT.deleteConfigGroup(cGroup.getId());
+        }
+
+        default TRProjectConfig addConfig(TRProjectConfig config, TRProjectConfigGroup cGroup) {
+            step("Add configuration to the group with ID {}", cGroup.getId());
+            return CLIENT.addConfig(config, cGroup.getId());
+        }
+
+        default TRProjectConfig updateConfig(TRProjectConfig config) {
+            step("Update configuration with ID {}", config.getId());
+            return CLIENT.updateConfig(config, config.getId());
+        }
+
+        default void deleteConfig(TRProjectConfig config) {
+            step("Delete configuration with ID {}", config.getId());
+            CLIENT.deleteConfig(config.getId());
+        }
     }
 }

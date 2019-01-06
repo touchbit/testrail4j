@@ -33,6 +33,35 @@ import java.util.List;
  * to integrate automated tests, submit test results
  * and automate various aspects of TestRail.
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-results">API: Results</a>
+ *      {@link TestRailClient#getResults(Long)}
+ *      {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
+ *      {@link TestRailClient#getResultsForCase(Long, Long)}
+ *      {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
+ *      {@link TestRailClient#getResultsForRun(Long)}
+ *      {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
+ *      {@link TestRailClient#addResult(TRResult, Long)}
+ *      {@link TestRailClient#addResults(TRResults, Long)}
+ *      {@link TestRailClient#addResultForCase(TRResult, Long, Long)}
+ *      {@link TestRailClient#addResultsForCases(TRResults, Long)}
+ *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases">API: Cases</a>
+ *      {@link TestRailClient#getCase(Long)}
+ *      {@link TestRailClient#getCases(Long)}
+ *      {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
+ *      {@link TestRailClient#addCase(TRCase, Long)}
+ *      {@link TestRailClient#updateCase(TRCase, Long)}
+ *      {@link TestRailClient#deleteCase(Long)}
+ *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs">API: Configs</a>
+ *      {@link TestRailClient#getConfigs(Long)}
+ *      {@link TestRailClient#addConfigGroup(TRProjectConfigGroup, Long)}
+ *      {@link TestRailClient#updateConfigGroup(TRProjectConfigGroup, Long)}
+ *      {@link TestRailClient#deleteConfigGroup(Long)}
+ *      {@link TestRailClient#addConfig(TRProjectConfig, Long)}
+ *      {@link TestRailClient#updateConfig(TRProjectConfig, Long)}
+ *      {@link TestRailClient#deleteConfig(Long)}
+ *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -1183,5 +1212,134 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_case_types")
     List<TRCaseType> getCaseTypes();
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs">API: Configs</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiConfigurations() { /* do nothing */ }
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#get_configs">API: Get configs</a>
+     *
+     * @param projectID is the ID of the project
+     *
+     * @return a list of available configurations {@link TRProjectConfigGroup},
+     * grouped by configuration groups (requires TestRail 3.1 or later).
+     *
+     * @apiNote Response codes
+     * 200	Success, the configurations are returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_configs/{project_id}")
+    List<TRProjectConfigGroup> getConfigs(@Param("project_id") Long projectID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#add_config_group">API: Add config group</a>
+     *
+     * @param projectID is the ID of the project the configuration group should be added to
+     * @param cGroup is the request body
+     *
+     * @return new {@link TRProjectConfigGroup}
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration group was created and is returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No permissions to add configuration groups or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_config_group/{project_id}")
+    TRProjectConfigGroup addConfigGroup(TRProjectConfigGroup cGroup, @Param("project_id") Long projectID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#update_config_group">API: Update config group</a>
+     *
+     * Updates an existing configuration group (requires TestRail 5.2 or later).
+     *
+     * @param configGroupID the ID of the configuration group
+     * @param cGroup is the request body
+     *
+     * @return updated {@link TRProjectConfigGroup}
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration group was updated and is returned as part of the response
+     * 400	Invalid or unknown configuration group
+     * 403	No permissions to modify configuration groups or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_config_group/{config_group_id}")
+    TRProjectConfigGroup updateConfigGroup(TRProjectConfigGroup cGroup, @Param("config_group_id") Long configGroupID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#delete_config_group">API: Delete config group</a>
+     *
+     * Deletes an existing configuration group and its configurations (requires TestRail 5.2 or later).
+     * Please note: Deleting a configuration group cannot be undone and also permanently deletes all configurations in
+     * this group. It does not, however, affect closed test plans/runs, or active test plans/runs unless they are updated.
+     *
+     * @param configGroupID the ID of the configuration group
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration group and all its configurations were deleted
+     * 400	Invalid or unknown configuration group
+     * 403	No permissions to delete configuration groups or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_config_group/{config_group_id}")
+    void deleteConfigGroup(@Param("config_group_id") Long configGroupID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#add_config">API: Add config</a>
+     *
+     * Creates a new configuration (requires TestRail 5.2 or later).
+     *
+     * @param configGroupID The ID of the configuration group the configuration should be added to
+     * @param config the {@link TRProjectConfig} request body
+     *
+     * @return a new configuration {@link TRProjectConfig}
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration was created and is returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No permissions to add configurations or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/add_config/{config_group_id}")
+    TRProjectConfig addConfig(TRProjectConfig config, @Param("config_group_id") Long configGroupID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#update_config">API: Update config</a>
+     *
+     * Updates an existing configuration (requires TestRail 5.2 or later).
+     *
+     * @param configID the ID of the configuration
+     * @param config the {@link TRProjectConfig} request body
+     *
+     * @return updated configuration {@link TRProjectConfig}
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration was updated and is returned as part of the response
+     * 400	Invalid or unknown configuration
+     * 403	No permissions to modify configurations or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_config/{config_id}")
+    TRProjectConfig updateConfig(TRProjectConfig config, @Param("config_id") Long configID);
+
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#delete_config">API: Delete config</a>
+     *
+     * Deletes an existing configuration (requires TestRail 5.2 or later).
+     * Please note: Deleting a configuration cannot be undone. It does not, however,
+     * affect closed test plans/runs, or active test plans/runs unless they are updated.
+     *
+     * @param configID the ID of the configuration
+     *
+     * @apiNote Response codes
+     * 200	Success, the configuration was deleted
+     * 400	Invalid or unknown configuration
+     * 403	No permissions to delete configurations or no access to the project
+     */
+    @RequestLine(value = "POST /index.php%3F/api/v2/delete_config/{config_id}")
+    void deleteConfig(@Param("config_id") Long configID);
 
 }
