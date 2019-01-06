@@ -71,6 +71,10 @@ import java.util.List;
  *      {@link TestRailClient#deleteMilestone(Long)}
  *
  * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities">API: Priorities</a>
+ *      {@link TestRailClient#getPriorities()}
+ *
+ *
+ *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -90,6 +94,7 @@ public interface TestRailClient {
         apiCasesFields();
         apiCaseTypes();
         apiMilestones();
+        apiPriorities();
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -102,6 +107,7 @@ public interface TestRailClient {
     default void apiResults() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results">API: Get results</a>
      *
      * Get the latest 10 results for test with ID 1 and statuses 4 or 5 (Retest, Failed)
@@ -147,6 +153,7 @@ public interface TestRailClient {
     List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap getResultsQueryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResults(Long testID) {
@@ -154,6 +161,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results_for_case">API: Get results for case</a>
      *
      * Returns a list of test results for a test run and case combination.
@@ -185,6 +193,7 @@ public interface TestRailClient {
                                    @QueryMap GetResultsQueryMap getResultsQueryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForCase(@Param("run_id") Long runID, @Param("case_id") Long caseID) {
@@ -192,6 +201,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results_for_run">API: Get results for run</a>
      *
      * Returns a list of test results for a test run.
@@ -210,6 +220,7 @@ public interface TestRailClient {
     List<TRResult> getResultsForRun(@Param("run_id") Long runID, @QueryMap GetResultsQueryMap getResultsQueryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForRun(@Param("run_id") Long runID) {
@@ -217,6 +228,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result">API: Add result</a>
      *
      * Adds a new test result, comment or assigns a test.
@@ -265,6 +277,7 @@ public interface TestRailClient {
     TRResult addResult(TRResult result, @Param("test_id") Long testID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_result_for_case">API: Add result for case</a>
      *
      * Adds a new test result, comment or assigns a test (for a test run and case combination).
@@ -294,6 +307,7 @@ public interface TestRailClient {
     TRResult addResultForCase(TRResult result, @Param("run_id") Long runID, @Param("case_id") Long caseID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results">API: Add results</a>
      *
      * Adds one or more new test results, comments or assigns one or more tests.
@@ -334,6 +348,7 @@ public interface TestRailClient {
     List<TRResult> addResults(TRResults results, @Param("run_id") Long runID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases">API: Add results for cases</a>
      *
      * Adds one or more new test results, comments or assigns one or more tests (using the case IDs).
@@ -387,6 +402,7 @@ public interface TestRailClient {
     default void apiCases() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#get_case">API: Get case</a>
      *
      * @param caseID is the ID of the test case
@@ -415,6 +431,7 @@ public interface TestRailClient {
     TRCase getCase(@Param("case_id") Long caseID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#get_cases">API: Get cases</a>
      *
      *
@@ -436,6 +453,7 @@ public interface TestRailClient {
     List<TRCase> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
      */
     default List<TRCase> getCases(Long projectID) {
@@ -443,6 +461,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#add_case">API: Add case</a>
      *
      * Creates a new test case.
@@ -462,6 +481,7 @@ public interface TestRailClient {
     TRCase addCase(TRCase aCase, @Param("section_id") Long sectionID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#update_case">API: Update case</a>
      *
      * Updates an existing test case (partial updates are supported, i.e.
@@ -483,6 +503,7 @@ public interface TestRailClient {
     TRCase updateCase(TRCase aCase, @Param("case_id") Long caseID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases#delete_case">API: Delete case</a>
      *
      * Deletes an existing test case.
@@ -509,6 +530,7 @@ public interface TestRailClient {
     default void apiProjects() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-projects#get_project
      *
      * @param projectID is the ID of the project
@@ -529,6 +551,7 @@ public interface TestRailClient {
     TRProject getProject(@Param("projectID") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-projects#get_projects
      *
      * Returns the list of available projects.
@@ -547,6 +570,7 @@ public interface TestRailClient {
     List<TRProject> getProjects(@Param(value = "is_completed", expander = BoolExp.class) Boolean isCompleted);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getProjects(Boolean)}
      */
     default List<TRProject> getProjects() {
@@ -554,6 +578,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-projects#add_project
      *
      * Creates a new project (admin status required).
@@ -577,12 +602,14 @@ public interface TestRailClient {
                        @Param(value = "suite_mode", expander = SuiteExp.class) SuiteMode suiteMode);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#addProject(String, String, Boolean, SuiteMode)}
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/add_project")
     TRProject addProject(TRProject project);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-projects#update_project
      *
      * Updates an existing project (admin status required;
@@ -616,6 +643,7 @@ public interface TestRailClient {
                        @Param(value = "suite_mode", expander = SuiteExp.class) SuiteMode suiteMode);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-projects#delete_project
      *
      * Deletes an existing project (admin status required).
@@ -642,6 +670,7 @@ public interface TestRailClient {
     default void apiRuns() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#get_run">API: Get run</a>
      *
      * @param runID is the ID of the test run
@@ -687,6 +716,7 @@ public interface TestRailClient {
     TRRun getRun(@Param("run_id") Long runID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#get_runs">API: Get Runs</a>
      *
      * 
@@ -710,6 +740,7 @@ public interface TestRailClient {
     List<TRRun> getRuns(@Param("project_id") Long projectID, @QueryMap GetRunsQueryMap queryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
      */
     default List<TRRun> getRuns(@Param("project_id") Long projectID) {
@@ -717,6 +748,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#add_run">API: Add run</a>
      *
      * Creates a new test run.
@@ -744,6 +776,7 @@ public interface TestRailClient {
     TRRun addRun(TRRun run, @Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#update_run">API: Update run</a>
      *
      * Updates an existing test run (partial updates are supported, i.e. you can submit and update specific fields only).
@@ -776,6 +809,7 @@ public interface TestRailClient {
     TRRun updateRun(TRRun run, @Param("run_id") Long runID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#close_run">API: Close run</a>
      *
      * Closes an existing test run and archives its tests & results.
@@ -795,6 +829,7 @@ public interface TestRailClient {
     TRRun closeRun(@Param("run_id") Long runID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-runs#delete_run">API: Delete run</a>
      *
      * Deletes an existing test run.
@@ -820,6 +855,7 @@ public interface TestRailClient {
     default void apiSuites() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suite
      *
      * @param suiteID is the ID of the test suite
@@ -837,6 +873,7 @@ public interface TestRailClient {
     TRSuite getSuite(@Param("suite_id") Long suiteID);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#get_suites
      *
      * @param projectID is the ID of the project
@@ -852,6 +889,7 @@ public interface TestRailClient {
     List<TRSuite> getSuites(@Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#add_suite
      *
      * Creates a new test suite.
@@ -870,6 +908,7 @@ public interface TestRailClient {
     TRSuite addSuite(TRSuite suite, @Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#update_suite
      *
      * Updates an existing test suite (partial updates are supported,
@@ -889,6 +928,7 @@ public interface TestRailClient {
     TRSuite updateSuite(TRSuite suite, @Param("suite_id") Long suiteID);
 
     /**
+     * {@link TestRailClient}
      * http://docs.gurock.com/testrail-api2/reference-suites#delete_suite
      *
      * Deletes an existing test suite.
@@ -915,6 +955,7 @@ public interface TestRailClient {
     default void apiSections() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#add_section">API: Add section</a>
      *
      * @param projectID is the ID of the project
@@ -932,6 +973,7 @@ public interface TestRailClient {
     TRSection addSection(TRSection section, @Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#get_section">API: Get section</a>
      *
      * Returns an existing section.
@@ -964,6 +1006,7 @@ public interface TestRailClient {
     TRSection getSection(@Param("section_id") Long sectionID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#get_sections">API: Get sections</a>
      *
      * @param projectID is the ID of the project
@@ -1000,6 +1043,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#update_section">API: Update section</a>
      *
      * Updates an existing section (partial updates are supported, i.e. you can submit and update specific fields only).
@@ -1019,6 +1063,7 @@ public interface TestRailClient {
     TRSection updateSection(TRSection section, @Param("section_id") Long sectionID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-sections#delete_section">API: Delete section</a>
      *
      * Deletes an existing section.
@@ -1045,6 +1090,7 @@ public interface TestRailClient {
     default void apiTests() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-tests#get_test">API: Get test</a>
      *
      * If you interested in the test results rather than the tests, please see get_results instead.
@@ -1086,6 +1132,7 @@ public interface TestRailClient {
     TRTest getTest(@Param("test_id") Long testID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-tests#get_tests">API: Get tests</a>
      *
      * @param runID is the ID of the test run
@@ -1112,6 +1159,7 @@ public interface TestRailClient {
     List<TRTest> getTests(@Param("run_id") Long runID, @QueryMap GetTestsQueryMap queryMap);
 
     /**
+     * {@link TestRailClient}
      * See {@link TestRailClient#getTests(Long, GetTestsQueryMap)}
      */
     default List<TRTest> getTests(@Param("run_id") Long runID) {
@@ -1128,6 +1176,7 @@ public interface TestRailClient {
     default void apiCasesFields() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields#get_case_fields">API: Get case fields</a>
      *
      * @return a list of available test case custom fields {@link TRCaseField}.
@@ -1167,6 +1216,7 @@ public interface TestRailClient {
     List<TRCaseField> getCaseFields();
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-fields#add_case_field">API: Add case field</a>
      *
      * Creates a new test case custom field.
@@ -1211,6 +1261,7 @@ public interface TestRailClient {
     default void apiCaseTypes() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-cases-types#get_case_types">API: Get case types</a>
      *
      * @return a list of available case types.
@@ -1225,6 +1276,7 @@ public interface TestRailClient {
 
     /*----------------------------------------------------------------------------------------------------------------*/
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs">API: Configs</a>
      *
      * Utility empty method for quickly navigate through categories.
@@ -1233,6 +1285,7 @@ public interface TestRailClient {
     default void apiConfigurations() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#get_configs">API: Get configs</a>
      *
      * @param projectID is the ID of the project
@@ -1249,6 +1302,7 @@ public interface TestRailClient {
     List<TRProjectConfigGroup> getConfigs(@Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#add_config_group">API: Add config group</a>
      *
      * @param projectID is the ID of the project the configuration group should be added to
@@ -1265,6 +1319,7 @@ public interface TestRailClient {
     TRProjectConfigGroup addConfigGroup(TRProjectConfigGroup cGroup, @Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#update_config_group">API: Update config group</a>
      *
      * Updates an existing configuration group (requires TestRail 5.2 or later).
@@ -1283,6 +1338,7 @@ public interface TestRailClient {
     TRProjectConfigGroup updateConfigGroup(TRProjectConfigGroup cGroup, @Param("config_group_id") Long configGroupID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#delete_config_group">API: Delete config group</a>
      *
      * Deletes an existing configuration group and its configurations (requires TestRail 5.2 or later).
@@ -1300,6 +1356,7 @@ public interface TestRailClient {
     void deleteConfigGroup(@Param("config_group_id") Long configGroupID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#add_config">API: Add config</a>
      *
      * Creates a new configuration (requires TestRail 5.2 or later).
@@ -1318,6 +1375,7 @@ public interface TestRailClient {
     TRProjectConfig addConfig(TRProjectConfig config, @Param("config_group_id") Long configGroupID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#update_config">API: Update config</a>
      *
      * Updates an existing configuration (requires TestRail 5.2 or later).
@@ -1336,6 +1394,7 @@ public interface TestRailClient {
     TRProjectConfig updateConfig(TRProjectConfig config, @Param("config_id") Long configID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-configs#delete_config">API: Delete config</a>
      *
      * Deletes an existing configuration (requires TestRail 5.2 or later).
@@ -1362,6 +1421,7 @@ public interface TestRailClient {
     default void apiMilestones() { /* do nothing */ }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#get_milestone">API: Get milestone</a>
      *
      * @param milestoneID is the ID of the milestone
@@ -1377,6 +1437,7 @@ public interface TestRailClient {
     TRMilestone getMilestone(@Param("milestone_id") Long milestoneID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#get_milestones">API: Get milestones</a>
      *
      * @param projectID is the ID of the project
@@ -1399,6 +1460,7 @@ public interface TestRailClient {
     }
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#add_milestone">API: Add milestone</a>
      *
      * Creates a new milestone.
@@ -1417,6 +1479,7 @@ public interface TestRailClient {
     TRMilestone addMilestone(TRMilestone milestone, @Param("project_id") Long projectID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#update_milestone">API: Update milestone</a>
      *
      * Updates an existing milestone (partial updates are supported, i.e. you can submit and update specific fields only).
@@ -1441,6 +1504,7 @@ public interface TestRailClient {
     TRMilestone updateMilestone(TRMilestone milestone, @Param("milestone_id") Long milestoneID);
 
     /**
+     * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-milestones#delete_milestone">API: Delete milestone</a>
      *
      * Deletes an existing milestone.
@@ -1453,5 +1517,38 @@ public interface TestRailClient {
      */
     @RequestLine(value = "POST /index.php%3F/api/v2/delete_milestone/{milestone_id}")
     void deleteMilestone(@Param("milestone_id") Long milestoneID);
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+    /**
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities">API: Priorities</a>
+     *
+     * Utility empty method for quickly navigate through categories.
+     * TOC - {@link TestRailClient#tableOfContents()}
+     */
+    default void apiPriorities() { /* do nothing */ }
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-priorities#get_priorities">API: Get priorities</a>
+     *
+     * @return a list of available {@link RTPriority}.
+     * The response include an array of priorities.
+     * Each priority has a unique ID, a name and a short version of the name.
+     * The priority field determines the order of the priorities.
+     * The is_default field is true for the default priority and false otherwise.
+     * [
+     * 	{
+     * 		"id": 1,
+     * 		"is_default": false,
+     * 		"name": "1 - Don't Test",
+     * 		"priority": 1,
+     * 		"short_name": "1 - Don't"
+     * 	}
+     * ]
+     * @apiNote Response codes
+     * 200	Success, the available priorities are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_priorities")
+    List<RTPriority> getPriorities();
 
 }
