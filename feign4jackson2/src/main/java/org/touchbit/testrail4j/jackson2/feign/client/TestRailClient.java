@@ -87,6 +87,11 @@ import java.util.List;
  * @see <a href="http://docs.gurock.com/testrail-api2/reference-results-fields">API: Results fields</a>
  *      {@link TestRailClient#getResultFields()}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-plans">API: Plans</a>
+ *
+ *
+ *
+ *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -138,7 +143,7 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{test_id}")
-    List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap getResultsQueryMap);
+    <Q extends GetResultsQueryMap> List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap Q getResultsQueryMap);
 
     /**
      * {@link TestRailClient}
@@ -176,9 +181,9 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_case/{run_id}/{case_id}")
-    List<TRResult> getResultsForCase(@Param("run_id") Long runID,
-                                   @Param("case_id") Long caseID,
-                                   @QueryMap GetResultsQueryMap getResultsQueryMap);
+    <Q extends GetResultsQueryMap> List<TRResult> getResultsForCase(@Param("run_id") Long runID,
+                                                                    @Param("case_id") Long caseID,
+                                                                    @QueryMap Q getResultsQueryMap);
 
     /**
      * {@link TestRailClient}
@@ -1530,5 +1535,49 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_result_fields")
     List<TRResultField> getResultFields();
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-plans#get_plan">API: Get plan</a>
+     *
+     * @param planID is the ID of the test plan
+     *
+     * @return an existing test plan {@link TRPlan}.
+     * The entries field includes an array of test plan entries. A test plan entry is a group of test runs that belong
+     * to the same test suite (just like in the user interface). Each group can have a variable amount of test runs
+     * and also supports configurations.
+     * Please also see {@link TestRailClient#addPlan()} and {@link TestRailClient#addPlanEntry()}
+     *
+     * @apiNote Response codes
+     * 200	Success, the test plan and its test runs are returned as part of the response
+     * 400	Invalid or unknown test plan
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_plan/{plan_id}")
+    TRPlan getPlan(@Param("plan_id") Long planID);
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-plans#get_plans">API: Get plans</a>
+     *
+     * @param projectID is the ID of the project
+     * @param getPlansQueryMap is the request filter
+     *
+     * @return a list of test {@link TRPlan} for a project.
+     *
+     * @apiNote Response codes
+     * 200	Success, the test plans are returned as part of the response
+     * 400	Invalid or unknown project
+     * 403	No access to the project
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_plans/{project_id}")
+    <Q extends GetPlansQueryMap> List<TRPlan> getPlans(@Param("project_id") Long projectID,
+                                                       @QueryMap Q getPlansQueryMap);
+    /**
+     * See {@link TestRailClient#getPlans(Long, GetPlansQueryMap)}
+     */
+    default List<TRPlan> getPlans(@Param("project_id") Long projectID) {
+        return getPlans(projectID, new GetPlansQueryMap());
+    }
 
 }

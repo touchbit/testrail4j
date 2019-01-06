@@ -12,7 +12,7 @@
           "description": "An object wrapped in an array with two default keys, 'context' and 'options'",
           "items": [
             {
-              "type": ["object"],
+              "type": "object",
               "javaType": "TRCaseFieldConfig",
               "$ref": "TRCaseFieldConfig.json"
             }
