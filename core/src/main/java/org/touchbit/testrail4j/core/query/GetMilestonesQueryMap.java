@@ -5,7 +5,7 @@ package org.touchbit.testrail4j.core.query;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class MilestonesQueryMap {
+public class GetMilestonesQueryMap {
 
     /**
      * 1 to return completed milestones only. 0 to return open (active/upcoming) milestones only (available since TestRail 4.0).
@@ -33,12 +33,12 @@ public class MilestonesQueryMap {
         this.is_started = isStarted;
     }
 
-    public MilestonesQueryMap withIsCompleted(Integer isCompleted) {
+    public GetMilestonesQueryMap withIsCompleted(Integer isCompleted) {
         this.is_completed = isCompleted;
         return this;
     }
 
-    public MilestonesQueryMap withIsStarted(Integer isStarted) {
+    public GetMilestonesQueryMap withIsStarted(Integer isStarted) {
         this.is_started = isStarted;
         return this;
     }

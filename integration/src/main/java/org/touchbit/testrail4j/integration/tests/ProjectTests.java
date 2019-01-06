@@ -29,15 +29,16 @@ public class ProjectTests extends BaseCorvusTest {
     public void test_20181231050759() {
         String name = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
-        TRProject project = CLIENT.addProject(name, null, null, null);
-        assertThat(project.getAnnouncement()).isNull();
-        assertThat(project.getCompletedOn()).isNull();
-        assertThat(project.getIsCompleted()).isFalse();
-        assertThat(project.getName()).isEqualTo(name);
-        assertThat(project.getShowAnnouncement()).isFalse();
-        assertThat(project.getId()).isGreaterThan(0);
-        assertThat(project.getUrl()).isNotEmpty();
-        assertThat(project.getSuiteMode()).isEqualTo(MULTIPLE.id());
+        TRProject project = new TRProject().withName(name);
+        TRProject actProject = CLIENT.addProject(project);
+        assertThat(actProject.getAnnouncement()).isNull();
+        assertThat(actProject.getCompletedOn()).isNull();
+        assertThat(actProject.getIsCompleted()).isFalse();
+        assertThat(actProject.getName()).isEqualTo(name);
+        assertThat(actProject.getShowAnnouncement()).isFalse();
+        assertThat(actProject.getId()).isGreaterThan(0);
+        assertThat(actProject.getUrl()).isNotEmpty();
+        assertThat(actProject.getSuiteMode()).isEqualTo(MULTIPLE.id());
     }
 
     @Test(description = "Expecting successful the project creation with all fields")
@@ -46,15 +47,20 @@ public class ProjectTests extends BaseCorvusTest {
         String name = UUID.randomUUID().toString();
         String announcement = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
-        TRProject project = CLIENT.addProject(name, announcement, true, SINGLE);
-        assertThat(project.getName()).isEqualTo(name);
-        assertThat(project.getAnnouncement()).isEqualTo(announcement);
-        assertThat(project.getShowAnnouncement()).isTrue();
-        assertThat(project.getSuiteMode()).isEqualTo(SINGLE.id());
-        assertThat(project.getCompletedOn()).isNull();
-        assertThat(project.getIsCompleted()).isFalse();
-        assertThat(project.getId()).isGreaterThan(0);
-        assertThat(project.getUrl()).isNotEmpty();
+        TRProject project = new TRProject()
+                .withName(name)
+                .withAnnouncement(announcement)
+                .withShowAnnouncement(true)
+                .withSuiteMode(SINGLE.id());
+        TRProject actProject = CLIENT.addProject(project);
+        assertThat(actProject.getName()).isEqualTo(name);
+        assertThat(actProject.getAnnouncement()).isEqualTo(announcement);
+        assertThat(actProject.getShowAnnouncement()).isTrue();
+        assertThat(actProject.getSuiteMode()).isEqualTo(SINGLE.id());
+        assertThat(actProject.getCompletedOn()).isNull();
+        assertThat(actProject.getIsCompleted()).isFalse();
+        assertThat(actProject.getId()).isGreaterThan(0);
+        assertThat(actProject.getUrl()).isNotEmpty();
     }
 
     @Test(description = "Expecting successful the project creation with Project json object")

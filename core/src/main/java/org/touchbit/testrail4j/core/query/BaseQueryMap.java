@@ -19,4 +19,8 @@ public abstract class BaseQueryMap {
         return sj.toString();
     }
 
+    protected Integer booleanToInteger(boolean value) {
+        return value ? 1 : 0;
+    }
+
 }

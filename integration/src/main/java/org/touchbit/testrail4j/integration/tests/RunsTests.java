@@ -9,6 +9,8 @@ import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
 import org.touchbit.testrail4j.jackson2.model.TRRun;
 
+import java.util.List;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 
@@ -40,14 +42,18 @@ public class RunsTests extends BaseCorvusTest {
     @Details()
     public void test_20190102010512() {
         TRRun run = CLIENT.addRun();
-        CLIENT.getRun(run);
+        TRRun actRun =CLIENT.getRun(run);
+        assertThat(actRun.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expecting successful receive of the existing runs list")
     @Details()
     public void test_20190102013324() {
         TRRun run = CLIENT.addRun();
-        CLIENT.getRuns(run);
+        List<TRRun> actRuns = CLIENT.getRuns(run);
+        for (TRRun actRun : actRuns) {
+            assertThat(actRun.getAdditionalProperties()).isEmpty();
+        }
     }
 
     @Test(description = "Expecting successful delete of the existing run")

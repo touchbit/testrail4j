@@ -40,5 +40,5 @@ tr-start: tr-stop
 tr-stop:
 	docker-compose -f .indirect/docker-compose.yml kill
 
-itest:
+itest: install
 	java -jar integration/target/Corvus.jar

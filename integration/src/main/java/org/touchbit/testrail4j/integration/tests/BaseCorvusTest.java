@@ -23,8 +23,9 @@ import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.GetProjectsQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
-import org.touchbit.testrail4j.core.query.MilestonesQueryMap;
+import org.touchbit.testrail4j.core.query.GetMilestonesQueryMap;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
@@ -117,10 +118,13 @@ public class BaseCorvusTest extends BaseBuggyTest {
          * @return generated {@link TRProject}
          */
         default TRProject getProject(SuiteMode suiteMode) {
-            String name = UUID.randomUUID().toString();
-            String announcement = UUID.randomUUID().toString();
-            step("Add new project with name: {}", name);
-            return addProject(name, announcement, true, suiteMode);
+            TRProject project = new TRProject()
+                    .withName(UUID.randomUUID().toString())
+                    .withAnnouncement(UUID.randomUUID().toString())
+                    .withShowAnnouncement(true)
+                    .withSuiteMode(suiteMode.id());
+            step("Add new project with name: {}", project.getName());
+            return addProject(project);
         }
 
         /**
@@ -142,7 +146,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default List<TRProject> getProjects() {
             step("Get existing projects list");
-            return getProjects(false);
+            return getProjects(new GetProjectsQueryMap().withIsCompleted(false));
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
@@ -434,7 +438,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.getMilestones(project.getId());
         }
 
-        default List<TRMilestone> getMilestones(TRProject project, MilestonesQueryMap queryMap) {
+        default List<TRMilestone> getMilestones(TRProject project, GetMilestonesQueryMap queryMap) {
             step("Get milestones with filter for project with ID {}", project.getId(), queryMap);
             return CLIENT.getMilestones(project.getId(), queryMap);
         }

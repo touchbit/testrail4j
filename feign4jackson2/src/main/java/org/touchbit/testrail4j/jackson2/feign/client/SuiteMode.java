@@ -32,13 +32,13 @@ public enum SuiteMode {
     MULTIPLE (3),
     ;
 
-    private int id;
+    private long id;
 
-    SuiteMode(int id) {
+    SuiteMode(long id) {
         this.id = id;
     }
 
-    public int id() {
+    public long id() {
         return id;
     }
 

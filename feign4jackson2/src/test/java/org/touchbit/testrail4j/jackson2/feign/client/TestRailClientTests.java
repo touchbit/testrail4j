@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.touchbit.testrail4j.core.BaseUnitTest;
 import org.touchbit.testrail4j.core.ExecutionLogger;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.GetProjectsQueryMap;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.TRResult;
@@ -104,17 +105,19 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#getProjects(Boolean)")
         void unitTest_20181112151002() {
-            CLIENT.getProjects(true);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString())
-                    .contains(GET_API + "/get_projects&is_completed=1");
+            CLIENT.getProjects(new  GetProjectsQueryMap().withIsCompleted(true));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_projects");
+            assertThat(msg).contains("is_completed=1");
         }
 
         @Test
         @DisplayName("TestRailClient#getProjects()")
         void unitTest_20181112151227() {
             CLIENT.getProjects();
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString())
-                    .contains(GET_API + "/get_projects&is_completed=0");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_projects");
+            assertThat(msg).contains("is_completed=0");
         }
     }
 
