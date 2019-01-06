@@ -4,7 +4,7 @@ import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
-import org.touchbit.testrail4j.core.query.GetMilestonesQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetMilestonesFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRMilestone;
@@ -79,7 +79,7 @@ public class MilestonesTests extends BaseCorvusTest {
         TRProject project = CLIENT.getProject();
         CLIENT.addMilestone(project);
         CLIENT.addMilestone(project);
-        GetMilestonesQueryMap queryMap = new GetMilestonesQueryMap().withIsCompleted(0).withIsStarted(1);
+        GetMilestonesFilter queryMap = new GetMilestonesFilter().withIsCompleted(0).withIsStarted(1);
         List<TRMilestone> actMilestones = CLIENT.getMilestones(project, queryMap);
         assertThat(actMilestones).isNotEmpty();
         for (TRMilestone actMilestone : actMilestones) {

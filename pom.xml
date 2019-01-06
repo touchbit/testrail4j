@@ -12,7 +12,6 @@
 
     <modules>
         <module>core</module>
-        <module>util</module>
         <module>feign4jackson2</module>
         <module>model4gson</module>
         <module>model4jackson2</module>

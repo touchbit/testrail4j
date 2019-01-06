@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.touchbit.testrail4j.core.BaseUnitTest;
 import org.touchbit.testrail4j.core.ExecutionLogger;
-import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
-import org.touchbit.testrail4j.core.query.GetProjectsQueryMap;
-import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
+import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
+import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
 import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.TRResult;
 import org.touchbit.testrail4j.jackson2.model.TRResults;
@@ -34,7 +34,7 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#getResults(Integer, GetResultsQueryMap)")
         void unitTest_20181112032818() {
-            GetResultsQueryMap resultsQueryMap = new GetResultsQueryMap();
+            GetResultsFilter resultsQueryMap = new GetResultsFilter();
             resultsQueryMap.setLimit(10L);
             CLIENT.getResults(2818L, resultsQueryMap);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_results/2818&limit=10");
@@ -83,7 +83,7 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#getCases(Integer, GetCasesQueryMap)")
         void unitTest_20181112134620() {
-            GetCasesQueryMap map = new GetCasesQueryMap();
+            GetCasesFilter map = new GetCasesFilter();
             map.setTypeId(3L);
             CLIENT.getCases(34530L, map);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_cases/34530&type_id=3");
@@ -105,7 +105,7 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#getProjects(Boolean)")
         void unitTest_20181112151002() {
-            CLIENT.getProjects(new  GetProjectsQueryMap().withIsCompleted(true));
+            CLIENT.getProjects(new GetProjectsFilter().withIsCompleted(true));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
             assertThat(msg).contains(GET_API + "/get_projects");
             assertThat(msg).contains("is_completed=1");

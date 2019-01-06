@@ -4,7 +4,7 @@ import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
-import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRCase;
@@ -115,7 +115,7 @@ public class CaseTests extends BaseCorvusTest {
         section = CLIENT.addSection(section, project);
         TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
         caze = CLIENT.addCase(caze);
-        List<TRCase> actualCaze = CLIENT.getCases(project, new GetCasesQueryMap().withSectionId(section.getId()));
+        List<TRCase> actualCaze = CLIENT.getCases(project, new GetCasesFilter().withSectionId(section.getId()));
         List<Long> ids = actualCaze.stream().map(TRCase::getId).collect(Collectors.toList());
         assertThat(ids).contains(caze.getId());
     }

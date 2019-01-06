@@ -23,6 +23,8 @@ import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
 import org.touchbit.testrail4j.core.query.*;
+import org.touchbit.testrail4j.core.query.filter.GetPlansFilter;
+import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
@@ -141,7 +143,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default List<TRProject> getProjects() {
             step("Get existing projects list");
-            return getProjects(new GetProjectsQueryMap().withIsCompleted(false));
+            return getProjects(new GetProjectsFilter().withIsCompleted(false));
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
@@ -480,10 +482,10 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default List<TRPlan> getPlans(TRProject project) {
             step("Get plan for project ID {}", project.getId());
-            return getPlans(project.getId(), new GetPlansQueryMap());
+            return getPlans(project.getId(), new GetPlansFilter());
         }
 
-        default <Q extends GetPlansQueryMap> List<TRPlan> getPlans(TRProject project, Q queryMap) {
+        default List<TRPlan> getPlans(TRProject project, GetPlansQueryMap queryMap) {
             step("Get plan for project ID {} with filter", project.getId());
             return getPlans(project.getId(), queryMap);
         }

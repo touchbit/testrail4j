@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.GetPlansQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetPlansFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.*;
@@ -163,7 +164,7 @@ public class PlanTests extends BaseCorvusTest {
         TRProject project = CLIENT.getProject();
         CLIENT.addPlan(project);
         CLIENT.addPlan(project);
-        GetPlansQueryMap queryMap = new GetPlansQueryMap()
+        GetPlansQueryMap queryMap = new GetPlansFilter()
                 .withCreatedAfter(500000000L)
                 .withCreatedBefore(500000000L)
                 .withCreatedBy(1L)

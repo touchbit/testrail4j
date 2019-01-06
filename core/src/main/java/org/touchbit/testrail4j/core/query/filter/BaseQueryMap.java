@@ -14,15 +14,29 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.core.query;
+package org.touchbit.testrail4j.core.query.filter;
 
-import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
+import java.util.StringJoiner;
 
 /**
- * Get Cases QueryMap Filter
- * Default filter - {@link GetCasesFilter}
- * <p>
- * Created by Oleg Shaburov on 06.01.2019
+ * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */
-public interface GetCasesQueryMap { }
+public abstract class BaseQueryMap {
+
+    protected String toCommaSeparatedString(Object[] array) {
+        if (array == null || array.length == 0) {
+            return null;
+        }
+        StringJoiner sj = new StringJoiner(",");
+        for (Object s : array) {
+            sj.add(String.valueOf(s));
+        }
+        return sj.toString();
+    }
+
+    protected Integer booleanToInteger(boolean value) {
+        return value ? 1 : 0;
+    }
+
+}

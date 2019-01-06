@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "javaInterfaces": ["org.touchbit.testrail4j.util.TestResult"],
   "properties": {
     "id": {
       "type": "integer",
@@ -11,7 +10,7 @@
     "case_id": {
       "type": "integer",
       "javaType" : "java.lang.Long",
-      "description": "The ID of the test case"
+      "description": "The ID of the test case (Util field. Not returned in response.)"
     },
     "status_id": {
       "type": "integer",

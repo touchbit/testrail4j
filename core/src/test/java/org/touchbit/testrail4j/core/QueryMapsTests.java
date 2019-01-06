@@ -2,10 +2,12 @@ package org.touchbit.testrail4j.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +18,7 @@ class QueryMapsTests {
     @Test
     @DisplayName("Check GetCasesQueryMap")
     void unitTest_20181111214825() {
-        GetCasesQueryMap map = new GetCasesQueryMap();
+        GetCasesFilter map = new GetCasesFilter();
         map.setCreatedAfter(1L);
         map.setCreatedBefore(2L);
         map.setCreatedBy(3L, 1L);
@@ -46,7 +48,7 @@ class QueryMapsTests {
     @Test
     @DisplayName("Check GetResultsQueryMap")
     void unitTest_20181111220009() {
-        GetResultsQueryMap map = new GetResultsQueryMap();
+        GetResultsFilter map = new GetResultsFilter();
         map.setLimit(1L);
         map.setOffset(2L);
         map.setStatusId(3L);
@@ -58,7 +60,7 @@ class QueryMapsTests {
     @Test
     @DisplayName("GetCasesQueryMap number field type is Long")
     void unitTest_20181112162433() {
-        Field[] fields = GetCasesQueryMap.class.getDeclaredFields();
+        Field[] fields = GetCasesFilter.class.getDeclaredFields();
         for (Field field : fields) {
             assertThat(field.getType()).isNotSameAs(Integer.class);
             assertThat(field.getType()).isNotSameAs(BigInteger.class);
@@ -71,7 +73,9 @@ class QueryMapsTests {
         Field[] fields = GetResultsQueryMap.class.getDeclaredFields();
         for (Field field : fields) {
             assertThat(field.getType()).isNotSameAs(Integer.class);
+            assertThat(field.getType()).isNotSameAs(Double.class);
             assertThat(field.getType()).isNotSameAs(BigInteger.class);
+            assertThat(field.getType()).isNotSameAs(BigDecimal.class);
         }
     }
 

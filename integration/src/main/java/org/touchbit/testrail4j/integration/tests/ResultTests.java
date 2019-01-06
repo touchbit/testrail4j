@@ -3,7 +3,7 @@ package org.touchbit.testrail4j.integration.tests;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
-import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.*;
@@ -97,7 +97,7 @@ public class ResultTests extends BaseCorvusTest {
         List<TRResult> expResult = CLIENT.addResultsForCases(results, run);
         List<TRResult> actResult = CLIENT.getResultsForRun(run);
         assertThat(actResult).isEqualTo(expResult);
-        actResult = CLIENT.getResultsForRun(run, new GetResultsQueryMap().withStatusId(PASSED.getId()));
+        actResult = CLIENT.getResultsForRun(run, new GetResultsFilter().withStatusId(PASSED.getId()));
         assertThat(actResult).isEmpty();
     }
 
@@ -115,7 +115,7 @@ public class ResultTests extends BaseCorvusTest {
         List<TRResult> expResult = CLIENT.addResultsForCases(results, run);
         List<TRResult> actResult = CLIENT.getResultsForCase(run, caze);
         assertThat(actResult).isEqualTo(expResult);
-        actResult = CLIENT.getResultsForCase(run, caze, new GetResultsQueryMap().withStatusId(PASSED.getId()));
+        actResult = CLIENT.getResultsForCase(run, caze, new GetResultsFilter().withStatusId(PASSED.getId()));
         assertThat(actResult).isEmpty();
     }
 
@@ -135,7 +135,7 @@ public class ResultTests extends BaseCorvusTest {
         for (TRTest trTest : trTests) {
             List<TRResult> actResult = CLIENT.getResults(trTest);
             assertThat(actResult).isEqualTo(expResult);
-            actResult = CLIENT.getResults(trTest, new GetResultsQueryMap().withStatusId(PASSED.getId()));
+            actResult = CLIENT.getResults(trTest, new GetResultsFilter().withStatusId(PASSED.getId()));
             assertThat(actResult).isEmpty();
         }
     }

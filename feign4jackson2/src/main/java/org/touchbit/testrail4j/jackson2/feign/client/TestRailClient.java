@@ -21,6 +21,7 @@ import feign.Param;
 import feign.QueryMap;
 import feign.RequestLine;
 import org.touchbit.testrail4j.core.query.*;
+import org.touchbit.testrail4j.core.query.filter.*;
 import org.touchbit.testrail4j.core.type.FieldTypes;
 import org.touchbit.testrail4j.jackson2.model.*;
 
@@ -273,12 +274,12 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{test_id}")
-    <Q extends GetResultsQueryMap> List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap Q queryMap);
+    List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
      */
-    default <Q extends GetResultsQueryMap> List<TRResult> getResults(TRTest trTest, Q queryMap) {
+    default List<TRResult> getResults(TRTest trTest, GetResultsQueryMap queryMap) {
         return getResults(trTest.getId(), queryMap);
     }
 
@@ -286,14 +287,14 @@ public interface TestRailClient {
      * See {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResults(Long testID) {
-        return getResults(testID, new GetResultsQueryMap());
+        return getResults(testID, new GetResultsFilter());
     }
 
     /**
      * See {@link TestRailClient#getResults(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResults(TRTest trTest) {
-        return getResults(trTest.getId(), new GetResultsQueryMap());
+        return getResults(trTest.getId(), new GetResultsFilter());
     }
 
     /**
@@ -324,28 +325,28 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_case/{run_id}/{case_id}")
-    <Q extends GetResultsQueryMap> List<TRResult> getResultsForCase(@Param("run_id") Long runID,
+    List<TRResult> getResultsForCase(@Param("run_id") Long runID,
                                                                     @Param("case_id") Long caseID,
-                                                                    @QueryMap Q queryMap);
+                                                                    @QueryMap GetResultsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForCase(Long runID, Long caseID) {
-        return getResultsForCase(runID, caseID, new GetResultsQueryMap());
+        return getResultsForCase(runID, caseID, new GetResultsFilter());
     }
 
     /**
      * See {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForCase(TRRun run, TRCase caze) {
-        return getResultsForCase(run.getId(), caze.getId(), new GetResultsQueryMap());
+        return getResultsForCase(run.getId(), caze.getId(), new GetResultsFilter());
     }
 
     /**
      * See {@link TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)}
      */
-    default <Q extends GetResultsQueryMap> List<TRResult> getResultsForCase(TRRun run, TRCase caze, Q queryMap) {
+    default List<TRResult> getResultsForCase(TRRun run, TRCase caze, GetResultsQueryMap queryMap) {
         return getResultsForCase(run.getId(), caze.getId(), queryMap);
     }
 
@@ -366,27 +367,27 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_run/{run_id}")
-    <Q extends GetResultsQueryMap> List<TRResult> getResultsForRun(@Param("run_id") Long runID, @QueryMap Q queryMap);
+    List<TRResult> getResultsForRun(@Param("run_id") Long runID, @QueryMap GetResultsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
      */
-    default <Q extends GetResultsQueryMap> List<TRResult> getResultsForRun(TRRun run, Q queryMap) {
-        return getResultsForRun(run.getId(), new GetResultsQueryMap());
+    default List<TRResult> getResultsForRun(TRRun run, GetResultsQueryMap queryMap) {
+        return getResultsForRun(run.getId(), new GetResultsFilter());
     }
 
     /**
      * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForRun(Long runID) {
-        return getResultsForRun(runID, new GetResultsQueryMap());
+        return getResultsForRun(runID, new GetResultsFilter());
     }
 
     /**
      * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForRun(TRRun run) {
-        return getResultsForRun(run.getId(), new GetResultsQueryMap());
+        return getResultsForRun(run.getId(), new GetResultsFilter());
     }
 
     /**
@@ -618,7 +619,7 @@ public interface TestRailClient {
      * GET /index.php?/api/v2/get_cases/1&suite_id=2&priority_id=3,4
      *
      * @param projectID is the ID of the project
-     * @param queryMap is the following optional parameters and filters {@link GetCasesQueryMap}
+     * @param queryMap is the following optional parameters and filters {@link GetCasesFilter}
      *
      * @return a list of {@link TRCase} for a test suite or specific section in a test suite.
      * [
@@ -629,26 +630,26 @@ public interface TestRailClient {
      *
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_cases/{project_id}")
-    <Q extends GetCasesQueryMap> List<TRCase> getCases(@Param("project_id") Long projectID, @QueryMap Q queryMap);
+    List<TRCase> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
      */
     default List<TRCase> getCases(Long projectID) {
-        return getCases(projectID, new GetCasesQueryMap());
+        return getCases(projectID, new GetCasesFilter());
     }
 
     /**
      * See {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
      */
     default List<TRCase> getCases(TRProject project) {
-        return getCases(project.getId(), new GetCasesQueryMap());
+        return getCases(project.getId(), new GetCasesFilter());
     }
 
     /**
      * See {@link TestRailClient#getCases(Long, GetCasesQueryMap)}
      */
-    default <Q extends GetCasesQueryMap> List<TRCase> getCases(TRProject project, Q queryMap) {
+    default List<TRCase> getCases(TRProject project, GetCasesQueryMap queryMap) {
         return getCases(project.getId(), queryMap);
     }
 
@@ -778,13 +779,13 @@ public interface TestRailClient {
      * ]
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_projects")
-    <Q extends GetProjectsQueryMap> List<TRProject> getProjects(@QueryMap Q queryMap);
+    List<TRProject> getProjects(@QueryMap GetProjectsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getProjects(GetProjectsQueryMap)}
      */
     default List<TRProject> getProjects() {
-        return getProjects(new GetProjectsQueryMap().withIsCompleted(false));
+        return getProjects(new GetProjectsFilter().withIsCompleted(false));
     }
 
     /**
@@ -933,26 +934,26 @@ public interface TestRailClient {
      * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_runs/{project_id}")
-    <Q extends GetRunsQueryMap> List<TRRun> getRuns(@Param("project_id") Long projectID, @QueryMap Q queryMap);
+    List<TRRun> getRuns(@Param("project_id") Long projectID, @QueryMap GetRunsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
      */
     default List<TRRun> getRuns(@Param("project_id") Long projectID) {
-        return getRuns(projectID, new GetRunsQueryMap());
+        return getRuns(projectID, new GetRunsFilter());
     }
 
     /**
      * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
      */
     default List<TRRun> getRuns(TRProject project) {
-        return getRuns(project.getId(), new GetRunsQueryMap());
+        return getRuns(project.getId(), new GetRunsFilter());
     }
 
     /**
      * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
      */
-    default <Q extends GetRunsQueryMap> List<TRRun> getRuns(TRProject project, Q queryMap) {
+    default List<TRRun> getRuns(TRProject project, GetRunsQueryMap queryMap) {
         return getRuns(project.getId(), queryMap);
     }
 
@@ -1301,27 +1302,27 @@ public interface TestRailClient {
      * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_sections/{project_id}")
-    <Q extends GetSectionsQueryMap> List<TRSection> getSections(@Param("project_id") Long projectID,
-                                                                @QueryMap Q queryMap);
+    List<TRSection> getSections(@Param("project_id") Long projectID,
+                                                                @QueryMap GetSectionsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getSections(Long, GetSectionsQueryMap)}
      */
     default List<TRSection> getSections(Long projectID) {
-        return getSections(projectID, new GetSectionsQueryMap());
+        return getSections(projectID, new GetSectionsFilter());
     }
 
     /**
      * See {@link TestRailClient#getSections(Long, GetSectionsQueryMap)}
      */
     default List<TRSection> getSections(TRProject project) {
-        return getSections(project.getId(), new GetSectionsQueryMap());
+        return getSections(project.getId(), new GetSectionsFilter());
     }
 
     /**
      * See {@link TestRailClient#getSections(Long, GetSectionsQueryMap)}
      */
-    default <Q extends GetSectionsQueryMap> List<TRSection> getSections(TRProject project, Q queryMap) {
+    default List<TRSection> getSections(TRProject project, GetSectionsQueryMap queryMap) {
         return getSections(project.getId(), queryMap);
     }
 
@@ -1451,26 +1452,26 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_tests/{run_id}")
-    <Q extends GetTestsQueryMap> List<TRTest> getTests(@Param("run_id") Long runID, @QueryMap Q queryMap);
+    List<TRTest> getTests(@Param("run_id") Long runID, @QueryMap GetTestsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getTests(Long, GetTestsQueryMap)}
      */
     default List<TRTest> getTests(Long runID) {
-        return getTests(runID, new GetTestsQueryMap());
+        return getTests(runID, new GetTestsFilter());
     }
 
     /**
      * See {@link TestRailClient#getTests(Long, GetTestsQueryMap)}
      */
     default List<TRTest> getTests(TRRun run) {
-        return getTests(run.getId(), new GetTestsQueryMap());
+        return getTests(run.getId(), new GetTestsFilter());
     }
 
     /**
      * See {@link TestRailClient#getTests(Long, GetTestsQueryMap)}
      */
-    default <Q extends GetTestsQueryMap> List<TRTest> getTests(TRRun run, Q queryMap) {
+    default List<TRTest> getTests(TRRun run, GetTestsQueryMap queryMap) {
         return getTests(run.getId(), queryMap);
     }
 
@@ -1777,14 +1778,13 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_milestones/{project_id}")
-    <Q extends GetMilestonesQueryMap> List<TRMilestone> getMilestones(@Param("project_id") Long projectID,
-                                                                      @QueryMap Q queryMap);
+    List<TRMilestone> getMilestones(@Param("project_id") Long projectID, @QueryMap GetMilestonesQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getMilestones(Long, GetMilestonesQueryMap)}
      */
     default List<TRMilestone> getMilestones(Long projectID) {
-        return getMilestones(projectID, new GetMilestonesQueryMap());
+        return getMilestones(projectID, new GetMilestonesFilter());
     }
 
     /**
@@ -1797,7 +1797,7 @@ public interface TestRailClient {
     /**
      * See {@link TestRailClient#getMilestones(Long, GetMilestonesQueryMap)}
      */
-    default <Q extends GetMilestonesQueryMap> List<TRMilestone> getMilestones(TRProject project, Q queryMap) {
+    default List<TRMilestone> getMilestones(TRProject project, GetMilestonesQueryMap queryMap) {
         return getMilestones(project.getId());
     }
 
@@ -2059,26 +2059,26 @@ public interface TestRailClient {
      * 403	No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_plans/{project_id}")
-    <Q extends GetPlansQueryMap> List<TRPlan> getPlans(@Param("project_id") Long projectID, @QueryMap Q queryMap);
+    List<TRPlan> getPlans(@Param("project_id") Long projectID, @QueryMap GetPlansQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getPlans(Long, GetPlansQueryMap)}
      */
     default List<TRPlan> getPlans(Long projectID) {
-        return getPlans(projectID, new GetPlansQueryMap());
+        return getPlans(projectID, new GetPlansFilter());
     }
 
     /**
      * See {@link TestRailClient#getPlans(Long, GetPlansQueryMap)}
      */
     default List<TRPlan> getPlans(TRProject project) {
-        return getPlans(project.getId(), new GetPlansQueryMap());
+        return getPlans(project.getId(), new GetPlansFilter());
     }
 
     /**
      * See {@link TestRailClient#getPlans(Long, GetPlansQueryMap)}
      */
-    default <Q extends GetPlansQueryMap> List<TRPlan> getPlans(TRProject project, Q queryMap) {
+    default List<TRPlan> getPlans(TRProject project, GetPlansQueryMap queryMap) {
         return getPlans(project.getId(), queryMap);
     }
 
