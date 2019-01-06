@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "configs": {
+      "type": "array",
+      "javaType": "java.util.List<TRResultFieldConfig>",
+      "items": {
+        "type": "object",
+        "javaType": "TRResultFieldConfig",
+        "$ref": "TRResultFieldConfig.json"
+      }
+    },
+    "template_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "description": {
+      "type": "string"
+    },
+    "display_order": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "include_all": {
+      "type": "boolean"
+    },
+    "label": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean"
+    },
+    "system_name": {
+      "type": "string"
+    },
+    "type_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "configs",
+    "description",
+    "display_order",
+    "id",
+    "label",
+    "name",
+    "system_name",
+    "type_id"
+  ]
+}

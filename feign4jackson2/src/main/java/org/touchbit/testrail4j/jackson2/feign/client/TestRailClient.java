@@ -84,6 +84,9 @@ import java.util.List;
  * @see <a href="http://docs.gurock.com/testrail-api2/reference-statuses">API: Statuses</a>
  *      {@link TestRailClient#getStatuses()}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-results-fields">API: Results fields</a>
+ *      {@link TestRailClient#getResultFields()}
+ *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -1510,5 +1513,22 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_statuses")
     List<TRStatus> getStatuses();
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-results-fields#get_result_fields">API: Get result fields</a>
+     *
+     * @return a list of available test result custom fields {@link TRResultField}.
+     * The response includes an array of custom field definitions.
+     * A custom field can have different configurations and options per project which is indicated by the configs field.
+     * To check if a custom field is applicable to a specific project (and to find out the field options for this
+     * project), the context of the field configuration must either be global (is_global) or include the ID of
+     * the project in project_ids.
+     *
+     * @apiNote Response codes
+     * 200	Success, the available custom fields are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_result_fields")
+    List<TRResultField> getResultFields();
 
 }

@@ -6,7 +6,7 @@
       "type": "array",
       "javaType": "java.util.List<TRProjectConfig>",
       "items": {
-        "type": ["object"],
+        "type": "object",
         "javaType": "TRProjectConfig",
         "$ref": "TRProjectConfig.json"
       }
