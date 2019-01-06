@@ -81,6 +81,8 @@ import java.util.List;
  * @see <a href="http://docs.gurock.com/testrail-api2/reference-templates">API: Templates</a>
  *      {@link TestRailClient#getTemplates(Long)}
  *
+ * @see <a href="http://docs.gurock.com/testrail-api2/reference-statuses">API: Statuses</a>
+ *      {@link TestRailClient#getStatuses()}
  *
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
@@ -1486,7 +1488,7 @@ public interface TestRailClient {
      *
      * @param projectID is the ID of the project
      *
-     * @return a list of available templates (requires TestRail 5.2 or later).
+     * @return a list of available {@link TRTemplate}s (requires TestRail 5.2 or later).
      *
      * @apiNote Response codes
      * 200	Success, the templates are returned as part of the response
@@ -1495,5 +1497,18 @@ public interface TestRailClient {
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_templates/{project_id}")
     List<TRTemplate> getTemplates(@Param("project_id") Long projectID);
+
+    /**
+     * {@link TestRailClient}
+     * @see <a href="http://docs.gurock.com/testrail-api2/reference-statuses#get_statuses">API: Get statuses</a>
+     *
+     * @return a list of available test {@link TRStatus}es.
+     * The returned response includes all system and custom statuses
+     *
+     * @apiNote Response codes
+     * 200	Success, the available statuses are returned as part of the response
+     */
+    @RequestLine(value = "GET /index.php%3F/api/v2/get_statuses")
+    List<TRStatus> getStatuses();
 
 }
