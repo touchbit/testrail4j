@@ -29,7 +29,7 @@ import org.touchbit.testrail4j.jackson2.model.TRRun;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 02.01.2019

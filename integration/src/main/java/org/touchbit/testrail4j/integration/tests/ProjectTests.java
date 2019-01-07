@@ -30,8 +30,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.MULTIPLE;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.MULTIPLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
@@ -55,7 +55,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(actProject.getShowAnnouncement()).isFalse();
         assertThat(actProject.getId()).isGreaterThan(0);
         assertThat(actProject.getUrl()).isNotEmpty();
-        assertThat(actProject.getSuiteMode()).isEqualTo(MULTIPLE.id());
+        assertThat(actProject.getSuiteMode()).isEqualTo(MULTIPLE.getId());
         assertThat(actProject.getAdditionalProperties()).isEmpty();
     }
 
@@ -69,12 +69,12 @@ public class ProjectTests extends BaseCorvusTest {
                 .withName(name)
                 .withAnnouncement(announcement)
                 .withShowAnnouncement(true)
-                .withSuiteMode(SINGLE.id());
+                .withSuiteMode(SINGLE.getId());
         TRProject actProject = CLIENT.addProject(project);
         assertThat(actProject.getName()).isEqualTo(name);
         assertThat(actProject.getAnnouncement()).isEqualTo(announcement);
         assertThat(actProject.getShowAnnouncement()).isTrue();
-        assertThat(actProject.getSuiteMode()).isEqualTo(SINGLE.id());
+        assertThat(actProject.getSuiteMode()).isEqualTo(SINGLE.getId());
         assertThat(actProject.getCompletedOn()).isNull();
         assertThat(actProject.getIsCompleted()).isFalse();
         assertThat(actProject.getId()).isGreaterThan(0);

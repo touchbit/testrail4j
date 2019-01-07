@@ -30,7 +30,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.core.type.Statuses.*;
 import static org.touchbit.testrail4j.core.type.Statuses.CUSTOM_STATUS6;
 import static org.touchbit.testrail4j.core.type.Statuses.CUSTOM_STATUS7;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 02.01.2019

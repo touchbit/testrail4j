@@ -26,7 +26,7 @@ import org.touchbit.testrail4j.core.query.*;
 import org.touchbit.testrail4j.core.query.filter.GetPlansFilter;
 import org.touchbit.testrail4j.core.query.filter.GetSectionsFilter;
 import org.touchbit.testrail4j.integration.config.Config;
-import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
+import org.touchbit.testrail4j.core.type.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
 import org.touchbit.testrail4j.jackson2.model.*;
@@ -34,8 +34,8 @@ import org.touchbit.testrail4j.jackson2.model.*;
 import java.util.*;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.MULTIPLE;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.MULTIPLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
@@ -119,7 +119,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
                     .withName(UUID.randomUUID().toString())
                     .withAnnouncement(UUID.randomUUID().toString())
                     .withShowAnnouncement(true)
-                    .withSuiteMode(suiteMode.id());
+                    .withSuiteMode(suiteMode.getId());
             step("Add new project with name: {}", project.getName());
             return addProject(project);
         }

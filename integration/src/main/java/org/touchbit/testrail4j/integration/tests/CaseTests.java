@@ -34,7 +34,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.core.type.CaseTypes.ACCEPTANCE;
 import static org.touchbit.testrail4j.core.type.Priorities.CRITICAL;
 import static org.touchbit.testrail4j.core.type.Templates.TEST_CASE_TEXT;
-import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
+import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
 /**
  * Created by Oleg Shaburov on 01.01.2019

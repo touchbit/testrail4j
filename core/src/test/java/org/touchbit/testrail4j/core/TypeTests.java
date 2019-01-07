@@ -26,6 +26,7 @@ import static org.touchbit.testrail4j.core.type.FieldTypes.*;
 import static org.touchbit.testrail4j.core.type.Priorities.*;
 import static org.touchbit.testrail4j.core.type.Statuses.*;
 import static org.touchbit.testrail4j.core.type.Templates.*;
+import static org.touchbit.testrail4j.core.type.SuiteMode.*;
 
 /**
  * Created by Oleg Shaburov on 07.01.2019
@@ -106,6 +107,14 @@ class TypeTests {
         assertThat(TEST_CASE_TEXT.getId()).isEqualTo(1);
         assertThat(TEST_CASE_STEPS.getId()).isEqualTo(2);
         assertThat(EXPLORATORY_SESSION.getId()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("Check SuiteMode enum")
+    void unitTest_20190107215904() {
+        assertThat(SINGLE.getId()).isEqualTo(1);
+        assertThat(BASELINES.getId()).isEqualTo(2);
+        assertThat(MULTIPLE.getId()).isEqualTo(3);
     }
 
 }

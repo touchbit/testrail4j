@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.jackson2.feign.client;
+package org.touchbit.testrail4j.core.type;
 
 /**
  * The suite mode of the project
@@ -25,7 +25,7 @@ package org.touchbit.testrail4j.jackson2.feign.client;
  * Created by Oleg Shaburov on 31.12.2018
  * shaburov.o.a@gmail.com
  */
-public enum SuiteMode {
+public enum SuiteMode implements Type {
 
     SINGLE (1),
     BASELINES (2),
@@ -38,7 +38,8 @@ public enum SuiteMode {
         this.id = id;
     }
 
-    public long id() {
+    @Override
+    public long getId() {
         return id;
     }
 
