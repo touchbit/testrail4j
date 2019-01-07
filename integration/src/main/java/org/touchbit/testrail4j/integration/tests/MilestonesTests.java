@@ -95,7 +95,7 @@ public class MilestonesTests extends BaseCorvusTest {
         TRProject project = CLIENT.getProject();
         TRMilestone milestone = CLIENT.addMilestone(project);
         CLIENT.addMilestone(project, milestone);
-        GetMilestonesFilter queryMap = new GetMilestonesFilter().withIsCompleted(0).withIsStarted(1);
+        GetMilestonesFilter queryMap = new GetMilestonesFilter().withIsCompleted(false).withIsStarted(true);
         List<TRMilestone> actMilestones = CLIENT.getMilestones(project, queryMap);
         assertThat(actMilestones).isNotEmpty();
         for (TRMilestone actMilestone : actMilestones) {

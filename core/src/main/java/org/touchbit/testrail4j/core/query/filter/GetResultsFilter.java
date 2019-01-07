@@ -97,6 +97,10 @@ public class GetResultsFilter extends BaseFilter implements GetResultsQueryMap {
         this.status_id = toCommaSeparatedString(statusId);
     }
 
+    public void setStatusId(Type... statusId) {
+        this.status_id = toCommaSeparatedString(statusId);
+    }
+
     public void setLimit(Number limit) {
         this.limit = limit;
     }

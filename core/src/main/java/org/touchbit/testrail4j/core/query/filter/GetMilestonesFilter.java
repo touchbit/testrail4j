@@ -43,21 +43,21 @@ public class GetMilestonesFilter extends BaseFilter implements GetMilestonesQuer
         return is_started;
     }
 
-    public void setIsCompleted(Number isCompleted) {
-        this.is_completed = isCompleted;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
     }
 
-    public void setIsStarted(Number isStarted) {
-        this.is_started = isStarted;
+    public void setIsStarted(Boolean isStarted) {
+        this.is_started = booleanToInteger(isStarted);
     }
 
-    public GetMilestonesFilter withIsCompleted(Number isCompleted) {
-        this.is_completed = isCompleted;
+    public GetMilestonesFilter withIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
         return this;
     }
 
-    public GetMilestonesFilter withIsStarted(Number isStarted) {
-        this.is_started = isStarted;
+    public GetMilestonesFilter withIsStarted(Boolean isStarted) {
+        this.is_started = booleanToInteger(isStarted);
         return this;
     }
 

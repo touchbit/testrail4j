@@ -42,6 +42,10 @@ public class GetTestsFilter extends BaseFilter implements GetTestsQueryMap {
         this.status_id = toCommaSeparatedString(statusIds);
     }
 
+    public void setStatusId(Type... statusIds) {
+        this.status_id = toCommaSeparatedString(statusIds);
+    }
+
     public GetTestsFilter withStatusId(Number... statusIds) {
         this.status_id = toCommaSeparatedString(statusIds);
         return this;

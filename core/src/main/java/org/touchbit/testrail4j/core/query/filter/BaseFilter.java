@@ -28,7 +28,7 @@ import java.util.StringJoiner;
 public abstract class BaseFilter {
 
     protected String toCommaSeparatedString(Number... array) {
-        if (array == null || array.length == 0) {
+        if (array.length == 0) {
             return null;
         }
         StringJoiner sj = new StringJoiner(",");
