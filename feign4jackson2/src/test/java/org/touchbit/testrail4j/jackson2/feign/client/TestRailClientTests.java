@@ -25,8 +25,7 @@ import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
 import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
 import org.touchbit.testrail4j.helpful.Auth;
-import org.touchbit.testrail4j.jackson2.model.TRResult;
-import org.touchbit.testrail4j.jackson2.model.TRResults;
+import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,30 +49,237 @@ class TestRailClientTests extends BaseUnitTest {
         @Test
         @DisplayName("TestRailClient#getResults(Integer, GetResultsQueryMap)")
         void unitTest_20181112032818() {
-            GetResultsFilter resultsQueryMap = new GetResultsFilter();
-            resultsQueryMap.setLimit(10L);
+            GetResultsFilter resultsQueryMap = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
             CLIENT.getResults(2818L, resultsQueryMap);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_results/2818&limit=10");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results/2818");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
         }
 
         @Test
-        @DisplayName("TestRailClient#getResults(Integer)")
+        @DisplayName("TestRailClient#getResults(TRTest, GetResultsQueryMap)")
+        void unitTest_20190107221313() {
+            GetResultsFilter resultsQueryMap = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
+            CLIENT.getResults(new TRTest().withId(2818L), resultsQueryMap);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results/2818");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResults(Long)")
         void unitTest_20181112040352() {
             CLIENT.getResults(352L);
             assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_results/352");
         }
 
         @Test
+        @DisplayName("TestRailClient#getResults(Long, GetResultsQueryMap)")
+        void unitTest_20190107221459() {
+            CLIENT.getResults(new TRTest().withId(352L));
+            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_results/352");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForCase(Long, Long, GetResultsQueryMap)")
+        void unitTest_20190107222421() {
+            GetResultsFilter filter = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
+            CLIENT.getResultsForCase(1L,2L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_case/1/2");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForCase(Long, Long)")
+        void unitTest_20190107223029() {
+            CLIENT.getResultsForCase(1L,2L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_case/1/2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForCase(TRRun, TRCase)")
+        void unitTest_20190107223131() {
+            CLIENT.getResultsForCase(new TRRun().withId(1L), new TRCase().withId(2L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_case/1/2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForCase(TRRun, TRCase, GetResultsQueryMap)")
+        void unitTest_20190107223240() {
+            GetResultsFilter filter = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
+            CLIENT.getResultsForCase(new TRRun().withId(1L), new TRCase().withId(2L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_case/1/2");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForRun(Long, GetResultsQueryMap)")
+        void unitTest_20190107223331() {
+            GetResultsFilter filter = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
+            CLIENT.getResultsForRun(1L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_run/1");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForRun(TRRun, GetResultsQueryMap)")
+        void unitTest_20190107223519() {
+            GetResultsFilter filter = new GetResultsFilter()
+                    .withLimit(1L)
+                    .withOffset(2)
+                    .withStatusId(3, 4, 5L)
+                    .withCreatedBefore(22)
+                    .withCreatedAfter(111)
+                    .withCreatedBy(1,2);
+            CLIENT.getResultsForRun(new TRRun().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_run/1");
+            assertThat(msg).contains("&status_id=3%2C4%2C5");
+            assertThat(msg).contains("&offset=2");
+            assertThat(msg).contains("&created_after=111");
+            assertThat(msg).contains("&created_before=22");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&created_by=1%2C2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForRun(Long)")
+        void unitTest_20190107223703() {
+            CLIENT.getResultsForRun(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getResultsForRun(TRRun)")
+        void unitTest_20190107223749() {
+            CLIENT.getResultsForRun(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_results_for_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResult(TRResult, Long)")
+        void unitTest_20190107223950() {
+            CLIENT.addResult(new TRResult(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_result/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResult(TRResult, TRTest)")
+        void unitTest_20190107224249() {
+            CLIENT.addResult(new TRResult(), new TRTest().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_result/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResultForCase(TRResult, Long, Long)")
+        void unitTest_20190107224333() {
+            CLIENT.addResultForCase(new TRResult(), 1L, 2L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_result_for_case/1/2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResultForCase(TRResult, TRRun, TRCase)")
+        void unitTest_20190107224548() {
+            CLIENT.addResultForCase(new TRResult(), new TRRun().withId(1L), new TRCase().withId(2L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_result_for_case/1/2");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResults(TRResults, Long)")
+        void unitTest_20190107224640() {
+            CLIENT.addResults(new TRResults(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_results/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResults(TRResults, TRRun)")
+        void unitTest_20190107224732() {
+            CLIENT.addResults(new TRResults(), new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_results/1");
+        }
+
+        @Test
         @DisplayName("TestRailClient#addResultsForCases(Results, Integer)")
         void unitTest_20181112132609() {
-            TRResults results = new TRResults();
-            List<TRResult> resultList = new ArrayList<>();
-            resultList.add(new TRResult() {{ setId(1L); }});
-            results.setResults(resultList);
-            CLIENT.addResultsForCases(results, 2609L);
-            String loggedMessages = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(loggedMessages).contains(POST_API + "/add_results_for_cases/2609");
-            assertThat(loggedMessages).contains("{\n  \"results\" : [ {\n    \"id\" : 1,\n    \"custom_step_results\" : [ ]\n  } ]");
+            CLIENT.addResultsForCases(new TRResults(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_results_for_cases/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addResultsForCases(TRResults, TRRun)")
+        void unitTest_20190107224834() {
+            CLIENT.addResultsForCases(new TRResults(), new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_results_for_cases/1");
         }
 
     }

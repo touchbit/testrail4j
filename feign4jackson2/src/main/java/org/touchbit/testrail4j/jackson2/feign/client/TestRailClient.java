@@ -373,7 +373,7 @@ public interface TestRailClient {
      * See {@link TestRailClient#getResultsForRun(Long, GetResultsQueryMap)}
      */
     default List<TRResult> getResultsForRun(TRRun run, GetResultsQueryMap queryMap) {
-        return getResultsForRun(run.getId(), new GetResultsFilter());
+        return getResultsForRun(run.getId(), queryMap);
     }
 
     /**
