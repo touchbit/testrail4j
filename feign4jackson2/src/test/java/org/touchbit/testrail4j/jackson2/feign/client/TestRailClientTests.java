@@ -24,6 +24,7 @@ import org.touchbit.testrail4j.core.ExecutionLogger;
 import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
 import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
+import org.touchbit.testrail4j.core.query.filter.GetRunsFilter;
 import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.*;
 
@@ -444,24 +445,75 @@ class TestRailClientTests extends BaseUnitTest {
         @DisplayName("TestRailClient#getProject(Long)")
         void unitTest_20181112134626() {
             CLIENT.getProject(4626L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_project/4626");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_project/4626");
         }
 
         @Test
-        @DisplayName("TestRailClient#getProjects(Boolean)")
-        void unitTest_20181112151002() {
-            CLIENT.getProjects(new GetProjectsFilter().withIsCompleted(true));
+        @DisplayName("TestRailClient#getProject(TRProject)")
+        void unitTest_20190107230622() {
+            CLIENT.getProject(new TRProject().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains(GET_API + "/get_projects");
-            assertThat(msg).contains("is_completed=1");
+            assertThat(msg).contains("/get_project/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getProjects(GetProjectsQueryMap)")
+        void unitTest_20190107230700() {
+            GetProjectsFilter filter = new GetProjectsFilter();
+            filter.withIsCompleted(true);
+            CLIENT.getProjects(filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_projects");
+            assertThat(msg).contains("&is_completed=1");
         }
 
         @Test
         @DisplayName("TestRailClient#getProjects()")
-        void unitTest_20181112151227() {
+        void unitTest_20190107230825() {
             CLIENT.getProjects();
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains(GET_API + "/get_projects");
+            assertThat(msg).contains("/get_projects");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addProject(TRProject)")
+        void unitTest_20190107230920() {
+            CLIENT.addProject(new TRProject());
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/add_project");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateProject(TRProject, Long)")
+        void unitTest_20190107230946() {
+            CLIENT.updateProject(new TRProject(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/update_project/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateProject(TRProject)")
+        void unitTest_20190107231048() {
+            CLIENT.updateProject(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/update_project/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteProject(Long)")
+        void unitTest_20190107231111() {
+            CLIENT.deleteProject(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/delete_project/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteProject(TRProject)")
+        void unitTest_20190107231213() {
+            CLIENT.deleteProject(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/delete_project/1");
         }
     }
 
@@ -473,9 +525,147 @@ class TestRailClientTests extends BaseUnitTest {
         @DisplayName("TestRailClient#getRun(Long)")
         void unitTest_20181112151321() {
             CLIENT.getRun(1321L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_run/1321");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_run/1321");
         }
 
+        @Test
+        @DisplayName("TestRailClient#getRun(TRRun)")
+        void unitTest_20190107231513() {
+            CLIENT.getRun(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getRuns(Long, GetRunsQueryMap)")
+        void unitTest_20190107233028() {
+            GetRunsFilter filter = new GetRunsFilter()
+                    .withCreatedAfter(11111)
+                    .withCreatedBefore(22222)
+                    .withCreatedBy(1,2,3)
+                    .withIsCompleted(false)
+                    .withLimit(1)
+                    .withMilestoneId(33,44)
+                    .withOffset(13)
+                    .withSuiteId(4,5,6);
+            CLIENT.getRuns(1L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_runs/1");
+            assertThat(msg).contains("&created_after=11111");
+            assertThat(msg).contains("&offset=13");
+            assertThat(msg).contains("&milestone_id=33%2C44");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&createdBefore=22222");
+            assertThat(msg).contains("&created_by=1%2C2%2C3");
+            assertThat(msg).contains("&is_completed=0");
+            assertThat(msg).contains("&suite_id=4%2C5%2C6");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getRuns(Long)")
+        void unitTest_20190107233250() {
+            CLIENT.getRuns(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_runs/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getRuns(TRProject)")
+        void unitTest_20190107233334() {
+            CLIENT.getRuns(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_runs/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getRuns(TRProject, GetRunsQueryMap)")
+        void unitTest_20190107233406() {
+            GetRunsFilter filter = new GetRunsFilter()
+                    .withCreatedAfter(11111)
+                    .withCreatedBefore(22222)
+                    .withCreatedBy(1,2,3)
+                    .withIsCompleted(false)
+                    .withLimit(1)
+                    .withMilestoneId(33,44)
+                    .withOffset(13)
+                    .withSuiteId(4,5,6);
+            CLIENT.getRuns(new TRProject().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_runs/1");
+            assertThat(msg).contains("&created_after=11111");
+            assertThat(msg).contains("&offset=13");
+            assertThat(msg).contains("&milestone_id=33%2C44");
+            assertThat(msg).contains("&limit=1");
+            assertThat(msg).contains("&createdBefore=22222");
+            assertThat(msg).contains("&created_by=1%2C2%2C3");
+            assertThat(msg).contains("&is_completed=0");
+            assertThat(msg).contains("&suite_id=4%2C5%2C6");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addRun(TRRun, Long)")
+        void unitTest_20190107233439() {
+            CLIENT.addRun(new TRRun(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_run/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#addRun(TRRun, TRProject)")
+        void unitTest_20190107233540() {
+            CLIENT.addRun(new TRRun(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateRun(TRRun, Long)")
+        void unitTest_20190107233630() {
+            CLIENT.updateRun(new TRRun(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateRun(TRRun)")
+        void unitTest_20190107233719() {
+            CLIENT.updateRun(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#closeRun(Long)")
+        void unitTest_20190107233816() {
+            CLIENT.closeRun(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/close_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#closeRun(TRRun)")
+        void unitTest_20190107233852() {
+            CLIENT.closeRun(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/close_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteRun(Long)")
+        void unitTest_20190107233920() {
+            CLIENT.deleteRun(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_run/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteRun(TRRun)")
+        void unitTest_20190107233948() {
+            CLIENT.deleteRun(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_run/1");
+        }
     }
 
     @Nested

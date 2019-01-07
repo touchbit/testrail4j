@@ -31,9 +31,19 @@ import static feign.Logger.Level.FULL;
  */
 public class TestRailClientBuilder {
 
+    public static TestRailClient build(String base64, String target) {
+        BasicAuth basicAuth = new BasicAuth(base64);
+        return build(basicAuth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
+    }
+
     public static TestRailClient build(String login, String passToken, String target) {
         BasicAuth basicAuth = new BasicAuth(login, passToken);
         return build(basicAuth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
+    }
+
+    public static TestRailClient build(String login, String passToken, String target, Logger log) {
+        BasicAuth basicAuth = new BasicAuth(login, passToken);
+        return build(basicAuth, target, TestRailClient.class, log, FULL);
     }
 
     public static <I extends AuthInterceptor> TestRailClient build(I auth, String target) {

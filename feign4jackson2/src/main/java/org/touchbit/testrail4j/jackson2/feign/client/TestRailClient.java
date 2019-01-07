@@ -939,7 +939,7 @@ public interface TestRailClient {
     /**
      * See {@link TestRailClient#getRuns(Long, GetRunsQueryMap)}
      */
-    default List<TRRun> getRuns(@Param("project_id") Long projectID) {
+    default List<TRRun> getRuns(Long projectID) {
         return getRuns(projectID, new GetRunsFilter());
     }
 
