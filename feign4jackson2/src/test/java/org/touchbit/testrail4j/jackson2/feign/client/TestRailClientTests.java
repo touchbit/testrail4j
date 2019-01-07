@@ -133,7 +133,6 @@ class TestRailClientTests extends BaseUnitTest {
             CLIENT.getProjects();
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
             assertThat(msg).contains(GET_API + "/get_projects");
-            assertThat(msg).contains("is_completed=0");
         }
     }
 
