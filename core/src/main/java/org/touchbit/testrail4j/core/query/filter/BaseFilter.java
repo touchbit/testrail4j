@@ -39,7 +39,7 @@ public abstract class BaseFilter {
     }
 
     protected String toCommaSeparatedString(Type... array) {
-        if (array == null || array.length == 0) {
+        if (array.length == 0) {
             return null;
         }
         return toCommaSeparatedString(Arrays.stream(array).map(Type::getId).toArray(Number[]::new));

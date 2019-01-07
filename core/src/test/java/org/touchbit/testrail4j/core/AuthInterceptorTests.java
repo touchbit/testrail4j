@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("AuthInterceptor class tests")
 class AuthInterceptorTests extends BaseUnitTest {
@@ -71,6 +73,21 @@ class AuthInterceptorTests extends BaseUnitTest {
         template.uri("/index.php%3F/api/v1/get_at?a=a&b=b");
         interceptor.apply(template);
         assertThat(template.url()).contains("/index.php?/api/v1/get_at&a=a&b=b");
+    }
+
+    @Test
+    @DisplayName("No exception if absolute url")
+    void unitTest_20190107234211() {
+        AuthInterceptor interceptor = new AuthInterceptor() {
+            @Override
+            public void intercept(RequestTemplate template) {
+                // do nothing
+            }
+        };
+        RequestTemplate template = mock(RequestTemplate.class);
+        when(template.url()).thenReturn("http://example.com/api/v2/index.php?/api/v1/get_at?a=a&b=b");
+        interceptor.apply(template);
+        assertThat(template.url()).contains("http://example.com/api/v2/index.php?/api/v1/get_at?a=a&b=b");
     }
 
 }

@@ -28,9 +28,6 @@ import org.touchbit.testrail4j.core.query.filter.GetRunsFilter;
 import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -323,7 +320,7 @@ class TestRailClientTests extends BaseUnitTest {
                     .withSectionId(12L);
             CLIENT.getCases(4620L, filter);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_cases/4620");
+            assertThat(msg).contains(GET_API + "/get_cases/4620");
             assertThat(msg).contains("&updated_before=9");
             assertThat(msg).contains("&priority_id=5%2C1");
             assertThat(msg).contains("&section_id=12");
@@ -343,7 +340,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107225322() {
             CLIENT.getCases(4620L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_cases/4620");
+            assertThat(msg).contains(GET_API + "/get_cases/4620");
         }
 
         @Test
@@ -351,7 +348,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107225732() {
             CLIENT.getCases(new TRProject().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_cases/1");
+            assertThat(msg).contains(GET_API + "/get_cases/1");
         }
 
         @Test
@@ -372,7 +369,7 @@ class TestRailClientTests extends BaseUnitTest {
                     .withSectionId(12L);
             CLIENT.getCases(new TRProject().withId(1L), filter);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_cases/1");
+            assertThat(msg).contains(GET_API + "/get_cases/1");
             assertThat(msg).contains("&updated_before=9");
             assertThat(msg).contains("&priority_id=5%2C1");
             assertThat(msg).contains("&section_id=12");
@@ -392,7 +389,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107225907() {
             CLIENT.addCase(new TRCase(), 1L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/add_case/1");
+            assertThat(msg).contains(POST_API + "/add_case/1");
         }
 
         @Test
@@ -400,7 +397,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230010() {
             CLIENT.addCase(new TRCase(), new TRSection().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/add_case/1");
+            assertThat(msg).contains(POST_API + "/add_case/1");
         }
 
         @Test
@@ -408,7 +405,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230104() {
             CLIENT.updateCase(new TRCase(), 1L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/update_case/1");
+            assertThat(msg).contains(POST_API + "/update_case/1");
         }
 
         @Test
@@ -416,7 +413,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230142() {
             CLIENT.updateCase(new TRCase().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/update_case/1");
+            assertThat(msg).contains(POST_API + "/update_case/1");
         }
 
         @Test
@@ -424,7 +421,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230300() {
             CLIENT.deleteCase(1L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/delete_case/1");
+            assertThat(msg).contains(POST_API + "/delete_case/1");
         }
 
         @Test
@@ -432,7 +429,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230340() {
             CLIENT.deleteCase(new TRCase().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/delete_case/1");
+            assertThat(msg).contains(POST_API + "/delete_case/1");
         }
 
     }
@@ -446,7 +443,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20181112134626() {
             CLIENT.getProject(4626L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_project/4626");
+            assertThat(msg).contains(GET_API + "/get_project/4626");
         }
 
         @Test
@@ -454,7 +451,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230622() {
             CLIENT.getProject(new TRProject().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_project/1");
+            assertThat(msg).contains(GET_API + "/get_project/1");
         }
 
         @Test
@@ -464,7 +461,7 @@ class TestRailClientTests extends BaseUnitTest {
             filter.withIsCompleted(true);
             CLIENT.getProjects(filter);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_projects");
+            assertThat(msg).contains(GET_API + "/get_projects");
             assertThat(msg).contains("&is_completed=1");
         }
 
@@ -473,7 +470,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230825() {
             CLIENT.getProjects();
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/get_projects");
+            assertThat(msg).contains(GET_API + "/get_projects");
         }
 
         @Test
@@ -481,7 +478,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230920() {
             CLIENT.addProject(new TRProject());
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/add_project");
+            assertThat(msg).contains(POST_API + "/add_project");
         }
 
         @Test
@@ -489,7 +486,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107230946() {
             CLIENT.updateProject(new TRProject(), 1L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/update_project/1");
+            assertThat(msg).contains(POST_API + "/update_project/1");
         }
 
         @Test
@@ -497,7 +494,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107231048() {
             CLIENT.updateProject(new TRProject().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/update_project/1");
+            assertThat(msg).contains(POST_API + "/update_project/1");
         }
 
         @Test
@@ -505,7 +502,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107231111() {
             CLIENT.deleteProject(1L);
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/delete_project/1");
+            assertThat(msg).contains(POST_API + "/delete_project/1");
         }
 
         @Test
@@ -513,7 +510,7 @@ class TestRailClientTests extends BaseUnitTest {
         void unitTest_20190107231213() {
             CLIENT.deleteProject(new TRProject().withId(1L));
             String msg = TEST_LOGGER.takeLoggedMessages().toString();
-            assertThat(msg).contains("/delete_project/1");
+            assertThat(msg).contains(POST_API + "/delete_project/1");
         }
     }
 
@@ -673,19 +670,84 @@ class TestRailClientTests extends BaseUnitTest {
     class APISuitesTests {
 
         @Test
-        @DisplayName("TestRailClient#getSuite(Long)")
-        void unitTest_20181112151636() {
-            CLIENT.getSuite(1636L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_suite/1636");
+        @DisplayName("TestRailClient#getSuite(Long")
+        void unitTest_20190108000031() {
+            CLIENT.getSuite(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_suite/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSuite(TRSuite)")
+        void unitTest_20190108000115() {
+            CLIENT.getSuite(new TRSuite().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_suite/1");
         }
 
         @Test
         @DisplayName("TestRailClient#getSuites(Long)")
-        void unitTest_20181112151722() {
-            CLIENT.getSuites(1722L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_suites/1722");
+        void unitTest_20190108000436() {
+            CLIENT.getSuites(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_suites/1");
         }
 
+        @Test
+        @DisplayName("TestRailClient#getSuites(TRProject)")
+        void unitTest_20190108000506() {
+            CLIENT.getSuites(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_suites/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addSuite(TRSuite, Long)")
+        void unitTest_20190108000533() {
+            CLIENT.addSuite(new TRSuite(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_suite/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addSuite(TRSuite, TRProject)")
+        void unitTest_20190108000619() {
+            CLIENT.addSuite(new TRSuite(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_suite/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateSuite(TRSuite, Long)")
+        void unitTest_20190108000713() {
+            CLIENT.updateSuite(new TRSuite(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_suite/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#updateSuite(TRSuite)")
+        void unitTest_20190108000746() {
+            CLIENT.updateSuite(new TRSuite().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_suite/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteSuite(Long)")
+        void unitTest_20190108000822() {
+            CLIENT.deleteSuite(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_suite/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteSuite(TRSuite)")
+        void unitTest_20190108000851() {
+            CLIENT.deleteSuite(new TRSuite().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_suite/1");
+        }
     }
 
 }
