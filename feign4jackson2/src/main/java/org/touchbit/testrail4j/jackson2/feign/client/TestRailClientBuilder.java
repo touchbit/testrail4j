@@ -20,7 +20,8 @@ import feign.Feign;
 import feign.Logger;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
-import org.touchbit.testrail4j.core.TestRailAuthorizationInterceptor;
+import org.touchbit.testrail4j.core.AuthInterceptor;
+import org.touchbit.testrail4j.core.BasicAuth;
 
 import static feign.Logger.Level.FULL;
 
@@ -30,42 +31,36 @@ import static feign.Logger.Level.FULL;
  */
 public class TestRailClientBuilder {
 
-    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
-                                                                                    String target
-    ) {
+    public static TestRailClient build(String login, String passToken, String target) {
+        BasicAuth basicAuth = new BasicAuth(login, passToken);
+        return build(basicAuth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
+    }
+
+    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target) {
         return build(auth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
     }
 
-    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
-                                                                                    String target,
-                                                                                    Logger log
-    ) {
+    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target, Logger log) {
         return build(auth, target, TestRailClient.class, log, FULL);
     }
 
-    public static <I extends TestRailAuthorizationInterceptor> TestRailClient build(I auth,
-                                                                                    String target,
-                                                                                    Logger log,
-                                                                                    Logger.Level logLevel
-    ) {
+    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target,
+                                                                   Logger log,
+                                                                   Logger.Level logLevel) {
         return build(auth, target, TestRailClient.class, log, logLevel);
     }
 
-    public static <I extends TestRailAuthorizationInterceptor, C extends  TestRailClient> C build(
-            I auth, String target,
-            Class<C> c,
-            Logger log
-    ) {
+    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth, String target,
+                                                                                 Class<C> c,
+                                                                                 Logger log) {
         return build(auth, target, c, log, FULL);
     }
 
-    public static <I extends TestRailAuthorizationInterceptor, C extends  TestRailClient> C build(
-            I auth,
-            String target,
-            Class<C> c,
-            Logger logger,
-            Logger.Level logLevel
-    ) {
+    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth,
+                                                                                 String target,
+                                                                                 Class<C> c,
+                                                                                 Logger logger,
+                                                                                 Logger.Level logLevel) {
         return new Feign.Builder()
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())

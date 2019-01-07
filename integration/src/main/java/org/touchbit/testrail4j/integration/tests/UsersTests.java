@@ -41,6 +41,7 @@ public class UsersTests extends BaseCorvusTest {
         TRUser actUser = CLIENT.getUser(1L);
         assertThat(actUser).isNotNull();
         assertThat(actUser.getIsActive()).isTrue();
+        assertThat(actUser.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expecting successful receive of the existing user by email")

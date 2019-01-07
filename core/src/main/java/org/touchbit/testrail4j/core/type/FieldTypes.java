@@ -23,7 +23,7 @@ package org.touchbit.testrail4j.core.type;
  * Created by Oleg Shaburov on 06.01.2019
  * shaburov.o.a@gmail.com
  */
-public enum FieldTypes {
+public enum FieldTypes implements Type {
 
     STRING(1),
     INTEGER(2),
@@ -43,7 +43,7 @@ public enum FieldTypes {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -23,9 +23,7 @@ import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.TRCase;
-import org.touchbit.testrail4j.jackson2.model.TRProject;
-import org.touchbit.testrail4j.jackson2.model.TRSection;
+import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.Date;
 import java.util.List;
@@ -124,16 +122,51 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case list with filter")
     @Details()
     public void test_20190102012601() {
-        TRProject project = CLIENT.getProject(SINGLE);
+        TRProject project = CLIENT.getProject();
+        TRSuite suite = CLIENT.addSuite(project);
         TRSection section = new TRSection()
                 .withName(UUID.randomUUID().toString())
-                .withDescription(UUID.randomUUID().toString());
+                .withDescription(UUID.randomUUID().toString())
+                .withSuiteId(suite.getId());
         section = CLIENT.addSection(section, project);
         TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
         caze = CLIENT.addCase(caze);
-        List<TRCase> actualCaze = CLIENT.getCases(project, new GetCasesFilter().withSectionId(section.getId()));
+
+        List<TRCase> actualCaze = CLIENT.getCases(project, new GetCasesFilter()
+                .withSectionId(section.getId())
+                .withCreatedBy(2L, 1L)
+                .withSuiteId(suite.getId()));
         List<Long> ids = actualCaze.stream().map(TRCase::getId).collect(Collectors.toList());
         assertThat(ids).contains(caze.getId());
+        for (TRCase trCase : actualCaze) {
+            assertThat(trCase.getAdditionalProperties()).isEmpty();
+            if (trCase.getCustomStepsSeparated() != null) {
+                for (TRStep trStep : trCase.getCustomStepsSeparated()) {
+                    assertThat(trStep.getAdditionalProperties()).isEmpty();
+                }
+            }
+        }
+
+        actualCaze = CLIENT.getCases(project, new GetCasesFilter()
+                .withSectionId(section.getId())
+                .withCreatedAfter(500000000L)
+                .withCreatedBefore(500000000L)
+                .withUpdatedBefore(500000000L)
+                .withUpdatedAfter(500000000L)
+                .withCreatedBy(1L,2L)
+                .withUpdatedBy(1L,2L)
+                .withMilestoneId(1L)
+                .withPriorityId(1L, 2L)
+                .withTemplateId(1L,2L)
+                .withTypeId(1L,2L)
+                .withSuiteId(suite.getId())
+        );
+        for (TRCase trCase : actualCaze) {
+            assertThat(trCase.getAdditionalProperties()).isEmpty();
+            for (TRStep trStep : trCase.getCustomStepsSeparated()) {
+                assertThat(trStep.getAdditionalProperties()).isEmpty();
+            }
+        }
     }
 
     @Test(description = "Expecting successful delete of existing test case")

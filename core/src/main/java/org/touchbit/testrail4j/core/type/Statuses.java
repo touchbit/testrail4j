@@ -24,7 +24,7 @@ package org.touchbit.testrail4j.core.type;
  * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */
-public enum Statuses {
+public enum Statuses implements Type {
     
     PASSED (1),
     BLOCKED (2),

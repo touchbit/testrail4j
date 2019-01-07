@@ -23,13 +23,13 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("TestRailAuthorizationInterceptor class tests")
-class TestRailAuthorizationInterceptorTests extends BaseUnitTest {
+@DisplayName("AuthInterceptor class tests")
+class AuthInterceptorTests extends BaseUnitTest {
 
     @Test
     @DisplayName("Replace 'index.php%3F' to 'index.php?'")
     void unitTest_20181112025309() {
-        TestRailAuthorizationInterceptor interceptor = new TestRailAuthorizationInterceptor() {
+        AuthInterceptor interceptor = new AuthInterceptor() {
             @Override
             public void intercept(RequestTemplate template) {
                 // do nothing
@@ -44,7 +44,7 @@ class TestRailAuthorizationInterceptorTests extends BaseUnitTest {
     @Test
     @DisplayName("Exception if get 'index.php?'")
     void unitTest_20181112025726() {
-        TestRailAuthorizationInterceptor interceptor = new TestRailAuthorizationInterceptor() {
+        AuthInterceptor interceptor = new AuthInterceptor() {
             @Override
             public void intercept(RequestTemplate template) {
                 // do nothing
@@ -61,7 +61,7 @@ class TestRailAuthorizationInterceptorTests extends BaseUnitTest {
     @Test
     @DisplayName("Replace ? to &")
     void unitTest_20181112163152() {
-        TestRailAuthorizationInterceptor interceptor = new TestRailAuthorizationInterceptor() {
+        AuthInterceptor interceptor = new AuthInterceptor() {
             @Override
             public void intercept(RequestTemplate template) {
                 // do nothing

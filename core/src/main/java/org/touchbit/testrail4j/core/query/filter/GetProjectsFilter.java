@@ -25,7 +25,7 @@ import org.touchbit.testrail4j.core.query.GetProjectsQueryMap;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetProjectsFilter extends BaseQueryMap implements GetProjectsQueryMap {
+public class GetProjectsFilter extends BaseFilter implements GetProjectsQueryMap {
 
     /**
      * true to return completed projects only. false to return active projects only.

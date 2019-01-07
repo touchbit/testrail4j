@@ -40,6 +40,9 @@ public class PrioritiesTests extends BaseCorvusTest {
         step("Get available priorities");
         List<TRPriority> priorities = CLIENT.getPriorities();
         assertThat(priorities).isNotNull();
+        for (TRPriority priority : priorities) {
+            assertThat(priority.getAdditionalProperties()).isEmpty();
+        }
     }
 
 }

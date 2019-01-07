@@ -785,7 +785,7 @@ public interface TestRailClient {
      * See {@link TestRailClient#getProjects(GetProjectsQueryMap)}
      */
     default List<TRProject> getProjects() {
-        return getProjects(new GetProjectsFilter().withIsCompleted(false));
+        return getProjects(new GetProjectsFilter());
     }
 
     /**
@@ -1302,8 +1302,7 @@ public interface TestRailClient {
      * 403 No access to the project
      */
     @RequestLine(value = "GET /index.php%3F/api/v2/get_sections/{project_id}")
-    List<TRSection> getSections(@Param("project_id") Long projectID,
-                                                                @QueryMap GetSectionsQueryMap queryMap);
+    List<TRSection> getSections(@Param("project_id") Long projectID, @QueryMap GetSectionsQueryMap queryMap);
 
     /**
      * See {@link TestRailClient#getSections(Long, GetSectionsQueryMap)}

@@ -35,17 +35,17 @@ class QueryMapsTests {
     @DisplayName("Check GetCasesQueryMap")
     void unitTest_20181111214825() {
         GetCasesFilter map = new GetCasesFilter();
-        map.setCreatedAfter(1L);
-        map.setCreatedBefore(2L);
-        map.setCreatedBy(3L, 1L);
-        map.setMilestoneId(4L, 1L);
-        map.setPriorityId(5L, 1L);
-        map.setTemplateId(6L, 1L);
-        map.setTypeId(7L, 1L);
-        map.setUpdatedAfter(8L);
-        map.setUpdatedBefore(9L);
-        map.setUpdatedBy(10L, 1L);
-        map.setSuiteId(11L);
+        map.setCreatedAfter(1);
+        map.setCreatedBefore(2);
+        map.setCreatedBy(3, 1);
+        map.setMilestoneId(4, 1);
+        map.setPriorityId(5, 1);
+        map.setTemplateId(6, 1);
+        map.setTypeId(7, 1);
+        map.setUpdatedAfter(8);
+        map.setUpdatedBefore(9);
+        map.setUpdatedBy(10, 1);
+        map.setSuiteId(11);
         map.setSectionId(12L);
         assertThat(map.getCreatedAfter()).isEqualTo(1);
         assertThat(map.getCreatedBefore()).isEqualTo(2);
@@ -58,7 +58,7 @@ class QueryMapsTests {
         assertThat(map.getUpdatedBefore()).isEqualTo(9);
         assertThat(map.getUpdatedBy()).isEqualTo("10,1");
         assertThat(map.getSuiteId()).isEqualTo(11);
-        assertThat(map.getSectionId()).isEqualTo(12);
+        assertThat(map.getSectionId()).isEqualTo(12L);
     }
 
     @Test
@@ -66,11 +66,11 @@ class QueryMapsTests {
     void unitTest_20181111220009() {
         GetResultsFilter map = new GetResultsFilter();
         map.setLimit(1L);
-        map.setOffset(2L);
-        map.setStatusId(3L);
-        assertThat(map.getLimit()).isEqualTo(1);
+        map.setOffset(2);
+        map.setStatusId(3, 4, 5L);
+        assertThat(map.getLimit()).isEqualTo(1L);
         assertThat(map.getOffset()).isEqualTo(2);
-        assertThat(map.getStatusId()).isEqualTo("3");
+        assertThat(map.getStatusId()).isEqualTo("3,4,5");
     }
 
     @Test

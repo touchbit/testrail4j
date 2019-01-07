@@ -24,7 +24,7 @@ import feign.template.UriUtils;
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */
-public abstract class TestRailAuthorizationInterceptor implements RequestInterceptor {
+public abstract class AuthInterceptor implements RequestInterceptor {
 
     /**
      * Workaround for 838 defect in OpenFeign

@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.touchbit.testrail4j.core.type.Statuses.FAILED;
-import static org.touchbit.testrail4j.core.type.Statuses.PASSED;
+import static org.touchbit.testrail4j.core.type.Statuses.*;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 
 /**
@@ -48,9 +47,21 @@ public class ResultTests extends BaseCorvusTest {
         TRRun run = CLIENT.addRun(project);
         List<TRTest> trTests = CLIENT.getTests(run);
         for (TRTest trTest : trTests) {
+            assertThat(trTest.getAdditionalProperties()).isEmpty();
+            if (trTest.getCustomStepsSeparated() != null) {
+                for (TRStep trStep : trTest.getCustomStepsSeparated()) {
+                    assertThat(trStep.getAdditionalProperties()).isEmpty();
+                }
+            }
             TRResult result = new TRResult().withStatusId(FAILED.getId());
             TRResult actResult = CLIENT.addResult(result, trTest);
             assertThat(actResult.getStatusId()).isEqualTo(result.getStatusId());
+            assertThat(actResult.getAdditionalProperties()).isEmpty();
+            if (actResult.getCustomStepResults() != null) {
+                for (TRStep trStep : actResult.getCustomStepResults()) {
+                    assertThat(trStep.getAdditionalProperties()).isEmpty();
+                }
+            }
         }
     }
 
@@ -111,9 +122,19 @@ public class ResultTests extends BaseCorvusTest {
         resultList.add(result);
         TRResults results = new TRResults().withResults(resultList);
         List<TRResult> expResult = CLIENT.addResultsForCases(results, run);
+
         List<TRResult> actResult = CLIENT.getResultsForRun(run);
         assertThat(actResult).isEqualTo(expResult);
-        actResult = CLIENT.getResultsForRun(run, new GetResultsFilter().withStatusId(PASSED.getId()));
+
+        actResult = CLIENT.getResultsForRun(run, new GetResultsFilter()
+                .withStatusId(PASSED, BLOCKED, UNTESTED, RETEST, FAILED, CUSTOM_STATUS1, CUSTOM_STATUS2,
+                        CUSTOM_STATUS3, CUSTOM_STATUS4, CUSTOM_STATUS5, CUSTOM_STATUS6, CUSTOM_STATUS7)
+                .withCreatedAfter(500000000)
+                .withCreatedBefore(500000000)
+                .withCreatedBy(2, 1, 3, 4)
+                .withLimit(123)
+                .withOffset(123L)
+        );
         assertThat(actResult).isEmpty();
     }
 

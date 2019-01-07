@@ -17,13 +17,14 @@
 package org.touchbit.testrail4j.core.query.filter;
 
 import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
+import org.touchbit.testrail4j.core.type.Type;
 
 /**
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetResultsFilter extends BaseQueryMap implements GetResultsQueryMap {
+public class GetResultsFilter extends BaseFilter implements GetResultsQueryMap {
 
     /**
      * A comma-separated list of status IDs to filter by
@@ -38,33 +39,33 @@ public class GetResultsFilter extends BaseQueryMap implements GetResultsQueryMap
     /**
      * Limit the test result
      */
-    private Long limit;
+    private Number limit;
 
     /**
      * Use to skip records
      */
-    private Long offset;
+    private Number offset;
 
     /**
      * Only return test results created after this date (as UNIX timestamp).
      */
-    private Long created_after;
+    private Number created_after;
 
     /**
      * Only return test results created before this date (as UNIX timestamp).
      */
-    private Long created_before;
+    private Number created_before;
 
 
     public String getCreatedBy() {
         return created_by;
     }
 
-    public Long getCreatedAfter() {
+    public Number getCreatedAfter() {
         return created_after;
     }
 
-    public Long getCreatedBefore() {
+    public Number getCreatedBefore() {
         return created_before;
     }
 
@@ -72,64 +73,69 @@ public class GetResultsFilter extends BaseQueryMap implements GetResultsQueryMap
         return status_id;
     }
 
-    public Long getLimit() {
+    public Number getLimit() {
         return limit;
     }
 
-    public Long getOffset() {
+    public Number getOffset() {
         return offset;
     }
 
-    public void setCreatedAfter(Long createdAfter) {
+    public void setCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
     }
 
-    public void setCreatedBefore(Long createdBefore) {
+    public void setCreatedBefore(Number createdBefore) {
         this.created_before = createdBefore;
     }
 
-    public void setCreatedBy(Long... createdBy) {
+    public void setCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
     }
 
-    public void setStatusId(Long... statusId) {
+    public void setStatusId(Number... statusId) {
         this.status_id = toCommaSeparatedString(statusId);
     }
 
-    public void setLimit(Long limit) {
+    public void setLimit(Number limit) {
         this.limit = limit;
     }
 
-    public void setOffset(Long offset) {
+    public void setOffset(Number offset) {
         this.offset = offset;
     }
 
-    public GetResultsFilter withCreatedAfter(Long createdAfter) {
+    public GetResultsFilter withCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
         return this;
     }
 
-    public GetResultsFilter withCreatedBefore(Long createdBefore) {
+    public GetResultsFilter withCreatedBefore(Number createdBefore) {
         this.created_before = createdBefore;
         return this;
     }
 
-    public GetResultsFilter withCreatedBy(Long... createdBy) {
+    public GetResultsFilter withCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
         return this;
     }
 
-    public GetResultsFilter withStatusId(Long... statusId) {
+    public GetResultsFilter withStatusId(Number... statusId) {
         this.status_id = toCommaSeparatedString(statusId);
         return this;
     }
 
-    public GetResultsFilter withLimit(Long limit) {
+    public GetResultsFilter withStatusId(Type... statuses) {
+        this.status_id = toCommaSeparatedString(statuses);
+        return this;
+    }
+
+    public GetResultsFilter withLimit(Number limit) {
         this.limit = limit;
         return this;
     }
 
-    public GetResultsFilter withOffset(Long offset) {
+    public GetResultsFilter withOffset(Number offset) {
         this.offset = offset;
         return this;
     }

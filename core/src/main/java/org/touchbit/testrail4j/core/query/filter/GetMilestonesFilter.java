@@ -23,40 +23,40 @@ import org.touchbit.testrail4j.core.query.GetMilestonesQueryMap;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetMilestonesFilter extends BaseQueryMap implements GetMilestonesQueryMap {
+public class GetMilestonesFilter extends BaseFilter implements GetMilestonesQueryMap {
 
     /**
      * 1 to return completed milestones only. 0 to return open (active/upcoming) milestones only (available since TestRail 4.0).
      */
-    private Integer is_completed;
+    private Number is_completed;
 
     /**
      * 1 to return started milestones only. 0 to return upcoming milestones only (available since TestRail 5.3).
      */
-    private Integer is_started;
+    private Number is_started;
 
-    public Integer getIsCompleted() {
+    public Number getIsCompleted() {
         return is_completed;
     }
 
-    public Integer getIsStarted() {
+    public Number getIsStarted() {
         return is_started;
     }
 
-    public void setIsCompleted(Integer isCompleted) {
+    public void setIsCompleted(Number isCompleted) {
         this.is_completed = isCompleted;
     }
 
-    public void setIsStarted(Integer isStarted) {
+    public void setIsStarted(Number isStarted) {
         this.is_started = isStarted;
     }
 
-    public GetMilestonesFilter withIsCompleted(Integer isCompleted) {
+    public GetMilestonesFilter withIsCompleted(Number isCompleted) {
         this.is_completed = isCompleted;
         return this;
     }
 
-    public GetMilestonesFilter withIsStarted(Integer isStarted) {
+    public GetMilestonesFilter withIsStarted(Number isStarted) {
         this.is_started = isStarted;
         return this;
     }

@@ -22,7 +22,7 @@ package org.touchbit.testrail4j.core.type;
  * Created by Oleg Shaburov on 01.01.2019
  * shaburov.o.a@gmail.com
  */
-public enum  AutomationType {
+public enum  AutomationType implements Type {
 
     NONE (0),
     RANOREX (1);

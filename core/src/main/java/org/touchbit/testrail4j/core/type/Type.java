@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.core.query.filter;
-
-import java.util.StringJoiner;
+package org.touchbit.testrail4j.core.type;
 
 /**
- * Created by Oleg Shaburov on 02.01.2019
+ * Created by Oleg Shaburov on 07.01.2019
  * shaburov.o.a@gmail.com
  */
-public abstract class BaseQueryMap {
+public interface Type {
 
-    protected String toCommaSeparatedString(Object[] array) {
-        if (array == null || array.length == 0) {
-            return null;
-        }
-        StringJoiner sj = new StringJoiner(",");
-        for (Object s : array) {
-            sj.add(String.valueOf(s));
-        }
-        return sj.toString();
-    }
-
-    protected Integer booleanToInteger(boolean value) {
-        return value ? 1 : 0;
-    }
+    long getId();
 
 }

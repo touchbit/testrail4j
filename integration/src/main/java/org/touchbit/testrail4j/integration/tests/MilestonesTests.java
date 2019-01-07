@@ -93,13 +93,16 @@ public class MilestonesTests extends BaseCorvusTest {
     @Details()
     public void test_20190106062831() {
         TRProject project = CLIENT.getProject();
-        CLIENT.addMilestone(project);
-        CLIENT.addMilestone(project);
+        TRMilestone milestone = CLIENT.addMilestone(project);
+        CLIENT.addMilestone(project, milestone);
         GetMilestonesFilter queryMap = new GetMilestonesFilter().withIsCompleted(0).withIsStarted(1);
         List<TRMilestone> actMilestones = CLIENT.getMilestones(project, queryMap);
         assertThat(actMilestones).isNotEmpty();
         for (TRMilestone actMilestone : actMilestones) {
             assertThat(actMilestone.getAdditionalProperties()).isEmpty();
+            for (TRMilestone actMilestoneMilestone : actMilestone.getMilestones()) {
+                assertThat(actMilestoneMilestone.getAdditionalProperties()).isEmpty();
+            }
         }
     }
 

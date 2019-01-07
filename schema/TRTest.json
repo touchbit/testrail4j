@@ -22,6 +22,11 @@
       "javaType" : "java.lang.Long",
       "description": "The ID of the current status of the test, also see get_statuses"
     },
+    "template_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test template"
+    },
     "estimate": {
       "type": "string",
       "description": "The estimate of the related test case, e.g. '30s' or '1m 45s'"

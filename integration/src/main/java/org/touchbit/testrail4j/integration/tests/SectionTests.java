@@ -20,12 +20,14 @@ import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
+import org.touchbit.testrail4j.core.query.filter.GetSectionsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
 import org.touchbit.testrail4j.jackson2.model.TRSection;
 import org.touchbit.testrail4j.jackson2.model.TRSuite;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -47,6 +49,7 @@ public class SectionTests extends BaseCorvusTest {
         TRSection section = new TRSection().withName(UUID.randomUUID().toString());
         TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
+        assertThat(actualSection.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expected successful section creation with all fields")
@@ -76,7 +79,7 @@ public class SectionTests extends BaseCorvusTest {
     @Details()
     public void test_20190101162032() {
         TRProject project = CLIENT.getProject(MULTIPLE);
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         TRSection section = genSection().withSuiteId(suite.getId());
         TRSection actualSection = CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
@@ -91,6 +94,35 @@ public class SectionTests extends BaseCorvusTest {
         TRSection section = CLIENT.addSection(genSection(), project);
         TRSection actualSection = CLIENT.getSection(section);
         assertThat(actualSection).isEqualTo(section);
+    }
+
+    @Test(description = "Expected successful receive sections list")
+    @Details()
+    public void test_20190107182532() {
+        TRProject project = CLIENT.getProject(SINGLE);
+        TRSection section = CLIENT.addSection(genSection(), project);
+        List<TRSection> actualSection = CLIENT.getSections(project);
+        assertThat(actualSection).isNotEmpty();
+        assertThat(actualSection).hasSize(1);
+        for (TRSection trSection : actualSection) {
+            assertThat(trSection).isEqualTo(section);
+            assertThat(trSection.getAdditionalProperties()).isEmpty();
+        }
+    }
+
+    @Test(description = "Expected successful receive sections list with filter")
+    @Details()
+    public void test_20190107183047() {
+        TRProject project = CLIENT.getProject(MULTIPLE);
+        TRSuite suite = CLIENT.addSuite(project);
+        TRSection section = CLIENT.addSection(genSection().withSuiteId(suite.getId()), project);
+        List<TRSection> actualSection = CLIENT.getSections(project, new GetSectionsFilter().withSuiteId(suite.getId()));
+        assertThat(actualSection).isNotEmpty();
+        assertThat(actualSection).hasSize(1);
+        for (TRSection trSection : actualSection) {
+            assertThat(trSection).isEqualTo(section);
+            assertThat(trSection.getAdditionalProperties()).isEmpty();
+        }
     }
 
     @Test(description = "Expected successful update existing section")

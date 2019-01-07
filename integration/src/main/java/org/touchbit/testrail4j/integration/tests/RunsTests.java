@@ -20,6 +20,7 @@ import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
+import org.touchbit.testrail4j.core.query.filter.GetRunsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
@@ -44,6 +45,7 @@ public class RunsTests extends BaseCorvusTest {
         TRRun run = new TRRun().withProjectId(project.getId()).withName("test_20190102004538");
         TRRun actualRun = CLIENT.addRun(run);
         assertThat(actualRun.getName()).isEqualTo(run.getName());
+        assertThat(actualRun.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expecting successful update of the existing run")
@@ -70,6 +72,23 @@ public class RunsTests extends BaseCorvusTest {
         for (TRRun actRun : actRuns) {
             assertThat(actRun.getAdditionalProperties()).isEmpty();
         }
+    }
+
+    @Test(description = "Expecting successful receive of the runs list with filter")
+    @Details()
+    public void test_20190107181124() {
+        TRRun run = CLIENT.addRun();
+        List<TRRun> actRuns = CLIENT.getRuns(run, new GetRunsFilter()
+                .withCreatedAfter(500000000)
+                .withCreatedBefore(500000000)
+                .withCreatedBy(7, 8)
+                .withIsCompleted(false)
+                .withMilestoneId(5, 6)
+                .withSuiteId(3, 4)
+                .withOffset(2)
+                .withLimit(1)
+        );
+        assertThat(actRuns).isEmpty();
     }
 
     @Test(description = "Expecting successful delete of the existing run")

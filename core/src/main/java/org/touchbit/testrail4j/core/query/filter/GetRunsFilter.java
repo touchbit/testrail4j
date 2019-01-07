@@ -28,17 +28,17 @@ import org.touchbit.testrail4j.core.query.GetRunsQueryMap;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetRunsFilter extends BaseQueryMap implements GetRunsQueryMap {
+public class GetRunsFilter extends BaseFilter implements GetRunsQueryMap {
 
     /**
      * Only return test runs created after this date (as UNIX timestamp).
      */
-    private Long created_after;
+    private Number created_after;
 
     /**
      * Only return test runs created before this date (as UNIX timestamp).
      */
-    private Long createdBefore;
+    private Number createdBefore;
 
     /**
      * A comma-separated list of creators (user IDs) to filter by.
@@ -48,17 +48,17 @@ public class GetRunsFilter extends BaseQueryMap implements GetRunsQueryMap {
     /**
      * 1 to return completed test runs only. 0 to return active test runs only.
      */
-    private Integer is_completed;
+    private Number is_completed;
 
     /**
      * Limit the result to :limit test runs. Use :offset to skip records.
      */
-    private Integer limit;
+    private Number limit;
 
     /**
      * Limit the result to :limit test runs. Use :offset to skip records.
      */
-    private Integer offset;
+    private Number offset;
 
     /**
      * A comma-separated list of milestone IDs to filter by.
@@ -70,11 +70,11 @@ public class GetRunsFilter extends BaseQueryMap implements GetRunsQueryMap {
      */
     private String suite_id;
 
-    public Long getCreatedAfter() {
+    public Number getCreatedAfter() {
         return created_after;
     }
 
-    public Long getCreatedBefore() {
+    public Number getCreatedBefore() {
         return createdBefore;
     }
 
@@ -82,15 +82,15 @@ public class GetRunsFilter extends BaseQueryMap implements GetRunsQueryMap {
         return created_by;
     }
 
-    public Integer getIsCompleted() {
+    public Number getIsCompleted() {
         return is_completed;
     }
 
-    public Integer getLimit() {
+    public Number getLimit() {
         return limit;
     }
 
-    public Integer getOffset() {
+    public Number getOffset() {
         return offset;
     }
 
@@ -102,74 +102,74 @@ public class GetRunsFilter extends BaseQueryMap implements GetRunsQueryMap {
         return suite_id;
     }
 
-    public void setCreatedAfter(Long createdAfter) {
+    public void setCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
     }
 
-    public void setCreatedBefore(Long createdBefore) {
+    public void setCreatedBefore(Number createdBefore) {
         this.createdBefore = createdBefore;
     }
 
-    public void setIsCompleted(Integer isCompleted) {
-        this.is_completed = isCompleted;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
     }
 
-    public void setLimit(Integer limit) {
+    public void setLimit(Number limit) {
         this.limit = limit;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(Number offset) {
         this.offset = offset;
     }
 
-    public void setMilestoneId(Long... milestoneId) {
+    public void setMilestoneId(Number... milestoneId) {
         this.milestone_id = toCommaSeparatedString(milestoneId);
     }
 
-    public void setSuiteId(Long... suiteId) {
+    public void setSuiteId(Number... suiteId) {
         this.suite_id = toCommaSeparatedString(suiteId);
     }
 
-    public void setCreatedBy(Long... createdBy) {
+    public void setCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
     }
 
-    public GetRunsFilter withCreatedAfter(Long createdAfter) {
+    public GetRunsFilter withCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
         return this;
     }
 
-    public GetRunsFilter withCreatedBefore(Long createdBefore) {
+    public GetRunsFilter withCreatedBefore(Number createdBefore) {
         this.createdBefore = createdBefore;
         return this;
     }
 
-    public GetRunsFilter withIsCompleted(Integer isCompleted) {
-        this.is_completed = isCompleted;
+    public GetRunsFilter withIsCompleted(Boolean isCompleted) {
+        this.is_completed = booleanToInteger(isCompleted);
         return this;
     }
 
-    public GetRunsFilter withLimit(Integer limit) {
+    public GetRunsFilter withLimit(Number limit) {
         this.limit = limit;
         return this;
     }
 
-    public GetRunsFilter withOffset(Integer offset) {
+    public GetRunsFilter withOffset(Number offset) {
         this.offset = offset;
         return this;
     }
 
-    public GetRunsFilter withMilestoneId(Long... milestoneId) {
+    public GetRunsFilter withMilestoneId(Number... milestoneId) {
         this.milestone_id = toCommaSeparatedString(milestoneId);
         return this;
     }
 
-    public GetRunsFilter withSuiteId(Long... suiteId) {
+    public GetRunsFilter withSuiteId(Number... suiteId) {
         this.suite_id = toCommaSeparatedString(suiteId);
         return this;
     }
 
-    public GetRunsFilter withCreatedBy(Long... createdBy) {
+    public GetRunsFilter withCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
         return this;
     }

@@ -20,6 +20,7 @@ import feign.FeignException;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
+import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
@@ -55,6 +56,7 @@ public class ProjectTests extends BaseCorvusTest {
         assertThat(actProject.getId()).isGreaterThan(0);
         assertThat(actProject.getUrl()).isNotEmpty();
         assertThat(actProject.getSuiteMode()).isEqualTo(MULTIPLE.id());
+        assertThat(actProject.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expecting successful the project creation with all fields")
@@ -130,9 +132,20 @@ public class ProjectTests extends BaseCorvusTest {
     public void test_20181231190411() {
         TRProject project1 = CLIENT.getProject();
         TRProject project2 = CLIENT.getProject();
-        List<Long> actualProject = CLIENT.getProjects().stream().map(TRProject::getId).collect(Collectors.toList());
+        List<Long> actualProject = CLIENT.getTRProjects().stream().map(TRProject::getId).collect(Collectors.toList());
         assertThat(actualProject).contains(project1.getId());
         assertThat(actualProject).contains(project2.getId());
+    }
+
+    @Test(description = "Expecting successful receive the projects list with filter")
+    @Details()
+    public void test_20190107160932() {
+        CLIENT.getProject();
+        CLIENT.getProject();
+        List<TRProject> actualProjects = CLIENT.getTRProjects(new GetProjectsFilter().withIsCompleted(false));
+        for (TRProject actualProject : actualProjects) {
+            assertThat(actualProject.getAdditionalProperties()).isEmpty();
+        }
     }
 
 

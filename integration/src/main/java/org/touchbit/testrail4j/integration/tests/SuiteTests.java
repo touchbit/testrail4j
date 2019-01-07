@@ -42,8 +42,9 @@ public class SuiteTests extends BaseCorvusTest {
     public void test_20181231221005() {
         TRProject project = CLIENT.getProject();
         TRSuite suite = new TRSuite().withName("name");
-        TRSuite actualSuite = CLIENT.addNewSuite(suite, project);
+        TRSuite actualSuite = CLIENT.addSuite(suite, project);
         assertThat(actualSuite.getName()).isEqualTo(suite.getName());
+        assertThat(actualSuite.getAdditionalProperties()).isEmpty();
     }
 
     @Test(description = "Expected successful suite creation with all fields")
@@ -60,7 +61,7 @@ public class SuiteTests extends BaseCorvusTest {
                 .withUrl("url")
                 .withProjectId(123L)
                 .withIsMaster(true);
-        TRSuite actualSuite = CLIENT.addNewSuite(suite, project);
+        TRSuite actualSuite = CLIENT.addSuite(suite, project);
         assertThat(actualSuite.getName()).isEqualTo(suite.getName());
     }
 
@@ -68,7 +69,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Details()
     public void test_20181231222652() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         TRSuite actualSuite = CLIENT.getSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
     }
@@ -77,7 +78,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Details()
     public void test_20181231223026() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         List<TRSuite> suiteList = CLIENT.getSuites(project);
         assertThat(suiteList).contains(suite);
     }
@@ -86,7 +87,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Details()
     public void test_20181231223730() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         suite.setName("test_20181231223730");
         TRSuite actualSuite = CLIENT.updateSuite(suite);
         assertThat(actualSuite).isEqualTo(suite);
@@ -96,7 +97,7 @@ public class SuiteTests extends BaseCorvusTest {
     @Details()
     public void test_20181231224319() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         CLIENT.deleteSuite(suite);
         FeignException exception = executeThrowable(() -> CLIENT.getSuite(suite));
         assertThat(exception.contentUTF8())

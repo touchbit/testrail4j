@@ -21,10 +21,10 @@ import org.touchbit.buggy.core.Buggy;
 import org.touchbit.buggy.core.test.BaseBuggyTest;
 import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener;
 import org.touchbit.buggy.feign.FeignCallLogger;
-import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
+import org.touchbit.testrail4j.core.BasicAuth;
 import org.touchbit.testrail4j.core.query.*;
 import org.touchbit.testrail4j.core.query.filter.GetPlansFilter;
-import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
+import org.touchbit.testrail4j.core.query.filter.GetSectionsFilter;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.jackson2.feign.client.SuiteMode;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
@@ -53,7 +53,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
                     " TestNG plugin configuration.");
         }
         CLIENT = TestRailClientBuilder
-                .build(new BasicAuthorizationInterceptor(Config.getAuth()),
+                .build(new BasicAuth(Config.getAuth()),
                         Config.getHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
@@ -141,9 +141,14 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return getProject(project.getId());
         }
 
-        default List<TRProject> getProjects() {
+        default List<TRProject> getTRProjects() {
             step("Get existing projects list");
-            return getProjects(new GetProjectsFilter().withIsCompleted(false));
+            return getProjects();
+        }
+
+        default List<TRProject> getTRProjects(GetProjectsQueryMap filter) {
+            step("Get existing projects list with filter");
+            return getProjects(filter);
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
@@ -172,17 +177,27 @@ public class BaseCorvusTest extends BaseBuggyTest {
         }
 
         default TRSection getSection(TRSection section) {
-            step("Get section with ID: {}", section.getId());
+            step("Get section with ID {}", section.getId());
             return CLIENT.getSection(section.getId());
         }
 
+        default List<TRSection> getSections(TRProject project) {
+            step("Get sections for project ID {}", project.getId());
+            return getSections(project.getId(), new GetSectionsFilter());
+        }
+
+        default List<TRSection> getSections(TRProject project, GetSectionsQueryMap queryMap) {
+            step("Get sections for project ID {} with filter", project.getId());
+            return getSections(project.getId(), queryMap);
+        }
+
         default TRSection updateSection(TRSection section) {
-            step("Update section with ID: {}", section.getId());
+            step("Update section with ID {}", section.getId());
             return CLIENT.updateSection(section, section.getId());
         }
 
         default void deleteSection(TRSection section) {
-            step("Delete section with ID: {}", section.getId());
+            step("Delete section with ID {}", section.getId());
             CLIENT.deleteSection(section.getId());
         }
 
@@ -198,14 +213,14 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.updateSuite(suite, suite.getId());
         }
 
-        default TRSuite addNewSuite(TRSuite suite, TRProject project) {
+        default TRSuite addSuite(TRSuite suite, TRProject project) {
             step("Create new suite with name: {}", suite.getName());
             return CLIENT.addSuite(suite, project.getId());
         }
 
-        default TRSuite addNewSuite(TRProject project) {
+        default TRSuite addSuite(TRProject project) {
             TRSuite suite = new TRSuite().withName("name");
-            return addNewSuite(suite, project);
+            return addSuite(suite, project);
         }
 
         default TRSuite getSuite(TRSuite suite) {
@@ -297,8 +312,13 @@ public class BaseCorvusTest extends BaseBuggyTest {
         }
 
         default List<TRRun> getRuns(TRRun run) {
-            step("Get run list with project id {}", run.getProjectId());
+            step("Get run list for project id {}", run.getProjectId());
             return CLIENT.getRuns(run.getProjectId());
+        }
+
+        default List<TRRun> getRuns(TRRun run, GetRunsQueryMap queryMap) {
+            step("Get run list for project id {} with filter", run.getProjectId());
+            return CLIENT.getRuns(run.getProjectId(), queryMap);
         }
 
         default void deleteRun(TRRun run) {
@@ -314,8 +334,13 @@ public class BaseCorvusTest extends BaseBuggyTest {
         }
 
         default List<TRTest> getTests(TRRun run) {
-            step("Get test with id {}", run.getId());
+            step("Get tests for run id {}", run.getId());
             return CLIENT.getTests(run.getId());
+        }
+
+        default List<TRTest> getTests(TRRun run, GetTestsQueryMap queryMap) {
+            step("Get tests for run id {} with filter", run.getId());
+            return getTests(run.getId(), queryMap);
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
@@ -377,7 +402,10 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.getCaseFields();
         }
 
-        default TRCaseField addTRCaseField(TRCaseField caseField) {
+        default TRCaseField addTRCaseField(TRCaseField caseField, TRCaseFieldConfig... caseFieldConfigs) {
+            if (caseFieldConfigs != null && caseFieldConfigs.length > 0) {
+                caseField.setConfigs(Arrays.asList(caseFieldConfigs));
+            }
             step("Add new case field with name {}", caseField.getName());
             return CLIENT.addCaseField(caseField);
         }
@@ -453,8 +481,10 @@ public class BaseCorvusTest extends BaseBuggyTest {
             return CLIENT.addMilestone(milestone, project.getId());
         }
 
-        default TRMilestone addMilestone(TRProject project) {
-            TRMilestone milestone = new TRMilestone().withName(UUID.randomUUID().toString());
+        default TRMilestone addMilestone(TRProject project, TRMilestone... milestones) {
+            TRMilestone milestone = new TRMilestone()
+                    .withName(UUID.randomUUID().toString())
+                    .withMilestones(Arrays.asList(milestones));
             return addMilestone(milestone, project.getId());
         }
 

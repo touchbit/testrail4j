@@ -16,9 +16,9 @@
 
 package org.touchbit.testrail4j.helpful;
 
-import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
+import org.touchbit.testrail4j.core.BasicAuth;
 
-public class Auth extends BasicAuthorizationInterceptor {
+public class Auth extends BasicAuth {
 
     public Auth() {
         super("user", "pass");

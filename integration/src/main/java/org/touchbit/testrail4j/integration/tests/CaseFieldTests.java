@@ -21,10 +21,7 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.jackson2.model.Context;
-import org.touchbit.testrail4j.jackson2.model.Options;
-import org.touchbit.testrail4j.jackson2.model.TRCaseField;
-import org.touchbit.testrail4j.jackson2.model.TRCaseFieldConfig;
+import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -52,19 +49,19 @@ public class CaseFieldTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful add new custom case field")
     @Details()
     public void test_20190106015332() {
+        TRProject project = CLIENT.getProject();
         TRCaseFieldConfig config = new TRCaseFieldConfig()
-                .withContext(new Context().withIsGlobal(true))
+                .withContext(new Context()
+                        .withIsGlobal(false)
+                        .withProjectIds(new ArrayList<Long>() {{ add(project.getId()); }}))
                 .withOptions(new Options().withIsRequired(false).withItems("0, A\n1, B").withDefaultValue("1"));
-        List<TRCaseFieldConfig> configs = new ArrayList<>();
-        configs.add(config);
         TRCaseField field = new TRCaseField()
-                .withConfigs(configs)
                 .withName("with_name_" + getRandomString(5))
                 .withDescription("withDescription")
                 .withLabel("test_20190106015332")
                 .withType("6")
                 .withIncludeAll(true);
-        TRCaseField actField = CLIENT.addTRCaseField(field);
+        TRCaseField actField = CLIENT.addTRCaseField(field, config);
         assertThat(actField.getAdditionalProperties()).isEmpty();
         assertThat(actField.getConfigs()).isInstanceOf(String.class);
         List<TRCaseField> fields = CLIENT.getTRCaseFields();

@@ -42,7 +42,7 @@ public class PlanTests extends BaseCorvusTest {
     @Details()
     public void test_20190106181613() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         TRRun run = CLIENT.addRun(project, suite);
         TRPlan plan = CLIENT.addPlan(project);
         TRPlanEntry entry = new TRPlanEntry()
@@ -62,7 +62,7 @@ public class PlanTests extends BaseCorvusTest {
     @Details()
     public void test_20190106184206() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         TRRun run = CLIENT.addRun(project, suite);
         TRPlan plan = CLIENT.addPlan(project);
         TRPlanEntry entry = CLIENT.addPlanEntry(plan, suite, run);
@@ -78,7 +78,7 @@ public class PlanTests extends BaseCorvusTest {
     @Details()
     public void test_20190106185055() {
         TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addNewSuite(project);
+        TRSuite suite = CLIENT.addSuite(project);
         TRRun run = CLIENT.addRun(project, suite);
         TRPlan plan = CLIENT.addPlan(project);
         TRPlanEntry actEntry = CLIENT.addPlanEntry(plan, suite, run);
@@ -181,12 +181,12 @@ public class PlanTests extends BaseCorvusTest {
         CLIENT.addPlan(project);
         CLIENT.addPlan(project);
         GetPlansQueryMap queryMap = new GetPlansFilter()
-                .withCreatedAfter(500000000L)
-                .withCreatedBefore(500000000L)
-                .withCreatedBy(1L)
+                .withCreatedAfter(500000000)
+                .withCreatedBefore(2000000000)
+                .withCreatedBy(1)
                 .withIsCompleted(false)
                 .withLimit(10)
-                .withMilestoneId(1L)
+                .withMilestoneId(1)
                 .withOffset(1);
         List<TRPlan> actPlan = CLIENT.getPlans(project, queryMap);
         assertThat(actPlan).isEmpty();

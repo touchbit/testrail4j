@@ -119,6 +119,9 @@ public class ConfigTests extends BaseCorvusTest {
         assertThat(configGroupList).isNotEmpty();
         for (TRProjectConfigGroup trProjectConfigGroup : configGroupList) {
             assertThat(trProjectConfigGroup.getAdditionalProperties()).isEmpty();
+            for (TRProjectConfig trProjectConfigGroupConfig : trProjectConfigGroup.getConfigs()) {
+                assertThat(trProjectConfigGroupConfig.getAdditionalProperties()).isEmpty();
+            }
         }
     }
 

@@ -79,7 +79,7 @@ org.touchbit.testrail4j:jackson2-feign-client:jar:0.4.0
 * Build feign client implementation and call the necessary method
 ```java
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
-import org.touchbit.testrail4j.core.BasicAuthorizationInterceptor;
+import org.touchbit.testrail4j.core.BasicAuth;
 import org.touchbit.testrail4j.jackson2.model.Case;
 
 public class Example {

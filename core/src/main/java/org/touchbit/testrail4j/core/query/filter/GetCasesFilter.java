@@ -23,32 +23,32 @@ import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetCasesFilter extends BaseQueryMap implements GetCasesQueryMap {
+public class GetCasesFilter extends BaseFilter implements GetCasesQueryMap {
 
     /**
      * The ID of the test suite (optional if the project is operating in single suite mode)
      */
-    private Long suite_id;
+    private Number suite_id;
     /**
      * The ID of the section (optional)
      */
-    private Long section_id;
+    private Number section_id;
     /**
      * Only return test cases created after this date (as UNIX timestamp).
      */
-    private Long created_after;
+    private Number created_after;
     /**
      * Only return test cases created before this date (as UNIX timestamp).
      */
-    private Long created_before;
+    private Number created_before;
     /**
      * Only return test cases updated after this date (as UNIX timestamp).
      */
-    private Long updated_after;
+    private Number updated_after;
     /**
      * Only return test cases updated before this date (as UNIX timestamp).
      */
-    private Long updated_before;
+    private Number updated_before;
     /**
      * A comma-separated list of milestone IDs to filter by
      * (not available if the milestone field is disabled for the project).
@@ -75,19 +75,19 @@ public class GetCasesFilter extends BaseQueryMap implements GetCasesQueryMap {
      */
     private String updated_by;
 
-    public Long getCreatedAfter() {
+    public Number getCreatedAfter() {
         return created_after;
     }
 
-    public Long getCreatedBefore() {
+    public Number getCreatedBefore() {
         return created_before;
     }
 
-    public Long getUpdatedAfter() {
+    public Number getUpdatedAfter() {
         return updated_after;
     }
 
-    public Long getUpdatedBefore() {
+    public Number getUpdatedBefore() {
         return updated_before;
     }
 
@@ -115,118 +115,118 @@ public class GetCasesFilter extends BaseQueryMap implements GetCasesQueryMap {
         return updated_by;
     }
 
-    public Long getSuiteId() {
+    public Number getSuiteId() {
         return suite_id;
     }
 
-    public Long getSectionId() {
+    public Number getSectionId() {
         return section_id;
     }
 
-    public void setCreatedAfter(Long createdAfter) {
+    public void setCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
     }
 
-    public void setCreatedBefore(Long createdBefore) {
+    public void setCreatedBefore(Number createdBefore) {
         this.created_before = createdBefore;
     }
 
-    public void setUpdatedAfter(Long updatedAfter) {
+    public void setUpdatedAfter(Number updatedAfter) {
         this.updated_after = updatedAfter;
     }
 
-    public void setUpdatedBefore(Long updatedBefore) {
+    public void setUpdatedBefore(Number updatedBefore) {
         this.updated_before = updatedBefore;
     }
 
-    public void setCreatedBy(Long... createdBy) {
+    public void setCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
     }
 
-    public void setMilestoneId(Long... milestoneId) {
+    public void setMilestoneId(Number... milestoneId) {
         this.milestone_id = toCommaSeparatedString(milestoneId);
     }
 
-    public void setPriorityId(Long... priorityId) {
+    public void setPriorityId(Number... priorityId) {
         this.priority_id = toCommaSeparatedString(priorityId);
     }
 
-    public void setUpdatedBy(Long... updatedBy) {
+    public void setUpdatedBy(Number... updatedBy) {
         this.updated_by = toCommaSeparatedString(updatedBy);
     }
 
-    public void setTemplateId(Long... templateId) {
+    public void setTemplateId(Number... templateId) {
         this.template_id = toCommaSeparatedString(templateId);
     }
 
-    public void setTypeId(Long... typeId) {
+    public void setTypeId(Number... typeId) {
         this.type_id = toCommaSeparatedString(typeId);
     }
 
-    public void setSuiteId(Long suiteId) {
+    public void setSuiteId(Number suiteId) {
         this.suite_id = suiteId;
     }
 
-    public void setSectionId(Long sectionId) {
+    public void setSectionId(Number sectionId) {
         this.section_id = sectionId;
     }
 
-    public GetCasesFilter withCreatedAfter(Long createdAfter) {
+    public GetCasesFilter withCreatedAfter(Number createdAfter) {
         this.created_after = createdAfter;
         return this;
     }
 
-    public GetCasesFilter withCreatedBefore(Long createdBefore) {
+    public GetCasesFilter withCreatedBefore(Number createdBefore) {
         this.created_before = createdBefore;
         return this;
     }
 
-    public GetCasesFilter withUpdatedAfter(Long updatedAfter) {
+    public GetCasesFilter withUpdatedAfter(Number updatedAfter) {
         this.updated_after = updatedAfter;
         return this;
     }
 
-    public GetCasesFilter withUpdatedBefore(Long updatedBefore) {
+    public GetCasesFilter withUpdatedBefore(Number updatedBefore) {
         this.updated_before = updatedBefore;
         return this;
     }
 
-    public GetCasesFilter withCreatedBy(Long... createdBy) {
+    public GetCasesFilter withCreatedBy(Number... createdBy) {
         this.created_by = toCommaSeparatedString(createdBy);
         return this;
     }
 
-    public GetCasesFilter withMilestoneId(Long... milestoneId) {
+    public GetCasesFilter withMilestoneId(Number... milestoneId) {
         this.milestone_id = toCommaSeparatedString(milestoneId);
         return this;
     }
 
-    public GetCasesFilter withPriorityId(Long... priorityId) {
+    public GetCasesFilter withPriorityId(Number... priorityId) {
         this.priority_id = toCommaSeparatedString(priorityId);
         return this;
     }
 
-    public GetCasesFilter withUpdatedBy(Long... updatedBy) {
+    public GetCasesFilter withUpdatedBy(Number... updatedBy) {
         this.updated_by = toCommaSeparatedString(updatedBy);
         return this;
     }
 
-    public GetCasesFilter withTemplateId(Long... templateId) {
+    public GetCasesFilter withTemplateId(Number... templateId) {
         this.template_id = toCommaSeparatedString(templateId);
         return this;
     }
 
-    public GetCasesFilter withTypeId(Long... typeId) {
+    public GetCasesFilter withTypeId(Number... typeId) {
         this.type_id = toCommaSeparatedString(typeId);
         return this;
     }
 
-    public GetCasesFilter withSuiteId(Long suiteId) {
+    public GetCasesFilter withSuiteId(Number suiteId) {
         this.suite_id = suiteId;
         return this;
     }
 
-    public GetCasesFilter withSectionId(Long sectionId) {
+    public GetCasesFilter withSectionId(Number sectionId) {
         this.section_id = sectionId;
         return this;
     }

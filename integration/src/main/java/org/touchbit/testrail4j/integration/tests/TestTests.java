@@ -19,6 +19,7 @@ package org.touchbit.testrail4j.integration.tests;
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
+import org.touchbit.testrail4j.core.query.filter.GetTestsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.jackson2.model.*;
@@ -26,6 +27,9 @@ import org.touchbit.testrail4j.jackson2.model.*;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.touchbit.testrail4j.core.type.Statuses.*;
+import static org.touchbit.testrail4j.core.type.Statuses.CUSTOM_STATUS6;
+import static org.touchbit.testrail4j.core.type.Statuses.CUSTOM_STATUS7;
 import static org.touchbit.testrail4j.jackson2.feign.client.SuiteMode.SINGLE;
 
 /**
@@ -47,6 +51,35 @@ public class TestTests extends BaseCorvusTest {
         for (TRTest test : tests) {
             test = CLIENT.getTest(test);
             assertThat(test).isNotNull();
+            assertThat(test.getAdditionalProperties()).isEmpty();
+            if (test.getCustomStepsSeparated() != null) {
+                for (TRStep trStep : test.getCustomStepsSeparated()) {
+                    assertThat(trStep.getAdditionalProperties()).isEmpty();
+                }
+            }
+        }
+    }
+
+    @Test(description = "Expecting a successful receive of tests with filter")
+    @Details()
+    public void test_20190107184213() {
+        TRProject project = CLIENT.getProject(SINGLE);
+        TRSection section = CLIENT.addSection(project);
+        CLIENT.addCase(section);
+        TRRun run = CLIENT.addRun(project);
+        List<TRTest> tests = CLIENT.getTests(run, new GetTestsFilter()
+                .withStatusId(PASSED, BLOCKED, UNTESTED, RETEST, FAILED, CUSTOM_STATUS1, CUSTOM_STATUS2,
+                CUSTOM_STATUS3, CUSTOM_STATUS4, CUSTOM_STATUS5, CUSTOM_STATUS6, CUSTOM_STATUS7));
+        assertThat(tests).isNotEmpty();
+        for (TRTest test : tests) {
+            test = CLIENT.getTest(test);
+            assertThat(test).isNotNull();
+            assertThat(test.getAdditionalProperties()).isEmpty();
+            if (test.getCustomStepsSeparated() != null) {
+                for (TRStep trStep : test.getCustomStepsSeparated()) {
+                    assertThat(trStep.getAdditionalProperties()).isEmpty();
+                }
+            }
         }
     }
 

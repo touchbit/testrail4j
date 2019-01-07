@@ -17,13 +17,14 @@
 package org.touchbit.testrail4j.core.query.filter;
 
 import org.touchbit.testrail4j.core.query.GetTestsQueryMap;
+import org.touchbit.testrail4j.core.type.Type;
 
 /**
  * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetTestsFilter extends BaseQueryMap implements GetTestsQueryMap {
+public class GetTestsFilter extends BaseFilter implements GetTestsQueryMap {
 
     /**
      * A comma-separated list of status IDs to filter by.
@@ -37,11 +38,16 @@ public class GetTestsFilter extends BaseQueryMap implements GetTestsQueryMap {
         return status_id;
     }
 
-    public void setStatusId(Long... statusIds) {
+    public void setStatusId(Number... statusIds) {
         this.status_id = toCommaSeparatedString(statusIds);
     }
 
-    public GetTestsFilter withStatusId(Long... statusIds) {
+    public GetTestsFilter withStatusId(Number... statusIds) {
+        this.status_id = toCommaSeparatedString(statusIds);
+        return this;
+    }
+
+    public GetTestsFilter withStatusId(Type... statusIds) {
         this.status_id = toCommaSeparatedString(statusIds);
         return this;
     }

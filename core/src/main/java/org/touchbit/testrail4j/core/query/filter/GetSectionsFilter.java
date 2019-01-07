@@ -23,22 +23,22 @@ import org.touchbit.testrail4j.core.query.GetSectionsQueryMap;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings({"unused", "squid:S00116"})
-public class GetSectionsFilter extends BaseQueryMap implements GetSectionsQueryMap {
+public class GetSectionsFilter extends BaseFilter implements GetSectionsQueryMap {
 
     /**
      * The ID of the test suite (optional if the project is operating in single suite mode)
      */
-    private Long suite_id;
+    private Number suite_id;
 
-    public Long getSuiteId() {
+    public Number getSuiteId() {
         return suite_id;
     }
 
-    public void setSuiteId(Long suiteId) {
+    public void setSuiteId(Number suiteId) {
         this.suite_id = suiteId;
     }
 
-    public GetSectionsFilter withSuiteId(Long suiteId) {
+    public GetSectionsFilter withSuiteId(Number suiteId) {
         this.suite_id = suiteId;
         return this;
     }

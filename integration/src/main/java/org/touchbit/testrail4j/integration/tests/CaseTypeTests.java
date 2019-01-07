@@ -39,6 +39,9 @@ public class CaseTypeTests extends BaseCorvusTest {
     public void test_20190106033851() {
         List<TRCaseType> types = CLIENT.getTRCaseTypes();
         assertThat(types).isNotEmpty();
+        for (TRCaseType type : types) {
+            assertThat(type.getAdditionalProperties()).isEmpty();
+        }
     }
 
 }
