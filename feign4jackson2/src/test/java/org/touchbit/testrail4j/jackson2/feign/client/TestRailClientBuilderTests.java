@@ -29,9 +29,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TestRailClientBuilderTests extends BaseUnitTest {
 
     @Test
+    @DisplayName("build(String login, String passToken, String target)")
+    void unitTest_20190107220511() {
+        TestRailClientBuilder.build("login", "passToken", TARGET).getCase(2100L);
+        assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
+    }
+
+    @Test
     @DisplayName("build(I auth, String target)")
     void unitTest_20181112131511() {
-        TestRailClientBuilder.build(new Auth(), TARGET);
+        TestRailClientBuilder.build(new Auth(), TARGET).getCase(2100L);
         assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
     }
 
@@ -39,6 +46,14 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @DisplayName("build(I auth, String target, Logger log)")
     void unitTest_20181112132100() {
         TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
+        assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/2100");
+    }
+
+    @Test
+    @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel)")
+    void unitTest_20190107220640() {
+        TestRailClientBuilder
+                .build(new Auth(), TARGET, TestRailClient.class, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
         assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/2100");
     }
 

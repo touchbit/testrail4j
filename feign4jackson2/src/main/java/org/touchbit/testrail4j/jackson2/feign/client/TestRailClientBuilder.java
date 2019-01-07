@@ -50,7 +50,8 @@ public class TestRailClientBuilder {
         return build(auth, target, TestRailClient.class, log, logLevel);
     }
 
-    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth, String target,
+    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth,
+                                                                                 String target,
                                                                                  Class<C> c,
                                                                                  Logger log) {
         return build(auth, target, c, log, FULL);
