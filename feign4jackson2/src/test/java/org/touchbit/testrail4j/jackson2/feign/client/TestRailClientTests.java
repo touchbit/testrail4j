@@ -750,4 +750,75 @@ class TestRailClientTests extends BaseUnitTest {
         }
     }
 
+    @Nested
+    @DisplayName("API: Sections")
+    class APISectionsTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Tests")
+    class APITestsTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Cases Fields")
+    class APICasesFieldsTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Cases Types")
+    class APICasesTypesTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Configs")
+    class APIConfigsTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Milestones")
+    class APIMilestonesTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Priorities")
+    class APIPrioritiesTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Users")
+    class APIUsersTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Templates")
+    class APITemplatesTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Statuses")
+    class APIStatusesTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Results fields")
+    class APIResultsFieldsTests {
+
+    }
+
+    @Nested
+    @DisplayName("API: Plans")
+    class APIPlansTests {
+
+    }
 }
