@@ -292,23 +292,146 @@ class TestRailClientTests extends BaseUnitTest {
         @DisplayName("TestRailClient#getCase(Integer)")
         void unitTest_20181112134433() {
             CLIENT.getCase(4433L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/4433");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_case/4433");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getCase(TRCase)")
+        void unitTest_20190107225235() {
+            CLIENT.getCase(new TRCase().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_case/1");
         }
 
         @Test
         @DisplayName("TestRailClient#getCases(Integer)")
         void unitTest_20181112134530() {
-            CLIENT.getCases(4620L);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_cases/4620");
+            GetCasesFilter filter = new GetCasesFilter()
+                    .withCreatedAfter(1)
+                    .withCreatedBefore(2)
+                    .withCreatedBy(3, 1)
+                    .withMilestoneId(4, 1)
+                    .withPriorityId(5, 1)
+                    .withTemplateId(6, 1)
+                    .withTypeId(7, 1)
+                    .withUpdatedAfter(8)
+                    .withUpdatedBefore(9)
+                    .withUpdatedBy(10, 1)
+                    .withSuiteId(11)
+                    .withSectionId(12L);
+            CLIENT.getCases(4620L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_cases/4620");
+            assertThat(msg).contains("&updated_before=9");
+            assertThat(msg).contains("&priority_id=5%2C1");
+            assertThat(msg).contains("&section_id=12");
+            assertThat(msg).contains("&created_after=1");
+            assertThat(msg).contains("&created_before=2");
+            assertThat(msg).contains("&type_id=7%2C1");
+            assertThat(msg).contains("&updated_after=8");
+            assertThat(msg).contains("&milestone_id=4%2C1");
+            assertThat(msg).contains("&updated_by=10%2C1");
+            assertThat(msg).contains("&template_id=6%2C1");
+            assertThat(msg).contains("&suite_id=11");
+            assertThat(msg).contains("&created_by=3%2C1");
         }
 
         @Test
-        @DisplayName("TestRailClient#getCases(Integer, GetCasesQueryMap)")
-        void unitTest_20181112134620() {
-            GetCasesFilter map = new GetCasesFilter();
-            map.setTypeId(3L);
-            CLIENT.getCases(34530L, map);
-            assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_cases/34530&type_id=3");
+        @DisplayName("TestRailClient#getCases(Long)")
+        void unitTest_20190107225322() {
+            CLIENT.getCases(4620L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_cases/4620");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getCases(TRProject)")
+        void unitTest_20190107225732() {
+            CLIENT.getCases(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_cases/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getCases(TRProject, GetCasesQueryMap)")
+        void unitTest_20190107225805() {
+            GetCasesFilter filter = new GetCasesFilter()
+                    .withCreatedAfter(1)
+                    .withCreatedBefore(2)
+                    .withCreatedBy(3, 1)
+                    .withMilestoneId(4, 1)
+                    .withPriorityId(5, 1)
+                    .withTemplateId(6, 1)
+                    .withTypeId(7, 1)
+                    .withUpdatedAfter(8)
+                    .withUpdatedBefore(9)
+                    .withUpdatedBy(10, 1)
+                    .withSuiteId(11)
+                    .withSectionId(12L);
+            CLIENT.getCases(new TRProject().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/get_cases/1");
+            assertThat(msg).contains("&updated_before=9");
+            assertThat(msg).contains("&priority_id=5%2C1");
+            assertThat(msg).contains("&section_id=12");
+            assertThat(msg).contains("&created_after=1");
+            assertThat(msg).contains("&created_before=2");
+            assertThat(msg).contains("&type_id=7%2C1");
+            assertThat(msg).contains("&updated_after=8");
+            assertThat(msg).contains("&milestone_id=4%2C1");
+            assertThat(msg).contains("&updated_by=10%2C1");
+            assertThat(msg).contains("&template_id=6%2C1");
+            assertThat(msg).contains("&suite_id=11");
+            assertThat(msg).contains("&created_by=3%2C1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addCase(TRCase, Long)")
+        void unitTest_20190107225907() {
+            CLIENT.addCase(new TRCase(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/add_case/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addCase(TRCase, TRSection)")
+        void unitTest_20190107230010() {
+            CLIENT.addCase(new TRCase(), new TRSection().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/add_case/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateCase(TRCase, Long)")
+        void unitTest_20190107230104() {
+            CLIENT.updateCase(new TRCase(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/update_case/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateCase(TRCase)")
+        void unitTest_20190107230142() {
+            CLIENT.updateCase(new TRCase().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/update_case/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteCase(Long)")
+        void unitTest_20190107230300() {
+            CLIENT.deleteCase(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/delete_case/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteCase(TRCase)")
+        void unitTest_20190107230340() {
+            CLIENT.deleteCase(new TRCase().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains("/delete_case/1");
         }
 
     }
