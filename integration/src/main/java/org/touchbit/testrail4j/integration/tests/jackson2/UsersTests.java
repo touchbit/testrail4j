@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.TRUser;
 
 import java.util.List;
@@ -31,14 +33,14 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
  * Created by Oleg Shaburov on 06.01.2019
  * shaburov.o.a@gmail.com
  */
-@Suite(service = TestRail.class, interfaze = API.class, task = "users_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "users_operations")
 public class UsersTests extends BaseCorvusTest {
 
     @Test(description = "Expecting successful receive of the existing user")
     @Details()
     public void test_20190106071009() {
         step("Get existing user");
-        TRUser actUser = CLIENT.getUser(1L);
+        TRUser actUser = J2_CLIENT.getUser(1L);
         assertThat(actUser).isNotNull();
         assertThat(actUser.getIsActive()).isTrue();
         assertThat(actUser.getAdditionalProperties()).isEmpty();
@@ -48,9 +50,9 @@ public class UsersTests extends BaseCorvusTest {
     @Details()
     public void test_20190106071959() {
         step("Get existing user");
-        TRUser user = CLIENT.getUser(1L);
+        TRUser user = J2_CLIENT.getUser(1L);
         step("Get existing user by email");
-        TRUser actUser = CLIENT.getUserByEmail(user.getEmail());
+        TRUser actUser = J2_CLIENT.getUserByEmail(user.getEmail());
         assertThat(actUser).isNotNull();
         assertThat(actUser.getIsActive()).isTrue();
     }
@@ -59,7 +61,7 @@ public class UsersTests extends BaseCorvusTest {
     @Details()
     public void test_20190106072059() {
         step("Get existing users list");
-        List<TRUser> actUsers = CLIENT.getUsers();
+        List<TRUser> actUsers = J2_CLIENT.getUsers();
         assertThat(actUsers).isNotEmpty();
     }
 

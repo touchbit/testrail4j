@@ -45,14 +45,14 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 public class BaseCorvusTest extends BaseBuggyTest {
 
-    protected static final TestRailTestClient CLIENT;
+    protected static final TestRailTestClient J2_CLIENT;
 
     static {
         if (!IntellijIdeaTestNgPluginListener.isIntellijIdeaTestRun() && !Buggy.isTestRun()) {
             Buggy.getExitHandler().exitRun(1, "Missing IntellijIdeaPluginListener in the Intellij IDEA" +
                     " TestNG plugin configuration.");
         }
-        CLIENT = TestRailClientBuilder
+        J2_CLIENT = TestRailClientBuilder
                 .build(new BasicAuth(Config.getAuth()),
                         Config.getHost(),
                         TestRailTestClient.class,
@@ -133,7 +133,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default void deleteProject(TRProject project) {
             step("Delete project with ID: {}", project.getId());
-            CLIENT.deleteProject(project.getId());
+            J2_CLIENT.deleteProject(project.getId());
         }
 
         default TRProject getProject(TRProject project) {
@@ -178,7 +178,7 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRSection getSection(TRSection section) {
             step("Get section with ID {}", section.getId());
-            return CLIENT.getSection(section.getId());
+            return J2_CLIENT.getSection(section.getId());
         }
 
         default List<TRSection> getSections(TRProject project) {
@@ -193,29 +193,29 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRSection updateSection(TRSection section) {
             step("Update section with ID {}", section.getId());
-            return CLIENT.updateSection(section, section.getId());
+            return J2_CLIENT.updateSection(section, section.getId());
         }
 
         default void deleteSection(TRSection section) {
             step("Delete section with ID {}", section.getId());
-            CLIENT.deleteSection(section.getId());
+            J2_CLIENT.deleteSection(section.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default void deleteSuite(TRSuite suite) {
             step("Delete suite with ID: {}", suite.getId());
-            CLIENT.deleteSuite(suite.getId());
+            J2_CLIENT.deleteSuite(suite.getId());
         }
 
         default TRSuite updateSuite(TRSuite suite) {
             step("Update suite with ID: {}", suite.getId());
-            return CLIENT.updateSuite(suite, suite.getId());
+            return J2_CLIENT.updateSuite(suite, suite.getId());
         }
 
         default TRSuite addSuite(TRSuite suite, TRProject project) {
             step("Create new suite with name: {}", suite.getName());
-            return CLIENT.addSuite(suite, project.getId());
+            return J2_CLIENT.addSuite(suite, project.getId());
         }
 
         default TRSuite addSuite(TRProject project) {
@@ -230,56 +230,56 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default List<TRSuite> getSuites(TRProject project) {
             step("Get list suites for project ID: {}", project.getId());
-            return CLIENT.getSuites(project.getId());
+            return J2_CLIENT.getSuites(project.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default TRCase getCase(TRCase caze) {
             step("Get case with ID: {}", caze.getId());
-            return CLIENT.getCase(caze.getId());
+            return J2_CLIENT.getCase(caze.getId());
         }
 
         default List<TRCase> getCases(TRProject project) {
             step("Get cases list for project ID: {}", project.getId());
-            return CLIENT.getCases(project.getId());
+            return J2_CLIENT.getCases(project.getId());
         }
 
         default List<TRCase> getCases(TRProject project, GetCasesQueryMap queryMap) {
             step("Get cases list with filter for project ID: {}", project.getId());
-            return CLIENT.getCases(project.getId(), queryMap);
+            return J2_CLIENT.getCases(project.getId(), queryMap);
         }
 
         default TRCase addCase() {
-            TRSection section = CLIENT.addSection();
+            TRSection section = J2_CLIENT.addSection();
             return addCase(section);
         }
 
         default TRCase addCase(TRSection section) {
             TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
             step("Add new case with title: {}", caze.getTitle());
-            return CLIENT.addCase(caze, caze.getSectionId());
+            return J2_CLIENT.addCase(caze, caze.getSectionId());
         }
 
         default TRCase addCase(TRCase caze) {
             step("Add new case with title: {}", caze.getTitle());
-            return CLIENT.addCase(caze, caze.getSectionId());
+            return J2_CLIENT.addCase(caze, caze.getSectionId());
         }
 
         default TRCase updateCase(TRCase caze) {
             step("Update case with ID: {}", caze.getId());
-            return CLIENT.updateCase(caze, caze.getId());
+            return J2_CLIENT.updateCase(caze, caze.getId());
         }
 
         default void deleteCase(TRCase caze) {
             step("Delete case with ID: {}", caze.getId());
-            CLIENT.deleteCase(caze.getId());
+            J2_CLIENT.deleteCase(caze.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default TRRun addRun() {
-            TRProject project = CLIENT.getProject(SINGLE);
+            TRProject project = J2_CLIENT.getProject(SINGLE);
             return addRun(project);
         }
 
@@ -298,44 +298,44 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRRun addRun(TRRun run) {
             step("Add run with name {} for project id {}", run.getName(), run.getProjectId());
-            return CLIENT.addRun(run, run.getProjectId());
+            return J2_CLIENT.addRun(run, run.getProjectId());
         }
 
         default TRRun updateRun(TRRun run) {
             step("Update run with id {}", run.getId());
-            return CLIENT.updateRun(run, run.getId());
+            return J2_CLIENT.updateRun(run, run.getId());
         }
 
         default TRRun getRun(TRRun run) {
             step("Get run with id {}", run.getId());
-            return CLIENT.getRun(run.getId());
+            return J2_CLIENT.getRun(run.getId());
         }
 
         default List<TRRun> getRuns(TRRun run) {
             step("Get run list for project id {}", run.getProjectId());
-            return CLIENT.getRuns(run.getProjectId());
+            return J2_CLIENT.getRuns(run.getProjectId());
         }
 
         default List<TRRun> getRuns(TRRun run, GetRunsQueryMap queryMap) {
             step("Get run list for project id {} with filter", run.getProjectId());
-            return CLIENT.getRuns(run.getProjectId(), queryMap);
+            return J2_CLIENT.getRuns(run.getProjectId(), queryMap);
         }
 
         default void deleteRun(TRRun run) {
             step("Delete run with id {}", run.getId());
-            CLIENT.deleteRun(run.getId());
+            J2_CLIENT.deleteRun(run.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default TRTest getTest(TRTest test) {
             step("Get test with id {}", test.getId());
-            return CLIENT.getTest(test.getId());
+            return J2_CLIENT.getTest(test.getId());
         }
 
         default List<TRTest> getTests(TRRun run) {
             step("Get tests for run id {}", run.getId());
-            return CLIENT.getTests(run.getId());
+            return J2_CLIENT.getTests(run.getId());
         }
 
         default List<TRTest> getTests(TRRun run, GetTestsQueryMap queryMap) {
@@ -347,59 +347,59 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRResult addResult(TRResult trResult, TRTest trTest) {
             step("Add test result for test id {}", trTest.getId());
-            return CLIENT.addResult(trResult, trTest.getId());
+            return J2_CLIENT.addResult(trResult, trTest.getId());
         }
 
         default TRResult addResultForCase(TRResult trResult, TRRun trRun, TRCase trCase) {
             step("Add test result for run id {} and case id {}", trCase.getId(), trCase.getId());
-            return CLIENT.addResultForCase(trResult, trRun.getId(), trCase.getId());
+            return J2_CLIENT.addResultForCase(trResult, trRun.getId(), trCase.getId());
         }
 
         default List<TRResult> addResults(TRResults trResults, TRRun trRun) {
             step("Add test results for run id {}", trRun.getId());
-            return CLIENT.addResults(trResults, trRun.getId());
+            return J2_CLIENT.addResults(trResults, trRun.getId());
         }
 
         default List<TRResult> addResultsForCases(TRResults trResults, TRRun trRun) {
             step("Add test results for cases with run id {}", trRun.getId());
-            return CLIENT.addResultsForCases(trResults, trRun.getId());
+            return J2_CLIENT.addResultsForCases(trResults, trRun.getId());
         }
 
         default List<TRResult> getResultsForRun(TRRun trRun) {
             step("Get test results for run id {}", trRun.getId());
-            return CLIENT.getResultsForRun(trRun.getId());
+            return J2_CLIENT.getResultsForRun(trRun.getId());
         }
 
         default List<TRResult> getResultsForRun(TRRun trRun, GetResultsQueryMap resultsQueryMap) {
             step("Get test results with filter for run id {}", trRun.getId());
-            return CLIENT.getResultsForRun(trRun.getId(), resultsQueryMap);
+            return J2_CLIENT.getResultsForRun(trRun.getId(), resultsQueryMap);
         }
 
         default List<TRResult> getResultsForCase(TRRun trRun, TRCase trCase) {
             step("Get test results for case id {} with run id {}", trCase.getId(), trRun.getId());
-            return CLIENT.getResultsForCase(trRun.getId(), trCase.getId());
+            return J2_CLIENT.getResultsForCase(trRun.getId(), trCase.getId());
         }
 
         default List<TRResult> getResultsForCase(TRRun trRun, TRCase trCase, GetResultsQueryMap queryMap) {
             step("Get test results with filter for case id {} with run id {}", trCase.getId(), trRun.getId());
-            return CLIENT.getResultsForCase(trRun.getId(), trCase.getId(), queryMap);
+            return J2_CLIENT.getResultsForCase(trRun.getId(), trCase.getId(), queryMap);
         }
 
         default List<TRResult> getResults(TRTest trTest) {
             step("Get test results for test id {}", trTest.getId());
-            return CLIENT.getResults(trTest.getId());
+            return J2_CLIENT.getResults(trTest.getId());
         }
 
         default List<TRResult> getResults(TRTest trTest, GetResultsQueryMap queryMap) {
             step("Get test results with filter for test id {}", trTest.getId());
-            return CLIENT.getResults(trTest.getId(), queryMap);
+            return J2_CLIENT.getResults(trTest.getId(), queryMap);
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default List<TRCaseField> getTRCaseFields() {
             step("Get existing case fields");
-            return CLIENT.getCaseFields();
+            return J2_CLIENT.getCaseFields();
         }
 
         default TRCaseField addTRCaseField(TRCaseField caseField, TRCaseFieldConfig... caseFieldConfigs) {
@@ -407,21 +407,21 @@ public class BaseCorvusTest extends BaseBuggyTest {
                 caseField.setConfigs(Arrays.asList(caseFieldConfigs));
             }
             step("Add new case field with name {}", caseField.getName());
-            return CLIENT.addCaseField(caseField);
+            return J2_CLIENT.addCaseField(caseField);
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default List<TRCaseType> getTRCaseTypes() {
             step("Get existing case types");
-            return CLIENT.getCaseTypes();
+            return J2_CLIENT.getCaseTypes();
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default List<TRProjectConfigGroup> getConfigs(TRProject project) {
             step("Get configurations for project ID {}", project.getId());
-            return CLIENT.getConfigs(project.getId());
+            return J2_CLIENT.getConfigs(project.getId());
         }
 
         default TRProjectConfigGroup addConfigGroup(TRProject project) {
@@ -431,54 +431,54 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRProjectConfigGroup addConfigGroup(TRProjectConfigGroup cGroup, TRProject project) {
             step("Add configuration group for project ID {}", project.getId());
-            return CLIENT.addConfigGroup(cGroup, project.getId());
+            return J2_CLIENT.addConfigGroup(cGroup, project.getId());
         }
 
         default TRProjectConfigGroup updateConfigGroup(TRProjectConfigGroup cGroup) {
             step("Update configuration group with ID {}", cGroup.getId());
-            return CLIENT.updateConfigGroup(cGroup, cGroup.getId());
+            return J2_CLIENT.updateConfigGroup(cGroup, cGroup.getId());
         }
 
         default void deleteConfigGroup(TRProjectConfigGroup cGroup) {
             step("Delete configuration group with ID {}", cGroup.getId());
-            CLIENT.deleteConfigGroup(cGroup.getId());
+            J2_CLIENT.deleteConfigGroup(cGroup.getId());
         }
 
         default TRProjectConfig addConfig(TRProjectConfig config, TRProjectConfigGroup cGroup) {
             step("Add configuration to the group with ID {}", cGroup.getId());
-            return CLIENT.addConfig(config, cGroup.getId());
+            return J2_CLIENT.addConfig(config, cGroup.getId());
         }
 
         default TRProjectConfig updateConfig(TRProjectConfig config) {
             step("Update configuration with ID {}", config.getId());
-            return CLIENT.updateConfig(config, config.getId());
+            return J2_CLIENT.updateConfig(config, config.getId());
         }
 
         default void deleteConfig(TRProjectConfig config) {
             step("Delete configuration with ID {}", config.getId());
-            CLIENT.deleteConfig(config.getId());
+            J2_CLIENT.deleteConfig(config.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */
 
         default TRMilestone getMilestone(TRMilestone milestone) {
             step("Get milestone with ID {}", milestone.getId());
-            return CLIENT.getMilestone(milestone.getId());
+            return J2_CLIENT.getMilestone(milestone.getId());
         }
 
         default List<TRMilestone> getMilestones(TRProject project) {
             step("Get milestones for project with ID {}", project.getId());
-            return CLIENT.getMilestones(project.getId());
+            return J2_CLIENT.getMilestones(project.getId());
         }
 
         default List<TRMilestone> getMilestones(TRProject project, GetMilestonesQueryMap queryMap) {
             step("Get milestones with filter for project with ID {}", project.getId(), queryMap);
-            return CLIENT.getMilestones(project.getId(), queryMap);
+            return J2_CLIENT.getMilestones(project.getId(), queryMap);
         }
 
         default TRMilestone addMilestone(TRMilestone milestone, TRProject project) {
             step("Add milestone {} to the project with ID {}", milestone.getName(), project.getId());
-            return CLIENT.addMilestone(milestone, project.getId());
+            return J2_CLIENT.addMilestone(milestone, project.getId());
         }
 
         default TRMilestone addMilestone(TRProject project, TRMilestone... milestones) {
@@ -490,17 +490,17 @@ public class BaseCorvusTest extends BaseBuggyTest {
 
         default TRMilestone updateMilestone(TRMilestone milestone) {
             step("Update milestone with ID {}", milestone.getId());
-            return CLIENT.updateMilestone(milestone, milestone.getId());
+            return J2_CLIENT.updateMilestone(milestone, milestone.getId());
         }
 
         default void deleteMilestone(TRMilestone milestone) {
             step("Delete milestone with ID {}", milestone.getId());
-            CLIENT.deleteMilestone(milestone.getId());
+            J2_CLIENT.deleteMilestone(milestone.getId());
         }
 
         default List<TRTemplate> getTemplates(TRProject project) {
             step("Get existing templates for project ID {}", project.getId());
-            return CLIENT.getTemplates(project.getId());
+            return J2_CLIENT.getTemplates(project.getId());
         }
 
         /* ---------------------------------------------------------------------------------------------------------- */

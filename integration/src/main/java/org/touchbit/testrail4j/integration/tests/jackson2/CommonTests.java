@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
@@ -23,7 +23,9 @@ import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuth;
 import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
 
@@ -33,7 +35,7 @@ import java.util.Base64;
  * Created by Oleg Shaburov on 07.01.2019
  * shaburov.o.a@gmail.com
  */
-@Suite(service = TestRail.class, interfaze = API.class, task = "common_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "common_operations")
 public class CommonTests extends BaseCorvusTest {
 
     @Test(description = "Expecting successful authentication with base64 string")

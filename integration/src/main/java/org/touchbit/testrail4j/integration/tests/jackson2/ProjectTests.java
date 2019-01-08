@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import feign.FeignException;
 import org.testng.annotations.Test;
@@ -22,7 +22,9 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
 
 import java.util.List;
@@ -38,7 +40,7 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings("WeakerAccess")
-@Suite(service = TestRail.class, interfaze = API.class, task = "project_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "project_operations")
 public class ProjectTests extends BaseCorvusTest {
 
     @Test(description = "Expecting successful the project creation with required fields")
@@ -47,7 +49,7 @@ public class ProjectTests extends BaseCorvusTest {
         String name = UUID.randomUUID().toString();
         step("Add new project with name: {}", name);
         TRProject project = new TRProject().withName(name);
-        TRProject actProject = CLIENT.addProject(project);
+        TRProject actProject = J2_CLIENT.addProject(project);
         assertThat(actProject.getAnnouncement()).isNull();
         assertThat(actProject.getCompletedOn()).isNull();
         assertThat(actProject.getIsCompleted()).isFalse();
@@ -70,7 +72,7 @@ public class ProjectTests extends BaseCorvusTest {
                 .withAnnouncement(announcement)
                 .withShowAnnouncement(true)
                 .withSuiteMode(SINGLE.getId());
-        TRProject actProject = CLIENT.addProject(project);
+        TRProject actProject = J2_CLIENT.addProject(project);
         assertThat(actProject.getName()).isEqualTo(name);
         assertThat(actProject.getAnnouncement()).isEqualTo(announcement);
         assertThat(actProject.getShowAnnouncement()).isTrue();
@@ -91,7 +93,7 @@ public class ProjectTests extends BaseCorvusTest {
                 .withIsCompleted(false)
                 .withShowAnnouncement(true);
         step("Add new project with name: {}", project.getName());
-        TRProject actualProject = CLIENT.addProject(project);
+        TRProject actualProject = J2_CLIENT.addProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
         assertThat(actualProject.getShowAnnouncement()).isTrue();
@@ -105,9 +107,9 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful delete the existing project")
     @Details()
     public void test_20181231184200() {
-        TRProject project = CLIENT.getProject();
-        CLIENT.deleteProject(project);
-        FeignException exception = executeThrowable(() -> CLIENT.getProject(project));
+        TRProject project = J2_CLIENT.getProject();
+        J2_CLIENT.deleteProject(project);
+        FeignException exception = executeThrowable(() -> J2_CLIENT.getProject(project));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :project_id is not a valid or accessible project.\"}");
     }
@@ -115,8 +117,8 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing project")
     @Details()
     public void test_20181231190218() {
-        TRProject project = CLIENT.getProject();
-        TRProject actualProject = CLIENT.getProject(project);
+        TRProject project = J2_CLIENT.getProject();
+        TRProject actualProject = J2_CLIENT.getProject(project);
         assertThat(actualProject.getName()).isEqualTo(project.getName());
         assertThat(actualProject.getAnnouncement()).isEqualTo(project.getAnnouncement());
         assertThat(actualProject.getShowAnnouncement()).isTrue();
@@ -130,9 +132,9 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the existing projects list")
     @Details()
     public void test_20181231190411() {
-        TRProject project1 = CLIENT.getProject();
-        TRProject project2 = CLIENT.getProject();
-        List<Long> actualProject = CLIENT.getTRProjects().stream().map(TRProject::getId).collect(Collectors.toList());
+        TRProject project1 = J2_CLIENT.getProject();
+        TRProject project2 = J2_CLIENT.getProject();
+        List<Long> actualProject = J2_CLIENT.getTRProjects().stream().map(TRProject::getId).collect(Collectors.toList());
         assertThat(actualProject).contains(project1.getId());
         assertThat(actualProject).contains(project2.getId());
     }
@@ -140,9 +142,9 @@ public class ProjectTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive the projects list with filter")
     @Details()
     public void test_20190107160932() {
-        CLIENT.getProject();
-        CLIENT.getProject();
-        List<TRProject> actualProjects = CLIENT.getTRProjects(new GetProjectsFilter().withIsCompleted(false));
+        J2_CLIENT.getProject();
+        J2_CLIENT.getProject();
+        List<TRProject> actualProjects = J2_CLIENT.getTRProjects(new GetProjectsFilter().withIsCompleted(false));
         for (TRProject actualProject : actualProjects) {
             assertThat(actualProject.getAdditionalProperties()).isEmpty();
         }

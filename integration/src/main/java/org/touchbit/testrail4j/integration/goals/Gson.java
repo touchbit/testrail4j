@@ -16,29 +16,17 @@
 
 package org.touchbit.testrail4j.integration.goals;
 
-import org.touchbit.buggy.core.process.Component;
 import org.touchbit.buggy.core.process.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created by Oleg Shaburov on 31.12.2018
+ * Created by Oleg Shaburov on 08.01.2019
  * shaburov.o.a@gmail.com
  */
-public class TestRail extends Component {
-
-    @Override
-    public List<Service> getServices() {
-        List<Service> services = new ArrayList<>();
-        services.add(new Gson());
-        services.add(new Jackson2());
-        return services;
-    }
+public class Gson extends Service {
 
     @Override
     public String getDescription() {
-        return "TestRail service";
+        return "Gson service model";
     }
 
 }

@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.filter.GetTestsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
@@ -36,20 +38,20 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
  * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */
-@Suite(service = TestRail.class, interfaze = API.class, task = "test_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "test_operations")
 public class TestTests extends BaseCorvusTest {
 
     @Test(description = "Expecting a successful receive of existing tests")
     @Details()
     public void test_20190102023252() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(project);
-        CLIENT.addCase(section);
-        TRRun run = CLIENT.addRun(project);
-        List<TRTest> tests = CLIENT.getTests(run);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(project);
+        J2_CLIENT.addCase(section);
+        TRRun run = J2_CLIENT.addRun(project);
+        List<TRTest> tests = J2_CLIENT.getTests(run);
         assertThat(tests).isNotEmpty();
         for (TRTest test : tests) {
-            test = CLIENT.getTest(test);
+            test = J2_CLIENT.getTest(test);
             assertThat(test).isNotNull();
             assertThat(test.getAdditionalProperties()).isEmpty();
             if (test.getCustomStepsSeparated() != null) {
@@ -63,16 +65,16 @@ public class TestTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful receive of tests with filter")
     @Details()
     public void test_20190107184213() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(project);
-        CLIENT.addCase(section);
-        TRRun run = CLIENT.addRun(project);
-        List<TRTest> tests = CLIENT.getTests(run, new GetTestsFilter()
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(project);
+        J2_CLIENT.addCase(section);
+        TRRun run = J2_CLIENT.addRun(project);
+        List<TRTest> tests = J2_CLIENT.getTests(run, new GetTestsFilter()
                 .withStatusId(PASSED, BLOCKED, UNTESTED, RETEST, FAILED, CUSTOM_STATUS1, CUSTOM_STATUS2,
                 CUSTOM_STATUS3, CUSTOM_STATUS4, CUSTOM_STATUS5, CUSTOM_STATUS6, CUSTOM_STATUS7));
         assertThat(tests).isNotEmpty();
         for (TRTest test : tests) {
-            test = CLIENT.getTest(test);
+            test = J2_CLIENT.getTest(test);
             assertThat(test).isNotNull();
             assertThat(test.getAdditionalProperties()).isEmpty();
             if (test.getCustomStepsSeparated() != null) {

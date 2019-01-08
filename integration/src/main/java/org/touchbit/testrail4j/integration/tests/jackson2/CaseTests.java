@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import feign.FeignException;
 import org.testng.annotations.Test;
@@ -22,7 +22,9 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.Date;
@@ -40,15 +42,15 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
  * Created by Oleg Shaburov on 01.01.2019
  * shaburov.o.a@gmail.com
  */
-@Suite(service = TestRail.class, interfaze = API.class, task = "case_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "case_operations")
 public class CaseTests extends BaseCorvusTest {
 
     @Test(description = "Expecting successful creation of a case with required fields")
     @Details()
     public void test_20190101195810() {
-        TRSection section = CLIENT.addSection();
+        TRSection section = J2_CLIENT.addSection();
         TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
-        TRCase actualCaze = CLIENT.addCase(caze);
+        TRCase actualCaze = J2_CLIENT.addCase(caze);
         assertThat(actualCaze.getTitle()).isEqualTo(caze.getTitle());
         assertThat(actualCaze.getSectionId()).isEqualTo(caze.getSectionId());
     }
@@ -56,7 +58,7 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful creation of a case with all fields")
     @Details()
     public void test_20190101201312() {
-        TRSection section = CLIENT.addSection();
+        TRSection section = J2_CLIENT.addSection();
         long time = new Date().getTime() / 1000;
         TRCase caze = new TRCase()
                 .withTitle("test_20190101201312")
@@ -75,7 +77,7 @@ public class CaseTests extends BaseCorvusTest {
                 .withCustomExpected("withCustomExpected")
                 .withCustomStepsSeparated(null)
                 ;
-        TRCase actualCaze = CLIENT.addCase(caze);
+        TRCase actualCaze = J2_CLIENT.addCase(caze);
         actualCaze.getAdditionalProperties().clear();
         caze.setId(actualCaze.getId());
         caze.setUpdatedOn(actualCaze.getUpdatedOn());
@@ -86,9 +88,9 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful update of existing test case")
     @Details()
     public void test_20190101204226() {
-        TRCase caze = CLIENT.addCase();
+        TRCase caze = J2_CLIENT.addCase();
         caze.setTitle("test_20190101204226");
-        TRCase actualCaze = CLIENT.updateCase(caze);
+        TRCase actualCaze = J2_CLIENT.updateCase(caze);
         caze.setUpdatedOn(actualCaze.getUpdatedOn());
         caze.setCreatedOn(actualCaze.getCreatedOn());
         assertThat(actualCaze).isEqualTo(caze);
@@ -97,8 +99,8 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case")
     @Details()
     public void test_20190101212406() {
-        TRCase caze = CLIENT.addCase();
-        TRCase actualCaze = CLIENT.getCase(caze);
+        TRCase caze = J2_CLIENT.addCase();
+        TRCase actualCaze = J2_CLIENT.getCase(caze);
         caze.setUpdatedOn(actualCaze.getUpdatedOn());
         caze.setCreatedOn(actualCaze.getCreatedOn());
         assertThat(actualCaze).isEqualTo(caze);
@@ -107,14 +109,14 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case list")
     @Details()
     public void test_20190102011912() {
-        TRProject project = CLIENT.getProject(SINGLE);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
         TRSection section = new TRSection()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString());
-        section = CLIENT.addSection(section, project);
+        section = J2_CLIENT.addSection(section, project);
         TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
-        caze = CLIENT.addCase(caze);
-        List<TRCase> actualCaze = CLIENT.getCases(project);
+        caze = J2_CLIENT.addCase(caze);
+        List<TRCase> actualCaze = J2_CLIENT.getCases(project);
         List<Long> ids = actualCaze.stream().map(TRCase::getId).collect(Collectors.toList());
         assertThat(ids).contains(caze.getId());
     }
@@ -122,17 +124,17 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful receive of existing test case list with filter")
     @Details()
     public void test_20190102012601() {
-        TRProject project = CLIENT.getProject();
-        TRSuite suite = CLIENT.addSuite(project);
+        TRProject project = J2_CLIENT.getProject();
+        TRSuite suite = J2_CLIENT.addSuite(project);
         TRSection section = new TRSection()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString())
                 .withSuiteId(suite.getId());
-        section = CLIENT.addSection(section, project);
+        section = J2_CLIENT.addSection(section, project);
         TRCase caze = new TRCase().withTitle("test_20190101195810").withSectionId(section.getId());
-        caze = CLIENT.addCase(caze);
+        caze = J2_CLIENT.addCase(caze);
 
-        List<TRCase> actualCaze = CLIENT.getCases(project, new GetCasesFilter()
+        List<TRCase> actualCaze = J2_CLIENT.getCases(project, new GetCasesFilter()
                 .withSectionId(section.getId())
                 .withCreatedBy(2L, 1L)
                 .withSuiteId(suite.getId()));
@@ -147,7 +149,7 @@ public class CaseTests extends BaseCorvusTest {
             }
         }
 
-        actualCaze = CLIENT.getCases(project, new GetCasesFilter()
+        actualCaze = J2_CLIENT.getCases(project, new GetCasesFilter()
                 .withSectionId(section.getId())
                 .withCreatedAfter(500000000L)
                 .withCreatedBefore(500000000L)
@@ -172,9 +174,9 @@ public class CaseTests extends BaseCorvusTest {
     @Test(description = "Expecting successful delete of existing test case")
     @Details()
     public void test_20190101214043() {
-        TRCase caze = CLIENT.addCase();
-        CLIENT.deleteCase(caze);
-        FeignException exception = executeThrowable(() -> CLIENT.getCase(caze));
+        TRCase caze = J2_CLIENT.addCase();
+        J2_CLIENT.deleteCase(caze);
+        FeignException exception = executeThrowable(() -> J2_CLIENT.getCase(caze));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :case_id is not a valid test case.\"}");
     }

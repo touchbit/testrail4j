@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import feign.FeignException;
 import org.testng.annotations.Test;
@@ -22,7 +22,9 @@ import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.core.query.filter.GetSectionsFilter;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.TRProject;
 import org.touchbit.testrail4j.jackson2.model.TRSection;
 import org.touchbit.testrail4j.jackson2.model.TRSuite;
@@ -39,15 +41,15 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
  * shaburov.o.a@gmail.com
  */
 @SuppressWarnings("WeakerAccess")
-@Suite(service = TestRail.class, interfaze = API.class, task = "section_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "section_operations")
 public class SectionTests extends BaseCorvusTest {
 
     @Test(description = "Expected successful section creation with required fields")
     @Details()
     public void test_20190101160155() {
-        TRProject project = CLIENT.getProject(SINGLE);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
         TRSection section = new TRSection().withName(UUID.randomUUID().toString());
-        TRSection actualSection = CLIENT.addSection(section, project);
+        TRSection actualSection = J2_CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
         assertThat(actualSection.getAdditionalProperties()).isEmpty();
     }
@@ -55,9 +57,9 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation with all fields")
     @Details()
     public void test_20190101161936() {
-        TRProject project = CLIENT.getProject(SINGLE);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
         TRSection section = genSection();
-        TRSection actualSection = CLIENT.addSection(section, project);
+        TRSection actualSection = J2_CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
         assertThat(actualSection.getDescription()).isEqualTo(section.getDescription());
     }
@@ -65,11 +67,11 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful subsection creation")
     @Details()
     public void test_20190101195318() {
-        TRProject project = CLIENT.getProject(SINGLE);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
         TRSection section = genSection();
-        TRSection actualSection = CLIENT.addSection(section, project);
+        TRSection actualSection = J2_CLIENT.addSection(section, project);
         TRSection subSection = genSection().withParentId(actualSection.getId());
-        TRSection actualSubSection = CLIENT.addSection(subSection, project);
+        TRSection actualSubSection = J2_CLIENT.addSection(subSection, project);
         assertThat(actualSubSection.getName()).isEqualTo(subSection.getName());
         assertThat(actualSubSection.getDescription()).isEqualTo(subSection.getDescription());
         assertThat(actualSubSection.getParentId()).isEqualTo(subSection.getParentId());
@@ -78,10 +80,10 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful section creation for project with multiple suite mode")
     @Details()
     public void test_20190101162032() {
-        TRProject project = CLIENT.getProject(MULTIPLE);
-        TRSuite suite = CLIENT.addSuite(project);
+        TRProject project = J2_CLIENT.getProject(MULTIPLE);
+        TRSuite suite = J2_CLIENT.addSuite(project);
         TRSection section = genSection().withSuiteId(suite.getId());
-        TRSection actualSection = CLIENT.addSection(section, project);
+        TRSection actualSection = J2_CLIENT.addSection(section, project);
         assertThat(actualSection.getName()).isEqualTo(section.getName());
         assertThat(actualSection.getDescription()).isEqualTo(section.getDescription());
         assertThat(actualSection.getSuiteId()).isEqualTo(suite.getId());
@@ -90,18 +92,18 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive existing section")
     @Details()
     public void test_20190101162834() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(genSection(), project);
-        TRSection actualSection = CLIENT.getSection(section);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(genSection(), project);
+        TRSection actualSection = J2_CLIENT.getSection(section);
         assertThat(actualSection).isEqualTo(section);
     }
 
     @Test(description = "Expected successful receive sections list")
     @Details()
     public void test_20190107182532() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(genSection(), project);
-        List<TRSection> actualSection = CLIENT.getSections(project);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(genSection(), project);
+        List<TRSection> actualSection = J2_CLIENT.getSections(project);
         assertThat(actualSection).isNotEmpty();
         assertThat(actualSection).hasSize(1);
         for (TRSection trSection : actualSection) {
@@ -113,10 +115,10 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful receive sections list with filter")
     @Details()
     public void test_20190107183047() {
-        TRProject project = CLIENT.getProject(MULTIPLE);
-        TRSuite suite = CLIENT.addSuite(project);
-        TRSection section = CLIENT.addSection(genSection().withSuiteId(suite.getId()), project);
-        List<TRSection> actualSection = CLIENT.getSections(project, new GetSectionsFilter().withSuiteId(suite.getId()));
+        TRProject project = J2_CLIENT.getProject(MULTIPLE);
+        TRSuite suite = J2_CLIENT.addSuite(project);
+        TRSection section = J2_CLIENT.addSection(genSection().withSuiteId(suite.getId()), project);
+        List<TRSection> actualSection = J2_CLIENT.getSections(project, new GetSectionsFilter().withSuiteId(suite.getId()));
         assertThat(actualSection).isNotEmpty();
         assertThat(actualSection).hasSize(1);
         for (TRSection trSection : actualSection) {
@@ -128,20 +130,20 @@ public class SectionTests extends BaseCorvusTest {
     @Test(description = "Expected successful update existing section")
     @Details()
     public void test_20190101194252() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(genSection(), project);
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(genSection(), project);
         section.setName("test_20190101194252");
-        TRSection actualSection = CLIENT.updateSection(section);
+        TRSection actualSection = J2_CLIENT.updateSection(section);
         assertThat(actualSection).isEqualTo(section);
     }
 
     @Test(description = "Expected successful delete existing section")
     @Details()
     public void test_20190101194905() {
-        TRProject project = CLIENT.getProject(SINGLE);
-        TRSection section = CLIENT.addSection(genSection(), project);
-        CLIENT.deleteSection(section);
-        FeignException exception = executeThrowable(() -> CLIENT.getSection(section));
+        TRProject project = J2_CLIENT.getProject(SINGLE);
+        TRSection section = J2_CLIENT.addSection(genSection(), project);
+        J2_CLIENT.deleteSection(section);
+        FeignException exception = executeThrowable(() -> J2_CLIENT.getSection(section));
         assertThat(exception.contentUTF8())
                 .isEqualTo("{\"error\":\"Field :section_id is not a valid section.\"}");
     }

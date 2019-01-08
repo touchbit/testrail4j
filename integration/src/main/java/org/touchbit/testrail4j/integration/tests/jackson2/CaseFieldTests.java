@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package org.touchbit.testrail4j.integration.tests;
+package org.touchbit.testrail4j.integration.tests.jackson2;
 
 import org.testng.annotations.Test;
 import org.touchbit.buggy.core.model.Details;
 import org.touchbit.buggy.core.model.Suite;
 import org.touchbit.testrail4j.integration.goals.API;
+import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseCorvusTest;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.ArrayList;
@@ -33,13 +35,13 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
  * Created by Oleg Shaburov on 06.01.2019
  * shaburov.o.a@gmail.com
  */
-@Suite(service = TestRail.class, interfaze = API.class, task = "case_fields_operations")
+@Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "case_fields_operations")
 public class CaseFieldTests extends BaseCorvusTest {
 
     @Test(description = "Expecting a successful receive of the existing case fields")
     @Details()
     public void test_20190106014139() {
-        List<TRCaseField> fields = CLIENT.getTRCaseFields();
+        List<TRCaseField> fields = J2_CLIENT.getTRCaseFields();
         assertThat(fields).isNotEmpty();
         for (TRCaseField field : fields) {
             assertThat(field.getAdditionalProperties()).isEmpty();
@@ -49,7 +51,7 @@ public class CaseFieldTests extends BaseCorvusTest {
     @Test(description = "Expecting a successful add new custom case field")
     @Details()
     public void test_20190106015332() {
-        TRProject project = CLIENT.getProject();
+        TRProject project = J2_CLIENT.getProject();
         TRCaseFieldConfig config = new TRCaseFieldConfig()
                 .withContext(new Context()
                         .withIsGlobal(false)
@@ -61,10 +63,10 @@ public class CaseFieldTests extends BaseCorvusTest {
                 .withLabel("test_20190106015332")
                 .withType("6")
                 .withIncludeAll(true);
-        TRCaseField actField = CLIENT.addTRCaseField(field, config);
+        TRCaseField actField = J2_CLIENT.addTRCaseField(field, config);
         assertThat(actField.getAdditionalProperties()).isEmpty();
         assertThat(actField.getConfigs()).isInstanceOf(String.class);
-        List<TRCaseField> fields = CLIENT.getTRCaseFields();
+        List<TRCaseField> fields = J2_CLIENT.getTRCaseFields();
         for (TRCaseField trCaseField : fields) {
             if (trCaseField.getId().equals(actField.getId())) {
                 for (LinkedHashMap actFieldConfig : (List<LinkedHashMap>) trCaseField.getConfigs()) {
