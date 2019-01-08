@@ -919,6 +919,21 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Cases Fields")
     class APICasesFieldsTests {
 
+        @Test
+        @DisplayName("TestRailClient#getCaseFields()")
+        void unitTest_20190108142112() {
+            CLIENT.getCaseFields();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_case_fields");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addCaseField(TRCaseField)")
+        void unitTest_20190108142154() {
+            CLIENT.addCaseField(new TRCaseField());
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_case_field");
+        }
     }
 
     @Nested
