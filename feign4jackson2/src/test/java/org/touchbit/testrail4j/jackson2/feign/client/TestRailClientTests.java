@@ -1270,6 +1270,13 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Statuses")
     class APIStatusesTests {
 
+        @Test
+        @DisplayName("TestRailClient#getStatuses()")
+        void unitTest_20190108185643() {
+            CLIENT.getStatuses();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_statuses");
+        }
     }
 
     @Nested
