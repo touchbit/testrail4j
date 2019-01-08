@@ -26,6 +26,8 @@ import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.touchbit.testrail4j.core.type.Statuses.FAILED;
+import static org.touchbit.testrail4j.core.type.Statuses.PASSED;
 
 /**
  * Created by Oleg Shaburov on 12.11.2018
@@ -854,6 +856,62 @@ class TestRailClientTests extends BaseUnitTest {
     @Nested
     @DisplayName("API: Tests")
     class APITestsTests {
+
+        @Test
+        @DisplayName("TestRailClient#getTest(Long)")
+        void unitTest_20190108141447() {
+            CLIENT.getTest(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_test/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#getTest(TRTest)")
+        void unitTest_20190108141526() {
+            CLIENT.getTest(new TRTest().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_test/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getTests(Long, GetTestsQueryMap)")
+        void unitTest_20190108141605() {
+            GetTestsFilter filter = new GetTestsFilter();
+            filter.withStatusId(PASSED, FAILED);
+            CLIENT.getTests(1L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_tests/1");
+            assertThat(msg).contains("&status_id=1%2C5");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#getTests(Long)")
+        void unitTest_20190108141740() {
+            CLIENT.getTests(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_tests/1");
+            assertThat(msg).doesNotContain("&status_id");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getTests(TRRun)")
+        void unitTest_20190108141845() {
+            CLIENT.getTests(new TRRun().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_tests/1");
+            assertThat(msg).doesNotContain("&status_id");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getTests(TRRun, GetTestsQueryMap)")
+        void unitTest_20190108141923() {
+            GetTestsFilter filter = new GetTestsFilter();
+            filter.withStatusId(PASSED, FAILED);
+            CLIENT.getTests(new TRRun().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_tests/1");
+            assertThat(msg).contains("&status_id=1%2C5");
+        }
 
     }
 
