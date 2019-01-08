@@ -60,6 +60,8 @@ Sonar review:
     - JUnit
   tags:
     - touchbit-shell
+  except:
+    - tags
   script:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
@@ -86,26 +88,9 @@ Deploy TestRail4J:
   stage: deploy
   tags:
     - touchbit-shell
-  before_script:
-    - make ver $CI_COMMIT_TAG
-    - mvn dependency:purge-local-repository@local-buggy
-    - mvn dependency:get@current-version && CHECK_RESULT=$(echo $?) || CHECK_RESULT=$(echo $?)
-    - >
-      if [ "${CHECK_RESULT}" != 1 ]; then
-          if [[ "${CI_COMMIT_MESSAGE,,}" = *"force deploy"* ]]; then
-              echo "Force deploy tag version: ${CI_COMMIT_TAG}";
-          else
-              TR4J_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-              echo "[ERROR] The current version of TestRail4J ($TR4J_VERSION) already exists in the TouchBIT repository"
-              echo "To set the new version, use the command: 'mvn versions:set -DnewVersion=<new version>'"
-              echo "Versioning rules: https://semver.org/spec/v2.0.0-rc.2.html"
-              false
-          fi
-      fi
   only:
     - tags
   script:
     - make ver $CI_COMMIT_TAG
     - make deploy
-    - TR4J_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=false&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${TR4J_VERSION}/%29\""
+    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=false&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${CI_COMMIT_TAG}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${CI_COMMIT_TAG}/%29\""
