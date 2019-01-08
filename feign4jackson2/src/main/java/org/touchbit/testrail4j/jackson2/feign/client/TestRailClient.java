@@ -1797,7 +1797,7 @@ public interface TestRailClient {
      * See {@link TestRailClient#getMilestones(Long, GetMilestonesQueryMap)}
      */
     default List<TRMilestone> getMilestones(TRProject project, GetMilestonesQueryMap queryMap) {
-        return getMilestones(project.getId());
+        return getMilestones(project.getId(), queryMap);
     }
 
     /**

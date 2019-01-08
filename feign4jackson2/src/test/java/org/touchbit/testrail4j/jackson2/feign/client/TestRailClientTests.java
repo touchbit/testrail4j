@@ -1072,6 +1072,116 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Milestones")
     class APIMilestonesTests {
 
+        @Test
+        @DisplayName("TestRailClient#getMilestone(Long")
+        void unitTest_20190108181401() {
+            CLIENT.getMilestone(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestone/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getMilestone(TRMilestone)")
+        void unitTest_20190108181508() {
+            CLIENT.getMilestone(new TRMilestone().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestone/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getMilestones(Long, GetMilestonesQueryMap)")
+        void unitTest_20190108181544() {
+            GetMilestonesFilter filter = new GetMilestonesFilter()
+                    .withIsCompleted(true)
+                    .withIsStarted(true);
+            CLIENT.getMilestones(1L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestones/1");
+            assertThat(msg).contains("&is_started=1");
+            assertThat(msg).contains("&is_completed=1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getMilestones(Long)")
+        void unitTest_20190108181722() {
+            CLIENT.getMilestones(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestones/1");
+            assertThat(msg).doesNotContain("is_started");
+            assertThat(msg).doesNotContain("is_completed");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getMilestones(TRProject)")
+        void unitTest_20190108183237() {
+            CLIENT.getMilestones(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestones/1");
+            assertThat(msg).doesNotContain("is_started");
+            assertThat(msg).doesNotContain("is_completed");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getMilestones(TRProject, GetMilestonesQueryMap)")
+        void unitTest_20190108183305() {
+            GetMilestonesFilter filter = new GetMilestonesFilter()
+                    .withIsCompleted(true)
+                    .withIsStarted(true);
+            CLIENT.getMilestones(new TRProject().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_milestones/1");
+            assertThat(msg).contains("&is_started=1");
+            assertThat(msg).contains("&is_completed=1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addMilestone(TRMilestone, Long)")
+        void unitTest_20190108183520() {
+            CLIENT.addMilestone(new TRMilestone(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_milestone/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addMilestone(TRMilestone, TRProject)")
+        void unitTest_20190108183630() {
+            CLIENT.addMilestone(new TRMilestone(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_milestone/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateMilestone(TRMilestone, Long)")
+        void unitTest_20190108183715() {
+            CLIENT.updateMilestone(new TRMilestone(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_milestone/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#updateMilestone(TRMilestone)")
+        void unitTest_20190108183751() {
+            CLIENT.updateMilestone(new TRMilestone().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_milestone/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#deleteMilestone(Long)")
+        void unitTest_20190108183812() {
+            CLIENT.deleteMilestone(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_milestone/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteMilestone(TRMilestone)")
+        void unitTest_20190108183850() {
+            CLIENT.deleteMilestone(new TRMilestone().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_milestone/1");
+        }
+
     }
 
     @Nested
