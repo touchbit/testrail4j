@@ -25,7 +25,6 @@ import org.touchbit.testrail4j.core.query.filter.*;
 import org.touchbit.testrail4j.core.type.FieldTypes;
 import org.touchbit.testrail4j.jackson2.model.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -218,8 +217,6 @@ import java.util.List;
  *      {@link TestRailClient#closePlan(TRPlan)}
  *      {@link TestRailClient#deletePlan(TRPlan)}
  *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan)}
- *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan, TRRun...)}
- *      {@link TestRailClient#addPlanEntry(TRPlanEntry, TRPlan, TRSuite, TRRun...)}
  *      {@link TestRailClient#updatePlanEntry(TRPlanEntry, TRPlan)}
  *      {@link TestRailClient#deletePlanEntry(TRPlan, TRPlanEntry)}
  *
@@ -2221,20 +2218,6 @@ public interface TestRailClient {
     }
 
     /**
-     * See {@link TestRailClient#addPlanEntry(TRPlanEntry, Long)}
-     */
-    default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan, TRRun... runs) {
-        return addPlanEntry(entry.withRuns(Arrays.asList(runs)), plan.getId());
-    }
-
-    /**
-     * See {@link TestRailClient#addPlanEntry(TRPlanEntry, Long)}
-     */
-    default TRPlanEntry addPlanEntry(TRPlanEntry entry, TRPlan plan, TRSuite suite, TRRun... runs) {
-        return addPlanEntry(entry.withRuns(Arrays.asList(runs)).withSuiteId(suite.getId()), plan.getId());
-    }
-
-    /**
      * {@link TestRailClient}
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-plans#update_plan_entry">API: Update plan entry</a>
      *
@@ -2250,7 +2233,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan or entry
      * 403	No permissions to modify test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_plan_entry/{plan_id}/{entry_id}")
+    @RequestLine(value = "POST /index.php%3F/api/v2/update_plan_entry/{plan_id}/{entry_id}")
     TRPlanEntry updatePlanEntry(TRPlanEntry entry, @Param("plan_id") Long planID, @Param("entry_id") String entryID);
 
     /**

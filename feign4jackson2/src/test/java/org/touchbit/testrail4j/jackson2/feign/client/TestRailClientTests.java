@@ -1283,11 +1283,222 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Results fields")
     class APIResultsFieldsTests {
 
+        @Test
+        @DisplayName("TestRailClient#getResultFields()")
+        void unitTest_20190108185735() {
+            CLIENT.getResultFields();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_result_fields");
+        }
+
     }
 
     @Nested
     @DisplayName("API: Plans")
     class APIPlansTests {
 
+        @Test
+        @DisplayName("TestRailClient#getPlan(Long)")
+        void unitTest_20190108185801() {
+            CLIENT.getPlan(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getPlan(TRPlan)")
+        void unitTest_20190108185832() {
+            CLIENT.getPlan(new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getPlans(Long, GetPlansQueryMap)")
+        void unitTest_20190108185906() {
+            GetPlansFilter filter = new GetPlansFilter()
+                    .withCreatedAfter(1)
+                    .withCreatedBefore(2)
+                    .withCreatedBy(3,4)
+                    .withIsCompleted(true)
+                    .withLimit(5)
+                    .withMilestoneId(6,7)
+                    .withOffset(8);
+            CLIENT.getPlans(1L, filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plans/1");
+            assertThat(msg).contains("&created_after=1");
+            assertThat(msg).contains("&created_before=2");
+            assertThat(msg).contains("&offset=8");
+            assertThat(msg).contains("&milestone_id=6%2C7");
+            assertThat(msg).contains("&limit=5");
+            assertThat(msg).contains("&is_completed=1");
+            assertThat(msg).contains("&created_by=3%2C4");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getPlans(Long)")
+        void unitTest_20190108190101() {
+            CLIENT.getPlans(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plans/1");
+            assertThat(msg).doesNotContain("created_after");
+            assertThat(msg).doesNotContain("created_before");
+            assertThat(msg).doesNotContain("offset");
+            assertThat(msg).doesNotContain("milestone_id");
+            assertThat(msg).doesNotContain("limit");
+            assertThat(msg).doesNotContain("is_completed");
+            assertThat(msg).doesNotContain("created_by");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getPlans(TRProject)")
+        void unitTest_20190108190151() {
+            CLIENT.getPlans(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plans/1");
+            assertThat(msg).doesNotContain("created_after");
+            assertThat(msg).doesNotContain("created_before");
+            assertThat(msg).doesNotContain("offset");
+            assertThat(msg).doesNotContain("milestone_id");
+            assertThat(msg).doesNotContain("limit");
+            assertThat(msg).doesNotContain("is_completed");
+            assertThat(msg).doesNotContain("created_by");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getPlans(TRProject, GetPlansQueryMap)")
+        void unitTest_20190108190214() {
+            GetPlansFilter filter = new GetPlansFilter()
+                    .withCreatedAfter(1)
+                    .withCreatedBefore(2)
+                    .withCreatedBy(3,4)
+                    .withIsCompleted(true)
+                    .withLimit(5)
+                    .withMilestoneId(6,7)
+                    .withOffset(8);
+            CLIENT.getPlans(new TRProject().withId(1L), filter);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_plans/1");
+            assertThat(msg).contains("&created_after=1");
+            assertThat(msg).contains("&created_before=2");
+            assertThat(msg).contains("&offset=8");
+            assertThat(msg).contains("&milestone_id=6%2C7");
+            assertThat(msg).contains("&limit=5");
+            assertThat(msg).contains("&is_completed=1");
+            assertThat(msg).contains("&created_by=3%2C4");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addPlan(TRPlan, Long)")
+        void unitTest_20190108190245() {
+            CLIENT.addPlan(new TRPlan(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addPlan(TRPlan, TRProject)")
+        void unitTest_20190108190336() {
+            CLIENT.addPlan(new TRPlan(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updatePlan(TRPlan, Long)")
+        void unitTest_20190108190403() {
+            CLIENT.updatePlan(new TRPlan(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updatePlan(TRPlan)")
+        void unitTest_20190108190438() {
+            CLIENT.updatePlan(new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#closePlan(Long)")
+        void unitTest_20190108190541() {
+            CLIENT.closePlan(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/close_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#closePlan(TRPlan)")
+        void unitTest_20190108190628() {
+            CLIENT.closePlan(new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/close_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deletePlan(Long)")
+        void unitTest_20190108190655() {
+            CLIENT.deletePlan(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deletePlan(TRPlan)")
+        void unitTest_20190108190721() {
+            CLIENT.deletePlan(new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_plan/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addPlanEntry(TRPlanEntry, Long)")
+        void unitTest_20190108190842() {
+            CLIENT.addPlanEntry(new TRPlanEntry(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_plan_entry/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addPlanEntry(TRPlanEntry, TRPlan)")
+        void unitTest_20190108190934() {
+            CLIENT.addPlanEntry(new TRPlanEntry(), new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_plan_entry/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updatePlanEntry(TRPlanEntry, Long, String)")
+        void unitTest_20190108191001() {
+            CLIENT.updatePlanEntry(new TRPlanEntry(), 1L, "uuid");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_plan_entry/1/uuid");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#updatePlanEntry(TRPlanEntry, TRPlan)")
+        void unitTest_20190108191300() {
+            CLIENT.updatePlanEntry(new TRPlanEntry().withId("uuid"), new TRPlan().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_plan_entry/1/uuid");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#deletePlanEntry(Long, String)")
+        void unitTest_20190108191407() {
+            CLIENT.deletePlanEntry(1L, "uuid");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_plan_entry/1/uuid");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deletePlanEntry(TRPlan, TRPlanEntry)")
+        void unitTest_20190108191446() {
+            CLIENT.deletePlanEntry(new TRPlan().withId(1L), new TRPlanEntry().withId("uuid"));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_plan_entry/1/uuid");
+        }
     }
 }
