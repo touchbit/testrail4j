@@ -91,7 +91,7 @@
         <reports.path>${project.build.directory}/reports</reports.path>
         <sonar.junit.reportPaths>${reports.path}</sonar.junit.reportPaths>
         <sonar.jacoco.reportPaths>${reports.path}/jacoco.exec</sonar.jacoco.reportPaths>
-        <sonar.verbose>true</sonar.verbose>
+        <sonar.skippedModules>integration, model4jackson2, model4gson</sonar.skippedModules>
         <testrail4j.sonar.exclusions>
             *.xml,
             src/main/java/org/touchbit/testrail4j/**/model/*,
