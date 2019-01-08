@@ -1249,6 +1249,21 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Templates")
     class APITemplatesTests {
 
+        @Test
+        @DisplayName("TestRailClient#getTemplates(Long)")
+        void unitTest_20190108184658() {
+            CLIENT.getTemplates(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_templates/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getTemplates(TRProject)")
+        void unitTest_20190108185550() {
+            CLIENT.getTemplates(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_templates/1");
+        }
     }
 
     @Nested
