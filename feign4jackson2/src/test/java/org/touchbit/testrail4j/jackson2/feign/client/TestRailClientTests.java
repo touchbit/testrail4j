@@ -1188,6 +1188,14 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Priorities")
     class APIPrioritiesTests {
 
+        @Test
+        @DisplayName("TestRailClient#getPriorities()")
+        void unitTest_20190108184010() {
+            CLIENT.getPriorities();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_priorities");
+        }
+
     }
 
     @Nested
