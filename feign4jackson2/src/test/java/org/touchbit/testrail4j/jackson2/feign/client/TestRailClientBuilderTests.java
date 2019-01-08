@@ -22,17 +22,33 @@ import org.touchbit.testrail4j.core.BaseUnitTest;
 import org.touchbit.testrail4j.core.ExecutionLogger;
 import org.touchbit.testrail4j.helpful.Auth;
 
-import static feign.Logger.Level.BASIC;
+import static feign.Logger.Level.HEADERS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("TestRail client builder tests")
 class TestRailClientBuilderTests extends BaseUnitTest {
 
     @Test
+    @DisplayName("build(String base64, String target)")
+    void unitTest_20190108140721() {
+        TestRailClientBuilder.build("base64", TARGET).getCase(2100L);
+        assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
+    }
+
+    @Test
     @DisplayName("build(String login, String passToken, String target)")
     void unitTest_20190107220511() {
         TestRailClientBuilder.build("login", "passToken", TARGET).getCase(2100L);
         assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("build(String login, String passToken, String target, Logger log)")
+    void unitTest_20190108140832() {
+        TestRailClientBuilder.build("login", "passToken", TARGET, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
+        String msg = TEST_LOGGER.takeLoggedMessages().toString();
+        assertThat(msg).contains(GET_API + "/get_case/2100");
+        assertThat(msg).contains("Authorization: Basic bG9naW46cGFzc1Rva2Vu");
     }
 
     @Test
@@ -46,7 +62,9 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @DisplayName("build(I auth, String target, Logger log)")
     void unitTest_20181112132100() {
         TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
-        assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/2100");
+        String msg = TEST_LOGGER.takeLoggedMessages().toString();
+        assertThat(msg).contains(GET_API + "/get_case/2100");
+        assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
     }
 
     @Test
@@ -54,14 +72,18 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     void unitTest_20190107220640() {
         TestRailClientBuilder
                 .build(new Auth(), TARGET, TestRailClient.class, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
-        assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/2100");
+        String msg = TEST_LOGGER.takeLoggedMessages().toString();
+        assertThat(msg).contains(GET_API + "/get_case/2100");
+        assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
     }
 
     @Test
     @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel)")
     void unitTest_20181112132306() {
-        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER), BASIC).getCase(2100L);
-        assertThat(TEST_LOGGER.takeLoggedMessages().toString()).contains(GET_API + "/get_case/2100");
+        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS).getCase(2100L);
+        String msg = TEST_LOGGER.takeLoggedMessages().toString();
+        assertThat(msg).contains(GET_API + "/get_case/2100");
+        assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
     }
 
 }
