@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "The email address of the user as configured in TestRail"
+    },
+    "id": {
+      "type": "integer",
+      "description": "The unique ID of the user"
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "True if the user is active and false otherwise"
+    },
+    "name": {
+      "type": "string",
+      "description": "The full name of the user"
+    }
+  },
+  "required": [
+    "email",
+    "id",
+    "is_active",
+    "name"
+  ]
+}

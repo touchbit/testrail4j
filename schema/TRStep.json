@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Test Case (Steps) template step",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Step value"
+    },
+    "expected": {
+      "type": "string",
+      "description": "Step expected result"
+    },
+    "actual": {
+      "type": "string",
+      "description": "Step actual result"
+    },
+    "status_id": {
+      "type": "string",
+      "description": "The ID of the test step status."
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID"
+    },
+    "suite_id": {
+      "type": "integer",
+      "description": "The ID of the test suite for the test run(s) (required)"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the test run(s)"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the test run(s) (requires TestRail 5.2 or later)"
+    },
+    "assignedto_id": {
+      "type": "integer",
+      "description": "The ID of the user the test run(s) should be assigned to"
+    },
+    "include_all": {
+      "type": "boolean",
+      "description": "True for including all test cases of the test suite and false for a custom case selection (default: true)"
+    },
+    "case_ids": {
+      "type": "array",
+      "javaType": "java.util.List<Long>",
+      "description": "An array of case IDs for the custom case selection",
+      "items": [
+        {
+          "type": "integer",
+          "javaType" : "java.lang.Long",
+          "description": "case ID for the custom case selection"
+        }
+      ]
+    },
+    "config_ids": {
+      "type": "array",
+      "javaType": "java.util.List<Long>",
+      "description": "An array of configuration IDs used for the test runs of the test plan entry (requires TestRail 3.1 or later)",
+      "items": [
+        {
+          "type": "integer",
+          "javaType" : "java.lang.Long",
+          "description": "configuration ID"
+        }
+      ]
+    },
+    "runs": {
+      "type": "array",
+      "javaType": "java.util.List<TRRun>",
+      "description": "An array of test runs with configurations, please see the example below for details (requires TestRail 3.1 or later)",
+      "items": {
+        "type": "object",
+        "javaType": "TRRun",
+        "$ref": "TRRun.json"
+      }
+    }
+  },
+  "required": [
+    "suite_id"
+  ]
+}

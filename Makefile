@@ -10,12 +10,14 @@ $(eval $(VERSION):;@:)
 clean:
 	mvn clean
 
+# do not use -Dmaven.test.skip=true
 install: clean
 	mvn install -DskipTests
 
 test: clean
 	mvn test
 
+# do not use -Dmaven.test.skip=true
 deploy:
 	mvn deploy -DskipTests
 
@@ -29,3 +31,16 @@ purge:
 build-doc:
 	python _docs/setup.py
 	mkdocs build
+
+tr-start: tr-stop
+	docker-compose -f .indirect/docker-compose.yml up -d
+	docker ps
+	echo http://localhost/index.php Login: testrail@testrail.testrail Pass: testrail
+
+tr-stop:
+	docker-compose -f .indirect/docker-compose.yml kill
+
+itest:
+	java -jar integration/target/Corvus.jar
+
+iitest: install itest

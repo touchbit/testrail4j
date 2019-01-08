@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © 2018 Shaburov Oleg
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.touchbit.buggy</groupId>
+        <artifactId>buggy</artifactId>
+        <version>0.2.23</version>
+    </parent>
+
+    <groupId>org.touchbit.testrail4j</groupId>
+    <artifactId>testrail4j-tests</artifactId>
+    <name>Testrail4J integration tests</name>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <sonar.projectKey>org.touchbit.testrail4j:integration-tests</sonar.projectKey>
+        <shaded.final.name>Corvus</shaded.final.name>
+        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.Corvus</shaded.transformer.main.class>
+        <testrail4j.sonar.exclusions>
+            src/main/java/org/touchbit/testrail4j/integration/*,
+            src/main/java/org/touchbit/testrail4j/integration/**/*
+        </testrail4j.sonar.exclusions>
+        <sonar.exclusions>${testrail4j.sonar.exclusions}</sonar.exclusions>
+        <sonar.coverage.exclusions>${testrail4j.sonar.exclusions}</sonar.coverage.exclusions>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.touchbit.buggy</groupId>
+            <artifactId>buggy-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.touchbit.buggy</groupId>
+            <artifactId>buggy-feign</artifactId>
+        </dependency>
+        <!-- TODO remove -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>10.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.touchbit.testrail4j</groupId>
+            <artifactId>jackson2-feign-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>touchbit.org.repository</id>
+            <url>https://touchbit.org/repository/</url>
+        </repository>
+    </repositories>
+</project>

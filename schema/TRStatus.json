@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "color_bright": {
+      "type": "integer"
+    },
+    "color_dark": {
+      "type": "integer"
+    },
+    "color_medium": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "is_final": {
+      "type": "boolean"
+    },
+    "is_system": {
+      "type": "boolean"
+    },
+    "is_untested": {
+      "type": "boolean"
+    },
+    "label": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "color_bright",
+    "color_dark",
+    "color_medium",
+    "id",
+    "is_final",
+    "is_system",
+    "is_untested",
+    "label",
+    "name"
+  ]
+}
