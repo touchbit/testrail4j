@@ -1202,6 +1202,47 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Users")
     class APIUsersTests {
 
+        @Test
+        @DisplayName("TestRailClient#getUser(Long)")
+        void unitTest_20190108184111() {
+            CLIENT.getUser(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_user/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getUser(TRUser)")
+        void unitTest_20190108184141() {
+            CLIENT.getUser(new TRUser().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_user/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getUserByEmail(String)")
+        void unitTest_20190108184214() {
+            CLIENT.getUserByEmail("email@email.email");
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_user_by_email/");
+            assertThat(msg).contains("&email=email%40email.email");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getUserByEmail(TRUser)")
+        void unitTest_20190108184336() {
+            CLIENT.getUserByEmail(new TRUser().withEmail("email@email.email"));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_user_by_email/");
+            assertThat(msg).contains("&email=email%40email.email");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getUsers()")
+        void unitTest_20190108184411() {
+            CLIENT.getUsers();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_users");
+        }
     }
 
     @Nested
