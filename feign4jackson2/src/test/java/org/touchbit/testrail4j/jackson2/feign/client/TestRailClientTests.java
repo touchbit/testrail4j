@@ -954,6 +954,118 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Configs")
     class APIConfigsTests {
 
+        @Test
+        @DisplayName("TestRailClient#getConfigs(Long)")
+        void unitTest_20190108142459() {
+            CLIENT.getConfigs(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_configs/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getConfigs(TRProject)")
+        void unitTest_20190108142536() {
+            CLIENT.getConfigs(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_configs/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addConfigGroup(TRProjectConfigGroup, Long)")
+        void unitTest_20190108142612() {
+            CLIENT.addConfigGroup(new TRProjectConfigGroup(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addConfigGroup(TRProjectConfigGroup, TRProject)")
+        void unitTest_20190108142652() {
+            CLIENT.addConfigGroup(new TRProjectConfigGroup(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateConfigGroup(TRProjectConfigGroup, Long)")
+        void unitTest_20190108142731() {
+            CLIENT.updateConfigGroup(new TRProjectConfigGroup(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateConfigGroup(TRProjectConfigGroup)")
+        void unitTest_20190108142813() {
+            CLIENT.updateConfigGroup(new TRProjectConfigGroup().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteConfigGroup(Long)")
+        void unitTest_20190108142850() {
+            CLIENT.deleteConfigGroup(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteConfigGroup(TRProjectConfigGroup)")
+        void unitTest_20190108142919() {
+            CLIENT.deleteConfigGroup(new TRProjectConfigGroup().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_config_group/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addConfig(TRProjectConfig, Long)")
+        void unitTest_20190108143005() {
+            CLIENT.addConfig(new TRProjectConfig(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_config/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addConfig(TRProjectConfig, TRProjectConfigGroup)")
+        void unitTest_20190108172222() {
+            CLIENT.addConfig(new TRProjectConfig(), new TRProjectConfigGroup().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_config/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateConfig(TRProjectConfig, Long)")
+        void unitTest_20190108172303() {
+            CLIENT.updateConfig(new TRProjectConfig(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_config/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateConfig(TRProjectConfig)")
+        void unitTest_20190108172340() {
+            CLIENT.updateConfig(new TRProjectConfig().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_config/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteConfig(Long)")
+        void unitTest_20190108172418() {
+            CLIENT.deleteConfig(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_config/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteConfig(TRProjectConfig)")
+        void unitTest_20190108172432() {
+            CLIENT.deleteConfig(new TRProjectConfig().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_config/1");
+        }
+
     }
 
     @Nested
