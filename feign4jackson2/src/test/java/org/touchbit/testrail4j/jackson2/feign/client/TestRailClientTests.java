@@ -940,6 +940,14 @@ class TestRailClientTests extends BaseUnitTest {
     @DisplayName("API: Cases Types")
     class APICasesTypesTests {
 
+        @Test
+        @DisplayName("TestRailClient#getCaseTypes()")
+        void unitTest_20190108142359() {
+            CLIENT.getCaseTypes();
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_case_types");
+        }
+
     }
 
     @Nested
