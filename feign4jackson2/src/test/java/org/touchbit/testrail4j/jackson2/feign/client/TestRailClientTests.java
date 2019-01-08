@@ -21,10 +21,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.touchbit.testrail4j.core.BaseUnitTest;
 import org.touchbit.testrail4j.core.ExecutionLogger;
-import org.touchbit.testrail4j.core.query.filter.GetCasesFilter;
-import org.touchbit.testrail4j.core.query.filter.GetProjectsFilter;
-import org.touchbit.testrail4j.core.query.filter.GetResultsFilter;
-import org.touchbit.testrail4j.core.query.filter.GetRunsFilter;
+import org.touchbit.testrail4j.core.query.filter.*;
 import org.touchbit.testrail4j.helpful.Auth;
 import org.touchbit.testrail4j.jackson2.model.*;
 
@@ -753,6 +750,104 @@ class TestRailClientTests extends BaseUnitTest {
     @Nested
     @DisplayName("API: Sections")
     class APISectionsTests {
+
+        @Test
+        @DisplayName("TestRailClient#addSection(TRSection, Long")
+        void unitTest_20190108135707() {
+            CLIENT.addSection(new TRSection(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_section/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#addSection(TRSection, TRProject)")
+        void unitTest_20190108135754() {
+            CLIENT.addSection(new TRSection(), new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/add_section/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSection(Long)")
+        void unitTest_20190108135826() {
+            CLIENT.getSection(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_section/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#getSection(TRSection)")
+        void unitTest_20190108135907() {
+            CLIENT.getSection(new TRSection().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_section/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSections(Long, GetSectionsQueryMap)")
+        void unitTest_20190108135953() {
+            CLIENT.getSections(1L, new GetSectionsFilter().withSuiteId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_sections/1");
+            assertThat(msg).contains("&suite_id=1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSections(Long)")
+        void unitTest_20190108140150() {
+            CLIENT.getSections(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_sections/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSections(TRProject)")
+        void unitTest_20190108140232() {
+            CLIENT.getSections(new TRProject().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_sections/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#getSections(TRProject, GetSectionsQueryMap)")
+        void unitTest_20190108140255() {
+            CLIENT.getSections(new TRProject().withId(1L), new GetSectionsFilter().withSuiteId(22L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(GET_API + "/get_sections/1");
+            assertThat(msg).contains("&suite_id=22");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateSection(TRSection, Long)")
+        void unitTest_20190108140337() {
+            CLIENT.updateSection(new TRSection(), 1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_section/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#updateSection(TRSection)")
+        void unitTest_20190108140428() {
+            CLIENT.updateSection(new TRSection().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/update_section/1");
+        }
+
+        @Test
+        @DisplayName("TestRailClient#deleteSection(Long)")
+        void unitTest_20190108140508() {
+            CLIENT.deleteSection(1L);
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_section/1");
+        }
+        
+        @Test
+        @DisplayName("TestRailClient#deleteSection(TRSection)")
+        void unitTest_20190108140541() {
+            CLIENT.deleteSection(new TRSection().withId(1L));
+            String msg = TEST_LOGGER.takeLoggedMessages().toString();
+            assertThat(msg).contains(POST_API + "/delete_section/1");
+        }
 
     }
 
