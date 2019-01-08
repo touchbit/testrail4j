@@ -29,7 +29,7 @@
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j-tests</artifactId>
     <name>Testrail4J integration tests</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.touchbit.testrail4j</groupId>
             <artifactId>jackson2-feign-client</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
