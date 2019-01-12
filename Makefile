@@ -23,6 +23,8 @@ deploy:
 
 version:
 	mvn versions:set -DnewVersion=${VERSION}
+	mvn install -DskipTests
+
 ver: version
 
 purge:

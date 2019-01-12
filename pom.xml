@@ -20,7 +20,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 
     <name>TestRail4J</name>
     <description>TestRail API clients</description>
@@ -156,28 +156,28 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>1.1.2</version>
+                <version>1.1.3</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>1.1.2</version>
+                <version>1.1.3</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-feign-client</artifactId>
-                <version>1.1.2</version>
+                <version>1.1.3</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>1.1.2</version>
+                <version>1.1.3</version>
             </dependency>
             <!-- Self Test -->
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>1.1.2</version>
+                <version>1.1.3</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -392,6 +392,17 @@
                                 <remoteRepositories>touchbit::default::https://touchbit.org/repository/</remoteRepositories>
                             </configuration>
                         </execution>
+                        <execution>
+                            <goals>
+                                <goal>tree</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <scope>compile</scope>
+                                <outputType>dot</outputType>
+                                <outputFile>${project.build.directory}/info/${project.artifactId}.txt</outputFile>
+                            </configuration>
+                        </execution>
                     </executions>
                 </plugin>
                 <plugin>
@@ -413,24 +424,6 @@
                         <artifactId>${project.artifactId}</artifactId>
                         <version>${project.version}</version>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.1.1</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>tree</goal>
-                            </goals>
-                            <phase>generate-resources</phase>
-                            <configuration>
-                                <scope>compile</scope>
-                                <outputType>dot</outputType>
-                                <outputFile>${project.build.directory}/info/${project.artifactId}-dependency-tree.txt</outputFile>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.ruleoftech</groupId>

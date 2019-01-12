@@ -31,20 +31,6 @@ To generate models, simply build the project `mvn clean package`.
 </dependencies>
 ```
 
-## Dependency
-```text
-org.touchbit.testrail4j:jackson2-feign-client:jar:0.4.0
-├─ org.touchbit.testrail4j:testrail4j-core:jar:0.4.0:compile
-├─ org.touchbit.testrail4j:jackson2-api-model:jar:0.4.0:compile
-│  ├─ com.fasterxml.jackson.core:jackson-annotations:jar:2.9.7:compile
-│  └─ org.apache.commons:commons-lang3:jar:3.8.1:compile
-├─ io.github.openfeign:feign-core:jar:10.1.0:compile
-├─ io.github.openfeign:feign-jackson:jar:10.1.0:compile
-│  └─ com.fasterxml.jackson.core:jackson-databind:jar:2.9.6:compile
-│     └─ com.fasterxml.jackson.core:jackson-core:jar:2.9.6:compile
-└─ org.slf4j:slf4j-api:jar:1.7.25:compile
-```
-
 ## Usage
 
 * Add repository
@@ -89,7 +75,7 @@ public class Example {
         Section section = new Section()
                 .withName(UUID.randomUUID().toString())
                 .withDescription(UUID.randomUUID().toString());
-        Section section = client.addSection(section, project.getId());;
+        Section section = client.addSection(section, project.getId());
         Case caze = new Case()
                 .withTitle("test_20190101201312")
                 .withPriorityId(CRITICAL.getId())
@@ -108,3 +94,9 @@ public class Example {
     }
 }
 ```
+
+## Dependency tree
+* [testrail4j-core](dependencies/testrail4j-core.html)
+* [jackson2-feign-client](dependencies/jackson2-feign-client.html)
+* [jackson2-api-model](dependencies/jackson2-api-model.html)
+* [gson-api-model](dependencies/gson-api-model.html)
