@@ -82,7 +82,7 @@ Deploy Snapshot:
     - SNAPSHOT_TR4J_VERSION=${TR4J_VERSION}-SNAPSHOT
     - make ver ${SNAPSHOT_TR4J_VERSION}
     - make deploy
-    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=true&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${SNAPSHOT_TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${SNAPSHOT_TR4J_VERSION}/%29\""
+    - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=true&parse_mode=Markdown&text=*TestRail4J*%0ANew version uploaded: %5B${SNAPSHOT_TR4J_VERSION}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${SNAPSHOT_TR4J_VERSION}/%29\""
 
 Deploy TestRail4J:
   stage: deploy
