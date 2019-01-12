@@ -21,13 +21,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
 
     <artifactId>jackson2-api-model</artifactId>
     <name>Jackson2 models</name>
     <description>Jackson2 annotation models for TestRail API</description>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -62,6 +62,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.ruleoftech</groupId>
+                <artifactId>markdown-page-generator-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

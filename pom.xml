@@ -20,7 +20,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <name>TestRail4J</name>
     <description>TestRail API clients</description>
@@ -107,9 +107,11 @@
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
         <distributionRepository>https://touchbit.org/repository/</distributionRepository>
+        <basedir>${project.basedir}</basedir>
     </properties>
 
     <dependencies>
+        <!-- TODO remove? -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -154,28 +156,28 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-feign-client</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
             </dependency>
             <!-- Self Test -->
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -279,6 +281,10 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
         </plugins>
 
@@ -407,6 +413,48 @@
                         <artifactId>${project.artifactId}</artifactId>
                         <version>${project.version}</version>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>tree</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <scope>compile</scope>
+                                <outputType>dot</outputType>
+                                <outputFile>${project.build.directory}/info/${project.artifactId}-dependency-tree.txt</outputFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.ruleoftech</groupId>
+                    <artifactId>markdown-page-generator-plugin</artifactId>
+                    <version>2.1.0</version>
+                    <configuration>
+                        <pegdownExtensions>HARDWRAPS</pegdownExtensions>
+                        <inputFileExtensions>md, markdown, txt</inputFileExtensions>
+                        <headerHtmlFile>.indirect/header.html</headerHtmlFile>
+                        <footerHtmlFile>.indirect/footer.html</footerHtmlFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <inputDirectory>${project.build.directory}/info/</inputDirectory>
+                                <!--suppress MavenModelInspection -->
+                                <outputDirectory>${project.parent.basedir}/_docs/dependencies/</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
