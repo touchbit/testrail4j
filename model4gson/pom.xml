@@ -21,13 +21,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
     </parent>
 
     <artifactId>gson-api-model</artifactId>
     <name>Gson models</name>
     <description>Gson annotation models for TestRail API</description>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -35,10 +35,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.touchbit.testrail4j</groupId>
-            <artifactId>testrail4j-util</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

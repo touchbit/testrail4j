@@ -22,6 +22,7 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import org.touchbit.testrail4j.core.AuthInterceptor;
 import org.touchbit.testrail4j.core.BasicAuth;
+import org.touchbit.testrail4j.core.RestRailErrorDecoder;
 
 import static feign.Logger.Level.FULL;
 
@@ -29,6 +30,7 @@ import static feign.Logger.Level.FULL;
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */
+@SuppressWarnings("WeakerAccess")
 public class TestRailClientBuilder {
 
     public static TestRailClient build(String base64, String target) {
@@ -78,6 +80,7 @@ public class TestRailClientBuilder {
                 .logger(logger)
                 .logLevel(logLevel)
                 .requestInterceptor(auth)
+                .errorDecoder(new RestRailErrorDecoder())
                 .target(c, target);
     }
 
