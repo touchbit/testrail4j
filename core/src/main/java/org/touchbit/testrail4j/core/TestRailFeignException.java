@@ -20,8 +20,6 @@ import feign.FeignException;
 import feign.Response;
 import feign.Util;
 
-import java.io.IOException;
-
 import static java.lang.String.format;
 
 /**
@@ -43,10 +41,13 @@ public class TestRailFeignException extends FeignException {
             if (response.body() != null) {
                 body = Util.toByteArray(response.body().asInputStream());
             }
-        } catch (IOException ignored) { // NOPMD
+        } catch (Exception ignored) { // NOPMD
         }
 
-        String message = format("status %s reading %s message %s", response.status(), methodKey, new String(body));
+        String message = format("status %s reading %s", response.status(), methodKey);
+        if (body.length != 0) {
+            message += " message " + new String(body);
+        }
         return new TestRailFeignException(response.status(), message, body);
     }
 

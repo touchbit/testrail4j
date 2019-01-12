@@ -29,8 +29,7 @@ public class RestRailErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
-        TestRailFeignException exception = TestRailFeignException.errorStatus(methodKey, response);
-        return exception;
+        return TestRailFeignException.errorStatus(methodKey, response);
     }
 
 }

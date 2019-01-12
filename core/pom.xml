@@ -21,13 +21,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>testrail4j</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
     </parent>
 
     <artifactId>testrail4j-core</artifactId>
     <name>TestRail4j core</name>
     <description>TestRail4j core module</description>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <dependencies>
