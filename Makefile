@@ -18,17 +18,17 @@ test: clean
 	mvn test
 
 # do not use -Dmaven.test.skip=true
-deploy:
-	mvn deploy -DskipTests
+deploy: clean
+	mvn deploy -Dperform-touchbit-release
+
+deploy-st: clean
+	mvn deploy -Dperform-sonatype-release
 
 version:
 	mvn versions:set -DnewVersion=${VERSION}
 	mvn install -DskipTests
 
 ver: version
-
-purge:
-	mvn dependency:purge-local-repository@local-buggy
 
 build-doc:
 	python _docs/setup.py

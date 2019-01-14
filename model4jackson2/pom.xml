@@ -20,14 +20,14 @@
 
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
-        <artifactId>testrail4j</artifactId>
-        <version>1.1.4</version>
+        <artifactId>parent</artifactId>
+        <version>1.1.5</version>
     </parent>
 
     <artifactId>jackson2-api-model</artifactId>
     <name>Jackson2 models</name>
     <description>Jackson2 annotation models for TestRail API</description>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
 
     <properties>

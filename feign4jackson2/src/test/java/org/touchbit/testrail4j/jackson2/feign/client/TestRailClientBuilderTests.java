@@ -18,9 +18,8 @@ package org.touchbit.testrail4j.jackson2.feign.client;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.touchbit.testrail4j.core.BaseUnitTest;
 import org.touchbit.testrail4j.core.ExecutionLogger;
-import org.touchbit.testrail4j.helpful.Auth;
+import org.touchbit.testrail4j.jackson2.feign.client.helpful.Auth;
 
 import static feign.Logger.Level.HEADERS;
 import static org.assertj.core.api.Assertions.assertThat;

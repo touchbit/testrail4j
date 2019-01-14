@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright © 2018 Shaburov Oleg
+  ~ Copyright © 2018 Shaburov Oleg, Maintained by the TouchBIT Team.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -18,27 +18,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-    </parent>
-
     <groupId>org.touchbit.testrail4j</groupId>
-    <artifactId>testrail4j</artifactId>
-    <version>1.1.4</version>
-
-    <name>TestRail4J</name>
-    <description>TestRail API clients</description>
+    <artifactId>parent</artifactId>
+    <version>1.1.5</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>core</module>
-        <module>feign4jackson2</module>
-        <module>model4gson</module>
-        <module>model4jackson2</module>
-        <module>integration</module>
-    </modules>
+    <name>TestRail4J</name>
+    <url>https://gitlab.com/TouchBIT/testrail4j</url>
+    <description>TestRail API clients</description>
+
+    <issueManagement>
+        <url>https://gitlab.com/TouchBIT/testrail4j/issues</url>
+        <system>GitLab</system>
+    </issueManagement>
 
     <licenses>
         <license>
@@ -61,7 +53,7 @@
             <name>Oleg Shaburov</name>
             <email>oleg.shaburov@touchbit.org</email>
             <roles>
-                <role>maintainer</role>
+                <role>owner</role>
             </roles>
             <timezone>+3</timezone>
         </developer>
@@ -75,6 +67,14 @@
             <timezone>+3</timezone>
         </developer>
     </developers>
+
+    <modules>
+        <module>core</module>
+        <module>feign4jackson2</module>
+        <module>model4gson</module>
+        <module>model4jackson2</module>
+        <module>integration</module>
+    </modules>
 
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -112,8 +112,6 @@
         <jackson.version>2.9.7</jackson.version>
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
         <commons.lang3.version>3.8.1</commons.lang3.version>
-        <distributionRepository>https://touchbit.org/repository/</distributionRepository>
-        <basedir>${project.basedir}</basedir>
     </properties>
 
     <dependencies>
@@ -156,30 +154,22 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>1.1.4</version>
+                <version>1.1.5</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>1.1.4</version>
+                <version>1.1.5</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-feign-client</artifactId>
-                <version>1.1.4</version>
+                <version>1.1.5</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>1.1.4</version>
-            </dependency>
-            <!-- Self Test -->
-            <dependency>
-                <groupId>org.touchbit.testrail4j</groupId>
-                <artifactId>testrail4j-core</artifactId>
-                <version>1.1.4</version>
-                <type>test-jar</type>
-                <scope>test</scope>
+                <version>1.1.5</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.openfeign -->
             <dependency>
@@ -237,10 +227,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-gpg-plugin</artifactId>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -373,19 +359,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.1</version>
-                    <executions>
-                        <execution>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>2.5.2</version>
                     <executions>
@@ -408,29 +381,6 @@
                     <version>3.1.1</version>
                     <executions>
                         <execution>
-                            <id>local-buggy</id>
-                            <goals>
-                                <goal>purge-local-repository</goal>
-                            </goals>
-                            <configuration>
-                                <resolutionFuzziness>groupId</resolutionFuzziness>
-                                <manualIncludes>
-                                    <manualInclude>${project.groupId}</manualInclude>
-                                </manualIncludes>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>current-version</id>
-                            <goals>
-                                <goal>get</goal>
-                            </goals>
-                            <configuration>
-                                <transitive>false</transitive>
-                                <artifact>${project.groupId}:${project.artifactId}-core:${project.version}:jar</artifact>
-                                <remoteRepositories>touchbit::default::https://touchbit.org/repository/</remoteRepositories>
-                            </configuration>
-                        </execution>
-                        <execution>
                             <goals>
                                 <goal>tree</goal>
                             </goals>
@@ -444,32 +394,11 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>com.coderplus.maven.plugins</groupId>
-                    <artifactId>copy-rename-maven-plugin</artifactId>
-                    <version>1.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>copy-javadoc-child</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>copy</goal>
-                            </goals>
-                            <configuration>
-                                <!--suppress MavenModelInspection -->
-                                <sourceFile>${project.parent.basedir}/.indirect/dummy-javadoc.jar</sourceFile>
-                                <destinationFile>${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar</destinationFile>
-                                <ignoreFileNotFoundOnIncremental>true</ignoreFileNotFoundOnIncremental>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                     <inherited>true</inherited>
                     <configuration>
-                        <url>${distributionRepository}</url>
                         <file>
                             ${project.build.directory}/${project.artifactId}-${project.version}.jar
                         </file>
@@ -520,16 +449,98 @@
             </extension>
         </extensions>
     </build>
-    <distributionManagement>
-        <repository>
-            <id>touchbit.org</id>
-            <url>${distributionRepository}</url>
-        </repository>
-    </distributionManagement>
     <repositories>
         <repository>
             <id>touchbit.org.repository</id>
-            <url>${distributionRepository}</url>
+            <url>https://touchbit.org/repository/</url>
         </repository>
     </repositories>
+
+    <profiles>
+        <profile>
+            <id>perform-touchbit-release</id>
+            <properties>
+                <perform-touchbit-release>fasle</perform-touchbit-release>
+                <skipJavaDoc>true</skipJavaDoc>
+            </properties>
+            <activation>
+                <property>
+                    <name>perform-touchbit-release</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>touchbit.org</id>
+                    <url>https://touchbit.org/repository/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>perform-sonatype-release</id>
+            <properties>
+                <perform-sonatype-release>fasle</perform-sonatype-release>
+                <skipTests>true</skipTests>
+            </properties>
+            <activation>
+                <property>
+                    <name>perform-sonatype-release</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <failOnError>false</failOnError>
+                                    <failOnWarnings>false</failOnWarnings>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <configuration>
+                            <passphrase/>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <keyname>3F61B9199E8B4A666AFE6A25F24941E93C74078B</keyname>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>sonatype-nexus-snapshots</id>
+                    <name>Sonatype Nexus Snapshots</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>sonatype-nexus-staging</id>
+                    <name>Nexus Release Repository</name>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
