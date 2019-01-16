@@ -31,13 +31,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>parent</artifactId>
-        <version>1.1.7</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>gson-feign-client</artifactId>
     <name>Gson TestRail client</name>
     <description>Feign client for TestRail API with Gson annotation models</description>
-    <version>1.1.7</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <properties>
