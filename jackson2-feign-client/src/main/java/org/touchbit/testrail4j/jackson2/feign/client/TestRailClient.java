@@ -233,7 +233,6 @@ import java.util.List;
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
-@SuppressWarnings({"common-java:DuplicatedBlocks"})
 @Headers("Content-Type: application/json; charset=utf-8")
 public interface TestRailClient {
 

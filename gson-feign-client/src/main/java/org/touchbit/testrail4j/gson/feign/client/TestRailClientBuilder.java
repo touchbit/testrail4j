@@ -40,7 +40,6 @@ import static feign.Logger.Level.FULL;
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */
-@SuppressWarnings({"common-java:DuplicatedBlocks"})
 public class TestRailClientBuilder {
 
     public static TestRailClient build(String base64, String target) {
