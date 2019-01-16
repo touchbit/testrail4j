@@ -29,13 +29,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.touchbit.testrail4j</groupId>
-    <artifactId>testrail4j</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.1.7</version>
     <packaging>pom</packaging>
 
     <name>TestRail4J</name>
     <url>https://gitlab.com/TouchBIT/testrail4j</url>
-    <description>TestRail API clients</description>
+    <description>Parent pom for TestRail4J modules</description>
 
     <issueManagement>
         <url>https://gitlab.com/TouchBIT/testrail4j/issues</url>
@@ -79,11 +79,14 @@
     </developers>
 
     <modules>
-        <module>core</module>
-        <module>feign4jackson2</module>
-        <module>model4gson</module>
-        <module>model4jackson2</module>
-        <module>integration</module>
+        <module>testrail4j-core</module>
+        <module>gson-feign-client</module>
+        <module>jackson2-feign-client</module>
+        <module>gson-api-model</module>
+        <module>jackson2-api-model</module>
+        <module>testrail4j-schema</module>
+        <module>testrail4j-test-core</module>
+        <module>testrail4j-integration-tests</module>
     </modules>
 
     <properties>
@@ -102,7 +105,7 @@
         <sonar.gitlab.project_id>8282105</sonar.gitlab.project_id>
         <sonar.sources>src/main</sonar.sources>
         <sonar.host.url>https://touchbit.org/sonar/</sonar.host.url>
-        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+        <sonar.projectKey>${project.groupId}:testrail4j</sonar.projectKey>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <reports.path>${project.build.directory}/reports</reports.path>
         <sonar.junit.reportPaths>${reports.path}</sonar.junit.reportPaths>
@@ -124,43 +127,15 @@
         <commons.lang3.version>3.8.1</commons.lang3.version>
     </properties>
 
-    <dependencies>
-        <!-- Test -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.11.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.9.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.9.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <version>2.0.0-beta.5</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <dependencyManagement>
         <dependencies>
             <!-- Self dependency management -->
+            <dependency>
+                <groupId>org.touchbit.testrail4j</groupId>
+                <artifactId>testrail4j-test-core</artifactId>
+                <version>1.1.7</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
@@ -228,10 +203,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -337,7 +308,9 @@
                             </goals>
                             <configuration>
                                 <!--suppress UnresolvedMavenProperty -->
-                                <sourceDirectory>${project.parent.basedir}/schema</sourceDirectory>
+                                <sourceDirectory>
+                                    ${project.parent.basedir}/testrail4j-schema/src/main/resources/schema
+                                </sourceDirectory>
                                 <outputDirectory>src/main/java</outputDirectory>
                                 <targetPackage>org.touchbit.testrail4j.${model.annotation.lib}.model</targetPackage>
                                 <useCommonsLang3>true</useCommonsLang3>

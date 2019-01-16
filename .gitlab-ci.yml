@@ -14,7 +14,7 @@ Build modules:
   script:
     # do not use -Dmaven.test.skip=true
     - make install
-    - mv integration/target/Corvus.jar Corvus.jar
+    - mv testrail4j-integration-tests/target/Corvus.jar Corvus.jar
   artifacts:
     paths:
       - Corvus.jar
