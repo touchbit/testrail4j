@@ -30,6 +30,8 @@ import org.touchbit.testrail4j.core.query.GetResultsQueryMap;
 import org.touchbit.testrail4j.core.type.Type;
 
 /**
+ * Get Results QueryMap Filter
+ * <p>
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */

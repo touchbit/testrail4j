@@ -33,19 +33,31 @@ import java.util.Base64;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
+ * Feign request interceptor for basic request authorization.
+ * <p>
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */
 public class BasicAuth extends AuthInterceptor {
 
+    /**
+     * base64-encoded login:password or login:token.
+     */
     private final String base64;
 
+    /**
+     * @param authBase64UserPass - base64-encoded login:password or login:token.
+     */
     public BasicAuth(final String authBase64UserPass) {
         this.base64 = authBase64UserPass;
     }
 
-    public BasicAuth(final String user, final String pass) {
-        this.base64 = Base64.getEncoder().encodeToString((user + ":" + pass).getBytes(UTF_8));
+    /**
+     * @param login - user login (email).
+     * @param passToken - user password or API token.
+     */
+    public BasicAuth(final String login, final String passToken) {
+        this.base64 = Base64.getEncoder().encodeToString((login + ":" + passToken).getBytes(UTF_8));
     }
 
     @Override

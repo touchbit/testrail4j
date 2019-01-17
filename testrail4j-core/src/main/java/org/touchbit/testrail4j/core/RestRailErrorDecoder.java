@@ -30,13 +30,17 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 
 /**
- * Error decoder for testrail feign http client.
+ * Error decoder for TestRail feign HTTP client.
+ * For more information see {@link ErrorDecoder}
  * <p>
  * Created by Oleg Shaburov on 12.01.2019
  * shaburov.o.a@gmail.com
  */
 public class RestRailErrorDecoder implements ErrorDecoder {
 
+    /**
+     * See {@link ErrorDecoder#decode(String, Response)}
+     */
     @Override
     public Exception decode(String methodKey, Response response) {
         return TestRailFeignException.errorStatus(methodKey, response);
