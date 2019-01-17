@@ -31,6 +31,9 @@ import feign.RequestTemplate;
 import feign.template.UriUtils;
 
 /**
+ * This class was created to bypass the defect in the Feign http client and will be removed in the future.
+ * For more information see issue https://github.com/OpenFeign/feign/issues/838
+ * <p>
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */

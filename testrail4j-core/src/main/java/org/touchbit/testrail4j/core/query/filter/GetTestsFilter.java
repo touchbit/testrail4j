@@ -30,6 +30,8 @@ import org.touchbit.testrail4j.core.query.GetTestsQueryMap;
 import org.touchbit.testrail4j.core.type.Type;
 
 /**
+ * Get Tests QueryMap Filter
+ * <p>
  * Created by Oleg Shaburov on 02.01.2019
  * shaburov.o.a@gmail.com
  */

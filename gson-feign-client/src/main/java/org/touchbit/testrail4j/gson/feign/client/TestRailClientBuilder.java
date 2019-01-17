@@ -30,59 +30,119 @@ import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
-import org.touchbit.testrail4j.core.AuthInterceptor;
 import org.touchbit.testrail4j.core.BasicAuth;
+import org.touchbit.testrail4j.core.ExecutionLogger;
 import org.touchbit.testrail4j.core.RestRailErrorDecoder;
 
 import static feign.Logger.Level.FULL;
 
 /**
+ * Base builder to get the {@link TestRailClient} object.
+ * You can always build your http-client using the {@link Feign.Builder()} class.
+ *
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */
 public class TestRailClientBuilder {
 
+    /**
+     * @param base64 - base64-encoded login:password or login:token.
+     * @param target - TestRail host.
+     *
+     * @return {@link TestRailClient} object without logging.
+     */
     public static TestRailClient build(String base64, String target) {
         BasicAuth basicAuth = new BasicAuth(base64);
         return build(basicAuth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
     }
 
+    /**
+     * @param login - user login (email).
+     * @param passToken - user password or API token.
+     * @param target - TestRail host.
+     *
+     * @return {@link TestRailClient} object without logging.
+     */
     public static TestRailClient build(String login, String passToken, String target) {
         BasicAuth basicAuth = new BasicAuth(login, passToken);
         return build(basicAuth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
     }
 
-    public static TestRailClient build(String login, String passToken, String target, Logger log) {
+    /**
+     * @param login - user login (email).
+     * @param passToken - user password or API token.
+     * @param target - TestRail host.
+     * @param logger - Custom logger inherits from {@link Logger}. It is recommended to use {@link ExecutionLogger}
+     *
+     * @return {@link TestRailClient} object with fill request logging.
+     */
+    public static TestRailClient build(String login, String passToken, String target, Logger logger) {
         BasicAuth basicAuth = new BasicAuth(login, passToken);
-        return build(basicAuth, target, TestRailClient.class, log, FULL);
+        return build(basicAuth, target, TestRailClient.class, logger, FULL);
     }
 
-    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target) {
+    /**
+     * @param auth - Feign request interceptor represented by class {@link BasicAuth} for basic request authorization.
+     * @param target - TestRail host.
+     *
+     * @return {@link TestRailClient} object without logging.
+     */
+    public static TestRailClient build(BasicAuth auth, String target) {
         return build(auth, target, TestRailClient.class, new Logger.NoOpLogger(), FULL);
     }
 
-    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target, Logger log) {
-        return build(auth, target, TestRailClient.class, log, FULL);
+    /**
+     * @param auth - Feign request interceptor represented by class {@link BasicAuth} for basic request authorization.
+     * @param target - TestRail host.
+     * @param logger - Custom logger inherits from {@link Logger}. It is recommended to use {@link ExecutionLogger}
+     *
+     * @return {@link TestRailClient} object with fill request logging.
+     */
+    public static TestRailClient build(BasicAuth auth, String target, Logger logger) {
+        return build(auth, target, TestRailClient.class, logger, FULL);
     }
 
-    public static <I extends AuthInterceptor> TestRailClient build(I auth, String target,
-                                                                   Logger log,
-                                                                   Logger.Level logLevel) {
-        return build(auth, target, TestRailClient.class, log, logLevel);
+    /**
+     * @param auth - Feign request interceptor represented by class {@link BasicAuth} for basic request authorization.
+     * @param target - TestRail host.
+     * @param logger - Custom logger inherits from {@link Logger}. It is recommended to use {@link ExecutionLogger}
+     * @param logLevel - Log level. Possible values NONE, BASIC, HEADERS, FULL.
+     *
+     * @return {@link TestRailClient} object with request logging.
+     */
+    public static TestRailClient build(BasicAuth auth, String target, Logger logger, Logger.Level logLevel) {
+        return build(auth, target, TestRailClient.class, logger, logLevel);
     }
 
-    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth,
-                                                                                 String target,
-                                                                                 Class<C> c,
-                                                                                 Logger log) {
-        return build(auth, target, c, log, FULL);
+    /**
+     * @param auth - Feign request interceptor represented by class {@link BasicAuth} for basic request authorization.
+     * @param target - TestRail host.
+     * @param testRailClientClass - {@link TestRailClient} class or the heir of this class.
+     * @param logger - Custom logger inherits from {@link Logger}. It is recommended to use {@link ExecutionLogger}
+     *
+     * @return {@link TestRailClient} object with fill request logging.
+     */
+    public static <C extends  TestRailClient> C build(BasicAuth auth,
+                                                      String target,
+                                                      Class<C> testRailClientClass,
+                                                      Logger logger) {
+        return build(auth, target, testRailClientClass, logger, FULL);
     }
 
-    public static <I extends AuthInterceptor, C extends  TestRailClient> C build(I auth,
-                                                                                 String target,
-                                                                                 Class<C> c,
-                                                                                 Logger logger,
-                                                                                 Logger.Level logLevel) {
+    /**
+     * @param auth - Feign request interceptor represented by class {@link BasicAuth} for basic request authorization.
+     * @param target - TestRail host.
+     * @param testRailClientClass - {@link TestRailClient} class or the heir of this class.
+     * @param logger - Custom logger inherits from {@link Logger}. It is recommended to use {@link ExecutionLogger}
+     * @param logLevel - Log level. Possible values NONE, BASIC, HEADERS, FULL.
+     *
+     * @return {@link TestRailClient} object with request logging.
+     */
+    public static <C extends  TestRailClient> C build(BasicAuth auth,
+                                                      String target,
+                                                      Class<C> testRailClientClass,
+                                                      Logger logger,
+                                                      Logger.Level logLevel) {
         return new Feign.Builder()
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
@@ -90,7 +150,7 @@ public class TestRailClientBuilder {
                 .logLevel(logLevel)
                 .requestInterceptor(auth)
                 .errorDecoder(new RestRailErrorDecoder())
-                .target(c, target);
+                .target(testRailClientClass, target);
     }
 
     /** Utility class. Prohibit instantiation. */

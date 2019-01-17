@@ -29,6 +29,8 @@ package org.touchbit.testrail4j.core.query.filter;
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
 
 /**
+ * Get Cases QueryMap Filter
+ * <p>
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com
  */

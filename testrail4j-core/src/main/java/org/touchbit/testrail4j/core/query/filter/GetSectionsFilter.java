@@ -29,6 +29,8 @@ package org.touchbit.testrail4j.core.query.filter;
 import org.touchbit.testrail4j.core.query.GetSectionsQueryMap;
 
 /**
+ * Get Sections QueryMap Filter
+ * <p>
  * Created by Oleg Shaburov on 01.01.2019
  * shaburov.o.a@gmail.com
  */

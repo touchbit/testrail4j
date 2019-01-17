@@ -26,12 +26,15 @@
 
 package org.touchbit.testrail4j.core;
 
+import feign.Feign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
 /**
+ * Http request and response logger
+ * <p>
  * Created by Oleg Shaburov on 12.11.2018
  * shaburov.o.a@gmail.com
  */
@@ -39,18 +42,34 @@ public class ExecutionLogger extends feign.Logger {
 
     private final Consumer<String> logMethod;
 
+    /**
+     * Default class logger
+     */
     public ExecutionLogger() {
         this(LoggerFactory.getLogger(ExecutionLogger.class));
     }
 
+    /**
+     * @param logger - your logger implementing the slf4j {@link Logger} interface.
+     */
     public ExecutionLogger(final Logger logger) {
         this(logger::info);
     }
 
+    /**
+     * @param logMethod - your logger with log level call. For example: new ExecutionLogger(logger::trace);
+     */
     public ExecutionLogger(final Consumer<String> logMethod) {
         this.logMethod = logMethod;
     }
 
+    /**
+     * Messages will be http request and response text.
+     *
+     * @param configKey value of {@link Feign#configKey(Class, java.lang.reflect.Method)}
+     * @param format {@link java.util.Formatter format string}
+     * @param args arguments applied to {@code format}
+     */
     @Override
     protected void log(String configKey, String format, Object... args) {
         String msg = methodTag(configKey) + format;

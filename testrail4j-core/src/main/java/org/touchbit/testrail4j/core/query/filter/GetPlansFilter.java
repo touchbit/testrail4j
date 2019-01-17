@@ -29,7 +29,7 @@ package org.touchbit.testrail4j.core.query.filter;
 import org.touchbit.testrail4j.core.query.GetPlansQueryMap;
 
 /**
- * The following filters can be applied (available since TestRail 4.0)
+ * Get plans QueryMap Filter
  * <p>
  * Created by Oleg Shaburov on 06.01.2019
  * shaburov.o.a@gmail.com

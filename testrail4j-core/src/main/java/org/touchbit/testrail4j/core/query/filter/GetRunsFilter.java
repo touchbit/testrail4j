@@ -29,10 +29,10 @@ package org.touchbit.testrail4j.core.query.filter;
 import org.touchbit.testrail4j.core.query.GetRunsQueryMap;
 
 /**
+ * Get Runs QueryMap Filter
  * The filter can be applied for the get runs call (available since TestRail 4.0)
  * All active test runs for project with ID 1 created by user with ID 1 or 2
  * GET index.php?/api/v2/get_runs/1&is_completed=0&created_by=1,2
- *
  * <p>
  * Created by Oleg Shaburov on 01.01.2019
  * shaburov.o.a@gmail.com
