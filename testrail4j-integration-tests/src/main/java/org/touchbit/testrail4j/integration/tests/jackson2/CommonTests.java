@@ -35,6 +35,7 @@ import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
+import org.touchbit.testrail4j.integration.tests.BaseGsonTest;
 import org.touchbit.testrail4j.integration.tests.BaseJackson2Test;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
@@ -47,6 +48,18 @@ import java.util.Base64;
  */
 @Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "common_operations")
 public class CommonTests extends BaseJackson2Test {
+
+    @Test(description = "Expecting successful authentication with SSL errors")
+    @Details()
+    public void test_20190119022032() {
+        BaseGsonTest.TestRailTestClient client = org.touchbit.testrail4j.gson.feign.client.TestRailClientBuilder
+                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
+                        Config.getHost().replace("http", "https"),
+                        BaseGsonTest.TestRailTestClient.class,
+                        new FeignCallLogger(log),
+                        true);
+        client.getProject();
+    }
 
     @Test(description = "Expecting successful authentication with base64 string")
     @Details()

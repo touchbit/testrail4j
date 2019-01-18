@@ -5,6 +5,7 @@ services:
     image: registry.gitlab.com/touchbit/image/testrail/web:latest
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - static-content:/var/www/testrail
     links:

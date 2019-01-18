@@ -39,7 +39,7 @@
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>testrail4j-integration-tests</artifactId>
     <name>Testrail4J integration tests</name>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -68,12 +68,12 @@
         <dependency>
             <groupId>org.touchbit.testrail4j</groupId>
             <artifactId>jackson2-feign-client</artifactId>
-            <version>2.0.1</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.touchbit.testrail4j</groupId>
             <artifactId>gson-feign-client</artifactId>
-            <version>2.0.1</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
