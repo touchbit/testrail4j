@@ -95,4 +95,13 @@ class TestRailClientBuilderTests extends BaseUnitTest {
         assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
     }
 
+    @Test
+    @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel, true)")
+    void unitTest_20190119015337() {
+        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS, true).getCase(2100L);
+        String msg = TEST_LOGGER.takeLoggedMessages().toString();
+        assertThat(msg).contains(GET_API + "/get_case/2100");
+        assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
+    }
+
 }

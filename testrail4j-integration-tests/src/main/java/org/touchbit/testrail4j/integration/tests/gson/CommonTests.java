@@ -48,6 +48,18 @@ import java.util.Base64;
 @Suite(component = TestRail.class, service = Gson.class, interfaze = API.class, task = "common_operations")
 public class CommonTests extends BaseGsonTest {
 
+    @Test(description = "Expecting successful authentication with SSL errors")
+    @Details()
+    public void test_20190119015452() {
+        TestRailTestClient client = TestRailClientBuilder
+                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
+                        Config.getHost().replace("http", "https"),
+                        TestRailTestClient.class,
+                        new FeignCallLogger(log),
+                        true);
+        client.getProject();
+    }
+
     @Test(description = "Expecting successful authentication with base64 string")
     @Details()
     public void test_20200107185620() {
