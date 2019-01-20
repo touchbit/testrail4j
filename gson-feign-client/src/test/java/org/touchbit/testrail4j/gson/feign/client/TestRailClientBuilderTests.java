@@ -52,6 +52,13 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     }
 
     @Test
+    @DisplayName("build(String, String, String, Class<C>")
+    void unitTest_20190120213036() {
+        TestRailClientBuilder.build("login", "passToken", TARGET, TestRailClient.class).getCase(2100L);
+        assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
+    }
+
+    @Test
     @DisplayName("build(String login, String passToken, String target, Logger log)")
     void unitTest_20190108140832() {
         TestRailClientBuilder.build("login", "passToken", TARGET, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);

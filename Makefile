@@ -30,10 +30,6 @@ version:
 
 ver: version
 
-build-doc:
-	python _docs/setup.py
-	mkdocs build
-
 tr-start: tr-stop
 	docker-compose -f .indirect/docker-compose.yml up -d
 	docker ps
@@ -46,3 +42,15 @@ itest:
 	java -jar testrail4j-integration-tests/target/Corvus.jar
 
 iitest: install itest
+
+clean-doc:
+	rm -rf ./site
+
+build-doc: clean-doc
+	sphinx-build -W -b html ./docs ./site
+
+build-doc-image:
+	docker build --no-cache -t testrail4j/doc:${VERSION} -f ./.indirect/docs/Dockerfile .
+
+run-doc-image:
+	docker run -p 8080:80 testrail4j/doc:${VERSION}
