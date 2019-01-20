@@ -84,7 +84,7 @@ public class Corvus extends Buggy {
                 }
             }
         } catch (IOException e) {
-            Buggy.getExitHandler().exitRun(1, "'docker ps' call fail", e);
+            Buggy.getExitHandler().exitRun(1, "'docker ps' call is fail", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

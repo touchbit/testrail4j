@@ -33,7 +33,7 @@ import feign.Util;
 import static java.lang.String.format;
 
 /**
- * Exception for {@link RestRailErrorDecoder}
+ * Exception for {@link TestRailErrorDecoder}
  * <p>
  * Created by Oleg Shaburov on 12.01.2019
  * shaburov.o.a@gmail.com

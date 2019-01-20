@@ -35,5 +35,3 @@ public class Example {
     }
 }
 ```
-
-##### [Contributing](https://testrail4j.readthedocs.io/en/master/CONTRIBUTING/index.html)

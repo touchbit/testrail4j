@@ -33,7 +33,7 @@ import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import org.touchbit.testrail4j.core.BasicAuth;
 import org.touchbit.testrail4j.core.ExecutionLogger;
-import org.touchbit.testrail4j.core.RestRailErrorDecoder;
+import org.touchbit.testrail4j.core.TestRailErrorDecoder;
 import org.touchbit.testrail4j.core.TrustSocketHelper;
 
 import static feign.Logger.Level.FULL;
@@ -91,6 +91,39 @@ public class TestRailClientBuilder {
     public static TestRailClient build(String login, String passToken, String target, boolean ignoreSslErrors) {
         BasicAuth basicAuth = new BasicAuth(login, passToken);
         return build(basicAuth, target, TestRailClient.class, ignoreSslErrors, new Logger.NoOpLogger(), FULL);
+    }
+
+    /**
+     * @param login - user login (email).
+     * @param passToken - user password or API token.
+     * @param target - TestRail host.
+     * @param testRailClientClass - {@link TestRailClient} class or the heir of this class.
+     *
+     * @return {@link TestRailClient} object without logging.
+     */
+    public static <C extends TestRailClient> C build(String login,
+                                                     String passToken,
+                                                     String target,
+                                                     Class<C> testRailClientClass) {
+        return build(login, passToken, target, testRailClientClass, false);
+    }
+
+    /**
+     * @param login - user login (email).
+     * @param passToken - user password or API token.
+     * @param target - TestRail host.
+     * @param testRailClientClass - {@link TestRailClient} class or the heir of this class.
+     * @param ignoreSslErrors - ignore ssl certificate errors.
+     *
+     * @return {@link TestRailClient} object without logging.
+     */
+    public static <C extends TestRailClient> C build(String login,
+                                                     String passToken,
+                                                     String target,
+                                                     Class<C> testRailClientClass,
+                                                     boolean ignoreSslErrors) {
+        BasicAuth basicAuth = new BasicAuth(login, passToken);
+        return build(basicAuth, target, testRailClientClass, ignoreSslErrors, new Logger.NoOpLogger(), FULL);
     }
 
     /**
@@ -276,7 +309,7 @@ public class TestRailClientBuilder {
                 .logger(logger)
                 .logLevel(logLevel)
                 .requestInterceptor(auth)
-                .errorDecoder(new RestRailErrorDecoder())
+                .errorDecoder(new TestRailErrorDecoder())
                 .target(testRailClientClass, target);
     }
 

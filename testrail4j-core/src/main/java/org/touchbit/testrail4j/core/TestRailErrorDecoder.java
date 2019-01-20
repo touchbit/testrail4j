@@ -27,35 +27,23 @@
 package org.touchbit.testrail4j.core;
 
 import feign.Response;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.touchbit.testrail4j.test.core.BaseUnitTest;
-
-import java.io.ByteArrayInputStream;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import feign.codec.ErrorDecoder;
 
 /**
+ * Error decoder for TestRail feign HTTP client.
+ * For more information see {@link ErrorDecoder}
+ * <p>
  * Created by Oleg Shaburov on 12.01.2019
  * shaburov.o.a@gmail.com
  */
-@DisplayName("RestRailErrorDecoder class tests")
-class RestRailErrorDecoderTests extends BaseUnitTest {
+public class TestRailErrorDecoder implements ErrorDecoder {
 
-    @Test
-    @DisplayName("RestRailErrorDecoder#decode(String, Response) ")
-    void unitTest_20190112180205() throws Exception {
-        Response response = mock(Response.class);
-        Response.Body body = mock(Response.Body.class);
-        when(body.asInputStream()).thenReturn(new ByteArrayInputStream("body str".getBytes(UTF_8)));
-        when(response.body()).thenReturn(body);
-        when(response.status()).thenReturn(500);
-        RestRailErrorDecoder decoder = new RestRailErrorDecoder();
-        Exception exception = decoder.decode("GET", response);
-        assertThat(exception.getMessage()).isEqualTo("status 500 reading GET message body str");
+    /**
+     * See {@link ErrorDecoder#decode(String, Response)}
+     */
+    @Override
+    public Exception decode(String methodKey, Response response) {
+        return TestRailFeignException.errorStatus(methodKey, response);
     }
 
 }
