@@ -54,6 +54,8 @@ html_theme_options = {
     # 'navigation_depth': 4,  # Depth of the headers shown in the navigation bar
 }
 
+html_extra_path = ['robots.txt']
+
 html_logo = 'img/testrail4j_logo.png'
 
 # Output file base name for HTML help builder
