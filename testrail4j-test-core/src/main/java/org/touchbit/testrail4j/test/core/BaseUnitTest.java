@@ -30,6 +30,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.status.StatusLogger;
 import org.junit.jupiter.api.function.Executable;
 
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class BaseUnitTest {
@@ -39,7 +41,7 @@ public abstract class BaseUnitTest {
     }
 
     protected static final UnitTestLogger TEST_LOGGER = new UnitTestLogger();
-    private static final int TARGET_PORT = 19876;
+    private static final int TARGET_PORT = generateIntBetween(10000, 60000);
     protected static final String TARGET = "http://localhost:" + TARGET_PORT + "/";
     protected static final String GET_API = "GET " + TARGET + "index.php?/api/v2";
     protected static final String POST_API = "POST " + TARGET + "index.php?/api/v2";
@@ -56,6 +58,15 @@ public abstract class BaseUnitTest {
         }
         assertThat(throwable).isInstanceOf(exceptionClass);
         return (T) throwable;
+    }
+
+    public static Integer generateIntBetween(int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("The value of the minimum range of the generated number " +
+                    "can not be greater than the maximum value.");
+        }
+        Random random = new Random();
+        return  random.nextInt((max - min) + 1) + min;
     }
 
 }

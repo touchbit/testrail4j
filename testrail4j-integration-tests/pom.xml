@@ -80,6 +80,11 @@
             <artifactId>feign-core</artifactId>
             <version>10.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.touchbit.shields4j</groupId>
+            <artifactId>testng</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- test -->
         <dependency>
             <groupId>org.assertj</groupId>

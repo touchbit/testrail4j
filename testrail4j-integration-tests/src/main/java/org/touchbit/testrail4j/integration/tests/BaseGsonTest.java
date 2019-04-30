@@ -64,7 +64,7 @@ public class BaseGsonTest extends BaseBuggyTest {
         }
         CLIENT = TestRailClientBuilder
                 .build(new BasicAuth(Config.getAuth()),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
     }

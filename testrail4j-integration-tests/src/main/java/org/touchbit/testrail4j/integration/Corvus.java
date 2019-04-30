@@ -27,8 +27,10 @@
 package org.touchbit.testrail4j.integration;
 
 import org.slf4j.Logger;
+import org.testng.TestNG;
 import org.touchbit.buggy.core.Buggy;
 import org.touchbit.buggy.core.utils.log.BuggyLog;
+import org.touchbit.shields4j.testng.IShieldsListener;
 import sun.misc.Unsafe;
 
 import java.io.BufferedReader;
@@ -50,7 +52,9 @@ public class Corvus extends Buggy {
         Buggy.prepare(args);
         disableWarning();
         waitMigrations();
-        Buggy.main(args);
+        TestNG testNG = new TestNG();
+        testNG.addListener(new IShieldsListener().withPath(".indirect/badges/").withLabelPefix("Integration tests"));
+        Buggy.delegate(testNG, args);
     }
 
     private static void waitMigrations() {

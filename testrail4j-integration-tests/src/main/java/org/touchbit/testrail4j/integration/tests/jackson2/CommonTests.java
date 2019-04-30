@@ -54,7 +54,7 @@ public class CommonTests extends BaseJackson2Test {
     public void test_20190119022032() {
         BaseGsonTest.TestRailTestClient client = org.touchbit.testrail4j.gson.feign.client.TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHost().replace("http", "https"),
+                        Config.getHttpsHost(),
                         BaseGsonTest.TestRailTestClient.class,
                         new FeignCallLogger(log),
                         true);
@@ -68,7 +68,7 @@ public class CommonTests extends BaseJackson2Test {
                 .encodeToString("testrail@testrail.testrail:1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj".getBytes());
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth(auth),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -79,7 +79,7 @@ public class CommonTests extends BaseJackson2Test {
     public void test_20190107202118() {
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -91,7 +91,7 @@ public class CommonTests extends BaseJackson2Test {
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail",
                                                          "1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj"),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -102,7 +102,7 @@ public class CommonTests extends BaseJackson2Test {
     public void test_20190107203936() {
         String login = "testrail@testrail.testrail";
         String pass = "testrail";
-        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHost());
+        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHttpHost());
         step("Get existing statuses");
         client.getStatuses();
     }

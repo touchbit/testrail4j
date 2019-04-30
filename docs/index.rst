@@ -1,7 +1,7 @@
-TestRail4J
-==========
+TestRail4J |TestRail4J|
+=======================
 
-.. image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
+.. |TestRail4J| image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
     :target: https://mvnrepository.com/artifact/org.touchbit.testrail4j
 
 Java HTTP-client for the TestRail API.
