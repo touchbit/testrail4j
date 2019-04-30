@@ -53,7 +53,7 @@ public class CommonTests extends BaseGsonTest {
     public void test_20190119015452() {
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHost().replace("http", "https"),
+                        Config.getHttpsHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log),
                         true);
@@ -67,7 +67,7 @@ public class CommonTests extends BaseGsonTest {
                 .encodeToString("testrail@testrail.testrail:1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj".getBytes());
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth(auth),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -78,7 +78,7 @@ public class CommonTests extends BaseGsonTest {
     public void test_20200107202118() {
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -90,7 +90,7 @@ public class CommonTests extends BaseGsonTest {
         TestRailTestClient client = TestRailClientBuilder
                 .build(new BasicAuth("testrail@testrail.testrail",
                                                          "1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj"),
-                        Config.getHost(),
+                        Config.getHttpHost(),
                         TestRailTestClient.class,
                         new FeignCallLogger(log));
         client.getProject();
@@ -101,7 +101,7 @@ public class CommonTests extends BaseGsonTest {
     public void test_20200107203936() {
         String login = "testrail@testrail.testrail";
         String pass = "testrail";
-        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHost());
+        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHttpHost());
         step("Get existing statuses");
         client.getStatuses();
     }

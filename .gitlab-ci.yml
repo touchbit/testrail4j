@@ -1,4 +1,5 @@
 stages:
+- clean
 - build
 - test
 - verify
@@ -13,7 +14,7 @@ Build modules:
     - touchbit-shell
   script:
     # do not use -Dmaven.test.skip=true
-    - make install
+    - make build
     - mv testrail4j-integration-tests/target/Corvus.jar Corvus.jar
   artifacts:
     paths:
@@ -38,16 +39,20 @@ Integration:
   stage: test
   tags:
     - touchbit-shell
+  variables:
+    ARTIFACTS_URL: "${CI_PROJECT_URL}/-/jobs/$CI_JOB_ID/artifacts/file/"
   before_script:
     - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
-    - docker-compose -f .indirect/docker-compose.yml kill
-    - docker-compose -f .indirect/docker-compose.yml pull
-    - docker-compose -f .indirect/docker-compose.yml up -d
+    - export TR_HTTP_PORT=$(shuf -i10000-60000 -n1)
+    - export TR_HTTPS_PORT=$(shuf -i10000-60000 -n1)
+    - mkdir ${CI_JOB_ID}
+    - cp .indirect/docker-compose.yml ${CI_JOB_ID}/docker-compose.yml
   script:
-    - java -jar Corvus.jar --artifacts-url "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/file/"
+    - make docker-up
+    - java -jar Corvus.jar --artifacts-url ${ARTIFACTS_URL} --http-port ${TR_HTTP_PORT} --https-port ${TR_HTTPS_PORT}
   after_script:
-    - docker-compose -f .indirect/docker-compose.yml kill
-    - docker-compose -f .indirect/docker-compose.yml rm -f
+    - make docker-logs
+    - make docker-kill
   artifacts:
     when: always
     paths:
@@ -94,3 +99,12 @@ Deploy TestRail4J:
     - make ver $CI_COMMIT_TAG
     - make deploy
     - "curl -X POST \"https://api.telegram.org/bot$BABBLER_TOKEN/sendMessage?chat_id=$TELEGRAM_TOUCHBIT_CI_CD_CHAT_ID&disable_notification=false&parse_mode=Markdown&text=*TestRail4J*%0ANew version deployed: %5B${CI_COMMIT_TAG}%5D%28https://touchbit.org/repository/org/touchbit/testrail4j/testrail4j/${CI_COMMIT_TAG}/%29\""
+
+Clean runner:
+  stage: clean
+  only:
+    - schedules
+  tags:
+    - touchbit-shell
+  script:
+    - make docker-clean

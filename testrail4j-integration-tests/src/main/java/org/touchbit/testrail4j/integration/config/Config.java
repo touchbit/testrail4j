@@ -26,6 +26,7 @@
 
 package org.touchbit.testrail4j.integration.config;
 
+import com.beust.jcommander.Parameter;
 import org.touchbit.buggy.core.config.PrimaryConfig;
 
 /**
@@ -36,7 +37,12 @@ import org.touchbit.buggy.core.config.PrimaryConfig;
  */
 public class Config implements PrimaryConfig {
 
-    private static String host = "http://localhost";
+    @Parameter(names = {"--http-port"}, description = "TestRail HTTP port")
+    private static int http_port = 80;
+    @Parameter(names = {"--https-port"}, description = "TestRail HTTP port")
+    private static int https_port = 443;
+    @Parameter(names = {"--host"}, description = "TestRail host")
+    private static String host = "localhost";
     private static String auth = "dGVzdHJhaWxAdGVzdHJhaWwudGVzdHJhaWw6dGVzdHJhaWw=";
 
     public Config() {
@@ -44,8 +50,12 @@ public class Config implements PrimaryConfig {
         setPrintSuite(true);
     }
 
-    public static String getHost() {
-        return host;
+    public static String getHttpHost() {
+        return "http://" + host + ":" + http_port;
+    }
+
+    public static String getHttpsHost() {
+        return "https://" + host + ":" + https_port;
     }
 
     public static String getAuth() {
