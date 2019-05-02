@@ -31,13 +31,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>parent</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </parent>
 
     <artifactId>gson-api-model</artifactId>
     <name>TestRail Gson models</name>
     <description>Gson annotation models for TestRail API</description>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -64,15 +64,7 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

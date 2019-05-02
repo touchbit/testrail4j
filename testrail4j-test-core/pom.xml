@@ -31,13 +31,13 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>parent</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </parent>
 
     <artifactId>testrail4j-test-core</artifactId>
     <name>TestRail4j unit test core</name>
     <description>Auxiliary module for unit testing</description>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -80,10 +80,10 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
                 </configuration>
             </plugin>
         </plugins>

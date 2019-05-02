@@ -31,29 +31,17 @@
     <parent>
         <groupId>org.touchbit.testrail4j</groupId>
         <artifactId>parent</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </parent>
 
     <artifactId>testrail4j-schema</artifactId>
     <name>TestRail json schemas</name>
     <description>Module TestRail4J for generating models from JSON schemes.</description>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <packaging>jar</packaging>
 
     <properties>
         <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
     </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

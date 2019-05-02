@@ -44,7 +44,7 @@ public class GetTestsFilter extends BaseFilter implements GetTestsQueryMap {
     private String status_id;
 
     /**
-     * A comma-separated list of status IDs to filter by.
+     * @return a comma-separated list of status IDs to filter by.
      */
     public String getStatusIds() {
         return status_id;
