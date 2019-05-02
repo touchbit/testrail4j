@@ -28,9 +28,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>parent</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <packaging>pom</packaging>
 
     <name>TestRail4J parent</name>
@@ -79,14 +85,14 @@
     </developers>
 
     <modules>
+        <module>testrail4j-integration-tests</module>
+        <module>testrail4j-test-core</module>
+        <module>testrail4j-schema</module>
         <module>testrail4j-core</module>
         <module>gson-feign-client</module>
         <module>jackson2-feign-client</module>
         <module>gson-api-model</module>
         <module>jackson2-api-model</module>
-        <module>testrail4j-schema</module>
-        <module>testrail4j-test-core</module>
-        <module>testrail4j-integration-tests</module>
     </modules>
 
     <properties>
@@ -104,6 +110,8 @@
 
         <sonar.gitlab.project_id>8282105</sonar.gitlab.project_id>
         <sonar.sources>src/main</sonar.sources>
+        <sonar.java.binaries>target/classes</sonar.java.binaries>
+        <sonar.java.test.binaries>target/test-classes</sonar.java.test.binaries>
         <sonar.host.url>https://touchbit.org/sonar/</sonar.host.url>
         <sonar.projectKey>${project.groupId}:testrail4j</sonar.projectKey>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -134,28 +142,28 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-test-core</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-feign-client</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>2.1.1</version>
+                <version>2.1.2</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.github.openfeign -->
             <dependency>
@@ -222,8 +230,20 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
         </plugins>
 
@@ -331,40 +351,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <executions>
-                        <execution>
-                            <phase>install</phase>
-                        </execution>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
-                    <executions>
-                        <execution>
-                            <phase>install</phase>
-                            <id>intall-this-jar</id>
-                            <configuration>
-                                <file>target/${project.artifactId}-${project.version}.jar</file>
-                                <sources>target/${project.artifactId}-${project.version}-sources.jar</sources>
-                                <pomFile>dependency-reduced-pom.xml</pomFile>
-                                <updateReleaseInfo>true</updateReleaseInfo>
-                                <createChecksum>true</createChecksum>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>3.1.1</version>
                     <executions>
@@ -379,28 +365,6 @@
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
-                    <inherited>true</inherited>
-                    <configuration>
-                        <file>
-                            ${project.build.directory}/${project.artifactId}-${project.version}.jar
-                        </file>
-                        <sources>
-                            ${project.build.directory}/${project.artifactId}-${project.version}-sources.jar
-                        </sources>
-                        <javadoc>
-                            ${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar
-                        </javadoc>
-                        <packaging>${project.packaging}</packaging>
-                        <pomFile>pom.xml</pomFile>
-                        <groupId>${project.groupId}</groupId>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -424,126 +388,111 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>com.coderplus.maven.plugins</groupId>
-                    <artifactId>copy-rename-maven-plugin</artifactId>
-                    <version>1.0.1</version>
-                    <inherited>false</inherited>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
                     <executions>
                         <execution>
-                            <id>copy-license</id>
-                            <phase>compile</phase>
+                            <phase>install</phase>
+                        </execution>
+                        <execution>
+                            <id>attach-sources</id>
                             <goals>
-                                <goal>copy</goal>
+                                <goal>jar</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <executions>
+                        <execution>
+                            <phase>install</phase>
+                            <id>install-jar</id>
                             <configuration>
-                                <sourceFile>${project.basedir}/LICENSE.rst</sourceFile>
-                                <destinationFile>${project.basedir}/docs/LICENSE.rst</destinationFile>
+                                <file>target/${project.artifactId}-${project.version}.jar</file>
+                                <sources>target/${project.artifactId}-${project.version}-sources.jar</sources>
+                                <pomFile>dependency-reduced-pom.xml</pomFile>
+                                <updateReleaseInfo>true</updateReleaseInfo>
+                                <createChecksum>true</createChecksum>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>deploy</phase>
+                            <configuration>
+                                <failOnError>false</failOnError>
+                                <failOnWarnings>false</failOnWarnings>
+                                <detectOfflineLinks>false</detectOfflineLinks>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <configuration>
+                        <passphrase/>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.8</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>sonatype</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <updateReleaseInfo>true</updateReleaseInfo>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-2</version>
-            </extension>
-        </extensions>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>touchbit.org.repository</id>
             <url>https://touchbit.org/repository/</url>
         </repository>
     </repositories>
-
-    <profiles>
-        <profile>
-            <id>perform-touchbit-release</id>
-            <properties>
-                <perform-touchbit-release>fasle</perform-touchbit-release>
-                <skipJavaDoc>true</skipJavaDoc>
-            </properties>
-            <activation>
-                <property>
-                    <name>perform-touchbit-release</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <distributionManagement>
-                <repository>
-                    <id>touchbit.org</id>
-                    <url>https://touchbit.org/repository/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>perform-sonatype-release</id>
-            <properties>
-                <perform-sonatype-release>fasle</perform-sonatype-release>
-                <skipTests>true</skipTests>
-            </properties>
-            <activation>
-                <property>
-                    <name>perform-sonatype-release</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <failOnError>false</failOnError>
-                                    <failOnWarnings>false</failOnWarnings>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <configuration>
-                            <passphrase/>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <keyname>3F61B9199E8B4A666AFE6A25F24941E93C74078B</keyname>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                </snapshotRepository>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Nexus Release Repository</name>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-    </profiles>
 </project>

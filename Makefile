@@ -21,14 +21,11 @@ test: clean
 
 # do not use -Dmaven.test.skip=true
 deploy: clean
-	mvn deploy -Dperform-touchbit-release
-
-deploy-st: clean
-	mvn deploy -Dperform-sonatype-release
+	mvn deploy -DskipTests=true
 
 version:
 	mvn versions:set -DnewVersion=${VERSION}
-	mvn install -DskipTests
+	mvn package -DskipTests=true
 
 ver: version
 
