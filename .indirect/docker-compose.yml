@@ -3,16 +3,10 @@ version: "3"
 volumes:
   static-content:
 
-networks:
-  default:
-    external:
-      name: testrail-network-${CI_JOB_ID:-local}
-
 services:
 
   db:
     image: mysql:5.7.22
-    container_name: "testrail-mysql-${CI_JOB_ID:-local}"
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: mydb
@@ -21,32 +15,23 @@ services:
       SKIP_NETWORKING: 1
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
-    networks:
-    - default
 
   migration:
     image: registry.gitlab.com/touchbit/image/testrail/migration:latest
-    container_name: "testrail-migration-${CI_JOB_ID:-local}"
     links:
     - db
     depends_on:
     - db
-    networks:
-    - default
 
   fpm:
     image: registry.gitlab.com/touchbit/image/testrail/fpm:latest
-    container_name: "testrail-fpm-${CI_JOB_ID:-local}"
     volumes:
     - static-content:/var/www/testrail
     links:
     - db
-    networks:
-    - default
 
   web:
     image: registry.gitlab.com/touchbit/image/testrail/web:latest
-    container_name: "testrail-web-${CI_JOB_ID:-local}"
     ports:
     - ${TR_HTTP_PORT:-80}:80
     - ${TR_HTTPS_PORT:-443}:443
@@ -55,5 +40,3 @@ services:
     links:
     - db
     - fpm
-    networks:
-    - default

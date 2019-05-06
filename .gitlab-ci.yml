@@ -27,14 +27,12 @@ Integration:
     - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
     - export TR_HTTP_PORT=$(shuf -i10000-60000 -n1)
     - export TR_HTTPS_PORT=$(shuf -i10000-60000 -n1)
-    - mkdir ${CI_JOB_ID}
-    - cp .indirect/docker-compose.yml ${CI_JOB_ID}/docker-compose.yml
   script:
     - make docker-up
     - java -jar Corvus.jar --artifacts-url ${ARTIFACTS_URL} --http-port ${TR_HTTP_PORT} --https-port ${TR_HTTPS_PORT}
   after_script:
     - make docker-logs
-    - make docker-kill
+    - make docker-down
   artifacts:
     when: always
     paths:
