@@ -9,6 +9,11 @@ $(eval $(VERSION):;@:)
 
 SHELL=/bin/bash -o pipefail
 
+ifeq ($(CI_JOB_ID),)
+	CI_JOB_ID := local
+endif
+export COMPOSE_PROJECT_NAME = $(CI_JOB_ID)-testrail
+
 clean:
 	mvn clean
 
@@ -29,23 +34,20 @@ version:
 
 ver: version
 
-docker-kill:
-	docker-compose -f $${CI_JOB_ID:-.indirect}/docker-compose.yml kill
-	docker network rm testrail-network-$${CI_JOB_ID:-local} || true
+docker-down:
+	docker-compose -f .indirect/docker-compose.yml down
 
-docker-up: docker-kill
-	docker network create testrail-network-$${CI_JOB_ID:-local}
-	docker-compose -f $${CI_JOB_ID:-.indirect}/docker-compose.yml pull
-	docker-compose -f $${CI_JOB_ID:-.indirect}/docker-compose.yml up --force-recreate --renew-anon-volumes -d
+docker-up: docker-down
+	docker-compose -f .indirect/docker-compose.yml pull
+	docker-compose -f .indirect/docker-compose.yml up --force-recreate --renew-anon-volumes -d
 	docker ps
-	@echo http://localhost/index.php Login: testrail@testrail.testrail Pass: testrail
 
 docker-logs:
-	mkdir ./logs || true
-	docker logs testrail-web-$${CI_JOB_ID:-local}       >& logs/testrail-web.log
-	docker logs testrail-fpm-$${CI_JOB_ID:-local}       >& logs/testrail-fpm.log
-	docker logs testrail-migration-$${CI_JOB_ID:-local} >& logs/testrail-migration.log
-	docker logs testrail-mysql-$${CI_JOB_ID:-local} 	>& logs/testrail-mysql.log
+	mkdir -p ./logs
+	docker logs $${COMPOSE_PROJECT_NAME}_web_1       >& logs/testrail-web.log       || true
+	docker logs $${COMPOSE_PROJECT_NAME}_fpm_1       >& logs/testrail-fpm.log       || true
+	docker logs $${COMPOSE_PROJECT_NAME}_migration_1 >& logs/testrail-migration.log || true
+	docker logs $${COMPOSE_PROJECT_NAME}_db_1        >& logs/testrail-mysql.log     || true
 
 docker-clean:
 	@echo Останавливаем все testrail-контейнеры
