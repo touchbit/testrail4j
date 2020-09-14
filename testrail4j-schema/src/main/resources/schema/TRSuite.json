@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "The description of the test suite"
+    },
+    "id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The unique ID of the test suite"
+    },
+    "completed_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test suite was closed (as UNIX timestamp) (added with TestRail 4.0)"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the test suite"
+    },
+    "project_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the project this test suite belongs to"
+    },
+    "is_baseline": {
+      "type": "boolean",
+      "description": "True if the test suite is a baseline test suite and false otherwise (added with TestRail 4.0)"
+    },
+    "is_completed": {
+      "type": "boolean",
+      "description": "True if the test suite is marked as completed/archived and false otherwise (added with TestRail 4.0)"
+    },
+    "is_master": {
+      "type": "boolean",
+      "description": "True if the test suite is a master test suite and false otherwise (added with TestRail 4.0)"
+    },
+    "url": {
+      "type": "string",
+      "description": "The address/URL of the test suite in the user interface"
+    }
+  }
+}

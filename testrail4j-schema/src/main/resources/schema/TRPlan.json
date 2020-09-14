@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "assignedto_id": {
+      "type": "integer",
+      "description": "The ID of the user the entire test plan is assigned to"
+    },
+    "blocked_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan marked as blocked"
+    },
+    "completed_on": {
+      "type": "integer",
+      "description": "The date/time when the test plan was closed (as UNIX timestamp)"
+    },
+    "created_by": {
+      "type": "integer",
+      "description": "The ID of the user who created the test plan"
+    },
+    "created_on": {
+      "type": "integer",
+      "description": "The date/time when the test plan was created (as UNIX timestamp)"
+    },
+    "custom_status1_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status2_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status3_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status4_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status5_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status6_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "custom_status7_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan with the respective custom status"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the test plan"
+    },
+    "entries": {
+      "type": "array",
+      "javaType": "java.util.List<TRPlanEntry>",
+      "description": "An array of 'entries', i.e. group of test runs",
+      "items": {
+        "type": "object",
+        "javaType": "TRPlanEntry",
+        "$ref": "TRPlanEntry.json"
+      }
+    },
+    "failed_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan marked as failed"
+    },
+    "id": {
+      "type": "integer",
+      "description": "The unique ID of the test plan"
+    },
+    "is_completed": {
+      "type": "boolean",
+      "description": "True if the test plan was closed and false otherwise"
+    },
+    "milestone_id": {
+      "type": "integer",
+      "description": "The ID of the milestone this test plan belongs to"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the test plan"
+    },
+    "passed_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan marked as passed"
+    },
+    "project_id": {
+      "type": "integer",
+      "description": "The ID of the project this test plan belongs to"
+    },
+    "retest_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan marked as retest"
+    },
+    "untested_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test plan marked as untested"
+    },
+    "url": {
+      "type": "string",
+      "description": "The address/URL of the test plan in the user interface"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

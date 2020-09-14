@@ -1,2 +1,16 @@
 .idea
 *.iml
+**/src/main/java/org/touchbit/testrail4j/**/model
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+target
+temp.*
+_site

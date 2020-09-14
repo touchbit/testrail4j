@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements (available since TestRail 6.4)"
+    },
+    "updated_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test run was last updated (as UNIX timestamp)"
+    },
+    "assignedto_id": {
+      "type": "integer",
+      "description": "The ID of the user the entire test run is assigned to"
+    },
+    "blocked_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run marked as blocked"
+    },
+    "completed_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test run was closed (as UNIX timestamp)"
+    },
+    "config": {
+      "type": "string",
+      "description": "The configuration of the test run as string (if part of a test plan)"
+    },
+    "entry_id": {
+      "type": "string",
+      "description": "Test plan entry UUID"
+    },
+    "entry_index": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "Test plan entry index"
+    },
+    "config_ids": {
+      "type": "array",
+      "javaType": "java.util.List<Long>",
+      "description": "The array of IDs of the configurations of the test run (if part of a test plan)",
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "configuration ID"
+      }
+    },
+    "case_ids": {
+      "type": "array",
+      "javaType": "java.util.List<Long>",
+      "description": "An array of case IDs for the custom case selection",
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "case ID"
+      }
+    },
+    "created_by": {
+      "type": "integer",
+      "description": "The ID of the user who created the test run"
+    },
+    "created_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test run was created (as UNIX timestamp)"
+    },
+    "custom_status1_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status2_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status3_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status4_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status5_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status6_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status7_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status8_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "custom_status9_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run with the respective custom status"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the test run"
+    },
+    "failed_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run marked as failed"
+    },
+    "id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The unique ID of the test run"
+    },
+    "include_all": {
+      "type": "boolean",
+      "description": "True if the test run includes all test cases and false otherwise"
+    },
+    "is_completed": {
+      "type": "boolean",
+      "description": "True if the test run was closed and false otherwise"
+    },
+    "milestone_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the milestone this test run belongs to"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the test run"
+    },
+    "passed_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run marked as passed"
+    },
+    "plan_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test plan this test run belongs to"
+    },
+    "project_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the project this test run belongs to"
+    },
+    "retest_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run marked as retest"
+    },
+    "suite_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test suite this test run is derived from"
+    },
+    "untested_count": {
+      "type": "integer",
+      "description": "The amount of tests in the test run marked as untested"
+    },
+    "url": {
+      "type": "string",
+      "description": "The address/URL of the test run in the user interface"
+    }
+  }
+}

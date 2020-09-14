@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "completed_on": {
+      "type": "integer",
+      "description": "The date/time when the milestone was marked as completed (as UNIX timestamp)"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the milestone"
+    },
+    "due_on": {
+      "type": "integer",
+      "description": "The due date/time of the milestone (as UNIX timestamp)"
+    },
+    "start_on": {
+      "type": "integer",
+      "description": "The scheduled start date/time of the milestone (as UNIX timestamp) (available since TestRail 5.3)"
+    },
+    "started_on": {
+      "type": "integer",
+      "description": "The date/time when the milestone was started (as UNIX timestamp) (available since TestRail 5.3)"
+    },
+    "id": {
+      "type": "integer",
+      "description": "The unique ID of the milestone"
+    },
+    "parent_id": {
+      "type": "integer",
+      "description": "The ID of the parent milestone the milestone belongs to (if any) (available since TestRail 5.3)"
+    },
+    "is_completed": {
+      "type": "boolean",
+      "description": "True if the milestone is marked as completed and false otherwise"
+    },
+    "is_started": {
+      "type": "boolean",
+      "description": "True if the milestone is marked as started and false otherwise (available since TestRail 5.3)"
+    },
+    "milestones": {
+      "type": "array",
+      "description": "The sub milestones that belong to the milestone (if any); only available with get_milestone (available since TestRail 5.3)",
+      "javaType": "java.util.List<TRMilestone>",
+      "items": {
+        "type": "object",
+        "javaType": "TRMilestone",
+        "$ref": "TRMilestone.json",
+        "description": "The sub milestone"
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the milestone"
+    },
+    "project_id": {
+      "type": "integer",
+      "description": "The ID of the project the milestone belongs to"
+    },
+    "url": {
+      "type": "string",
+      "description": "The address/URL of the milestone in the user interface"
+    },
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements (available since TestRail 6.4)"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

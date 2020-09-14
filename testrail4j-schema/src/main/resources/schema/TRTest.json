@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "assignedto_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the user the test is assigned to"
+    },
+    "case_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the related test case"
+    },
+    "run_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test run the test belongs to"
+    },
+    "status_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the current status of the test, also see get_statuses"
+    },
+    "template_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test template"
+    },
+    "estimate": {
+      "type": "string",
+      "description": "The estimate of the related test case, e.g. '30s' or '1m 45s'"
+    },
+    "estimate_forecast": {
+      "type": "string",
+      "description": "The estimate forecast of the related test case, e.g. '30s' or '1m 45s'"
+    },
+    "id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The unique ID of the test"
+    },
+    "milestone_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the milestone that is linked to the test case"
+    },
+    "priority_id": {
+      "type": "integer",
+      "description": "The ID of the priority that is linked to the test case"
+    },
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements that are linked to the test case"
+    },
+    "title": {
+      "type": "string",
+      "description": "The title of the related test case"
+    },
+    "type_id": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The ID of the test case type that is linked to the test case"
+    },
+    "custom_steps": {
+      "type": "string",
+      "description": "Test Case (Text) template steps"
+    },
+    "custom_expected": {
+      "type": "string",
+      "description": "Test Case (Text) template expected result"
+    },
+    "custom_preconds": {
+      "type": "string",
+      "description": "Test Case (Text) template preconditions"
+    },
+    "custom_mission": {
+      "type": "string",
+      "description": "Exploratory Session template mission"
+    },
+    "custom_goals": {
+      "type": "string",
+      "description": "Exploratory Session template goals"
+    },
+    "custom_automation_type": {
+      "type": "integer",
+      "description": "Automation Type. Default values: 0 - None, 1 - Ranorex"
+    },
+    "custom_steps_separated": {
+      "type": "array",
+      "description": "Test Case (Steps) template steps",
+      "javaType": "java.util.List<TRStep>",
+      "items": [
+        {
+          "type": "object",
+          "javaType": "TRStep",
+          "$ref": "TRStep.json"
+        }
+      ]
+    }
+  }
+}
