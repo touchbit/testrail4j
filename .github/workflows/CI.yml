@@ -1,6 +1,9 @@
 name: Testrail4J
 
 on:
+  pull_request:
+    branches:
+      - 'master'
   push:
     branches:
       - '*'
@@ -13,6 +16,9 @@ jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
+    env:
+      SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,18 +33,28 @@ jobs:
           server-password: SONATYPE_TOKEN
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
+      - name: Init m2 cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Build & test
         run: mvn clean package
-      - name: Run sonar
-        env:
-          SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: ${{ github.ref == 'refs/heads/master' || github.event_name == 'release' }}
+      - if: github.ref == 'refs/heads/master' || github.event_name == 'release'
+        name: Sonar master/release rewiew
         run: mvn package sonar:sonar -DskipTests=true -Dsonar.login=${SONAR_GH_CI_TOKEN}
-      - if: ${{ github.event_name == 'pull_request' }} ||
+      - if: github.event_name == 'pull_request'
+        name: Sonar pull request rewiew
         run: |
+          echo $GITHUB_PR_NUMBER
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_BASE_REF
           mvn package sonar:sonar -DskipTests=true \
           -Dsonar.login=${SONAR_GH_CI_TOKEN} \
           -Dsonar.pullrequest.key=${GITHUB_PR_NUMBER} \
           -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
           -Dsonar.pullrequest.base=${GITHUB_BASE_REF}
+
+# find ./ -type f -name *.log -exec sed -i 's/Authorization: Basic .*/Authorization: Basic <hidden>/g' {} \;
