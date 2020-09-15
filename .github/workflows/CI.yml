@@ -48,12 +48,9 @@ jobs:
       - if: github.event_name == 'pull_request'
         name: Sonar pull request rewiew
         run: |
-          echo $GITHUB_PR_NUMBER
-          echo $GITHUB_HEAD_REF
-          echo $GITHUB_BASE_REF
           mvn package sonar:sonar -DskipTests=true \
           -Dsonar.login=${SONAR_GH_CI_TOKEN} \
-          -Dsonar.pullrequest.key=${GITHUB_PR_NUMBER} \
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
           -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
           -Dsonar.pullrequest.base=${GITHUB_BASE_REF}
 
