@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +34,6 @@ import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.integration.goals.API;
 import org.touchbit.testrail4j.integration.goals.Jackson2;
 import org.touchbit.testrail4j.integration.goals.TestRail;
-import org.touchbit.testrail4j.integration.tests.BaseGsonTest;
 import org.touchbit.testrail4j.integration.tests.BaseJackson2Test;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClient;
 import org.touchbit.testrail4j.jackson2.feign.client.TestRailClientBuilder;
@@ -49,28 +47,16 @@ import java.util.Base64;
 @Suite(component = TestRail.class, service = Jackson2.class, interfaze = API.class, task = "common_operations")
 public class CommonTests extends BaseJackson2Test {
 
-    @Test(description = "Expecting successful authentication with SSL errors")
-    @Details()
-    public void test_20190119022032() {
-        BaseGsonTest.TestRailTestClient client = org.touchbit.testrail4j.gson.feign.client.TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHttpsHost(),
-                        BaseGsonTest.TestRailTestClient.class,
-                        new FeignCallLogger(log),
-                        true);
-        client.getProject();
-    }
-
     @Test(description = "Expecting successful authentication with base64 string")
     @Details()
     public void test_20190107185620() {
         String auth = Base64.getEncoder()
-                .encodeToString("testrail@testrail.testrail:1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj".getBytes());
+                .encodeToString((Config.getLogin() + ":" + Config.getToken()).getBytes());
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth(auth),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(auth));
         client.getProject();
     }
 
@@ -78,10 +64,10 @@ public class CommonTests extends BaseJackson2Test {
     @Details()
     public void test_20190107202118() {
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(Config.getLogin(), Config.getPassword()));
         client.getProject();
     }
 
@@ -89,20 +75,17 @@ public class CommonTests extends BaseJackson2Test {
     @Details()
     public void test_20190107202205() {
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail",
-                                                         "1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj"),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(Config.getLogin(), Config.getToken()));
         client.getProject();
     }
 
     @Test(description = "Expecting successful call with base builder")
     @Details()
     public void test_20190107203936() {
-        String login = "testrail@testrail.testrail";
-        String pass = "testrail";
-        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHttpHost());
+        TestRailClient client = TestRailClientBuilder.build(Config.getLogin(), Config.getPassword(), Config.geHost());
         step("Get existing statuses");
         client.getStatuses();
     }

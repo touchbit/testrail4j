@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,31 +34,43 @@ import org.touchbit.buggy.core.config.PrimaryConfig;
  * Created by Oleg Shaburov on 31.12.2018
  * shaburov.o.a@gmail.com
  */
+@SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
 public class Config implements PrimaryConfig {
 
-    @Parameter(names = {"--http-port"}, description = "TestRail HTTP port")
-    private static int http_port = 80;
-    @Parameter(names = {"--https-port"}, description = "TestRail HTTP port")
-    private static int https_port = 443;
-    @Parameter(names = {"--host"}, description = "TestRail host")
-    private static String host = "localhost";
-    private static String auth = "dGVzdHJhaWxAdGVzdHJhaWwudGVzdHJhaWw6dGVzdHJhaWw=";
+    @Parameter(names = {"--port"}, description = "TestRail HTTP port")
+    private static int port = 443;
+
+    @Parameter(names = {"--host"}, description = "TestRail host", required = true)
+    private static String host = "";
+
+    @Parameter(names = {"--login"}, description = "TestRail host", required = true)
+    private static String login = "";
+
+    @Parameter(names = {"--password"}, description = "TestRail host", required = true)
+    private static String password = "";
+
+    @Parameter(names = {"--token"}, description = "TestRail host", required = true)
+    private static String token = "";
 
     public Config() {
         setPrintLogFile(true);
         setPrintSuite(true);
     }
 
-    public static String getHttpHost() {
-        return "http://" + host + ":" + http_port;
+    public static String geHost() {
+        return "https://" + host + ":" + port;
     }
 
-    public static String getHttpsHost() {
-        return "https://" + host + ":" + https_port;
+    public static String getLogin() {
+        return login;
     }
 
-    public static String getAuth() {
-        return auth;
+    public static String getPassword() {
+        return password;
+    }
+
+    public static String getToken() {
+        return token;
     }
 
 }

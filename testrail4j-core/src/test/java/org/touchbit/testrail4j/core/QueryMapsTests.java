@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -94,14 +93,14 @@ class QueryMapsTests extends BaseUnitTest {
         filter.setSectionId(12L);
         assertThat(filter.getCreatedAfter()).isEqualTo(1);
         assertThat(filter.getCreatedBefore()).isEqualTo(2);
-        assertThat(filter.getCreatedBy()).isEqualTo("3,1");
-        assertThat(filter.getMilestoneId()).isEqualTo("4,1");
-        assertThat(filter.getPriorityId()).isEqualTo("5,1");
-        assertThat(filter.getTemplateId()).isEqualTo("6,1");
-        assertThat(filter.getTypeId()).isEqualTo("7,1");
+        assertThat(filter.getCreatedBy()).contains("3", "1");
+        assertThat(filter.getMilestoneId()).contains("4", "1");
+        assertThat(filter.getPriorityId()).contains("5", "1");
+        assertThat(filter.getTemplateId()).contains("6", "1");
+        assertThat(filter.getTypeId()).contains("7", "1");
+        assertThat(filter.getUpdatedBy()).contains("10", "1");
         assertThat(filter.getUpdatedAfter()).isEqualTo(8);
         assertThat(filter.getUpdatedBefore()).isEqualTo(9);
-        assertThat(filter.getUpdatedBy()).isEqualTo("10,1");
         assertThat(filter.getSuiteId()).isEqualTo(11);
         assertThat(filter.getSectionId()).isEqualTo(12L);
     }
@@ -124,14 +123,14 @@ class QueryMapsTests extends BaseUnitTest {
                 .withSectionId(12L);
         assertThat(filter.getCreatedAfter()).isEqualTo(1);
         assertThat(filter.getCreatedBefore()).isEqualTo(2);
-        assertThat(filter.getCreatedBy()).isEqualTo("3,1");
-        assertThat(filter.getMilestoneId()).isEqualTo("4,1");
-        assertThat(filter.getPriorityId()).isEqualTo("5,1");
-        assertThat(filter.getTemplateId()).isEqualTo("6,1");
-        assertThat(filter.getTypeId()).isEqualTo("7,1");
+        assertThat(filter.getCreatedBy()).contains("3", "1");
+        assertThat(filter.getMilestoneId()).contains("4", "1");
+        assertThat(filter.getPriorityId()).contains("5", "1");
+        assertThat(filter.getTemplateId()).contains("6", "1");
+        assertThat(filter.getTypeId()).contains("7", "1");
+        assertThat(filter.getUpdatedBy()).contains("10", "1");
         assertThat(filter.getUpdatedAfter()).isEqualTo(8);
         assertThat(filter.getUpdatedBefore()).isEqualTo(9);
-        assertThat(filter.getUpdatedBy()).isEqualTo("10,1");
         assertThat(filter.getSuiteId()).isEqualTo(11);
         assertThat(filter.getSectionId()).isEqualTo(12L);
     }

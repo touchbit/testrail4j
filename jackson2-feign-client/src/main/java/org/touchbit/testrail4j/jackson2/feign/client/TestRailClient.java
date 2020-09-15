@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +35,8 @@ import org.touchbit.testrail4j.core.type.FieldTypes;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
+
+import static feign.CollectionFormat.CSV;
 
 /**
  * This class explains how to access and use TestRail's API
@@ -241,7 +242,7 @@ public interface TestRailClient {
      * @see <a href="http://docs.gurock.com/testrail-api2/reference-results#get_results">API: Get results</a>
      *
      * Get the latest 10 results for test with ID 1 and statuses 4 or 5 (Retest, Failed)
-     * GET /index.php?/api/v2/get_results/1&status_id=4,5&limit=10
+     * GET /index.php/api/v2/get_results/1&status_id=4,5&limit=10
      *
      * @param testID is the ID of the test
      * @param queryMap is the request filter. See {@link GetResultsQueryMap}
@@ -279,7 +280,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{test_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_results/{test_id}")
     List<TRResult> getResults(@Param("test_id") Long testID, @QueryMap GetResultsQueryMap queryMap);
 
     /**
@@ -330,7 +331,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run or case
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_case/{run_id}/{case_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_results_for_case/{run_id}/{case_id}")
     List<TRResult> getResultsForCase(@Param("run_id") Long runID,
                                                                     @Param("case_id") Long caseID,
                                                                     @QueryMap GetResultsQueryMap queryMap);
@@ -372,7 +373,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_results_for_run/{run_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_results_for_run/{run_id}")
     List<TRResult> getResultsForRun(@Param("run_id") Long runID, @QueryMap GetResultsQueryMap queryMap);
 
     /**
@@ -433,7 +434,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test
      * 403	No permissions to add test results or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_result/{test_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_result/{test_id}")
     TRResult addResult(TRResult result, @Param("test_id") Long testID);
 
     /**
@@ -470,7 +471,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run or case
      * 403	No permissions to add test results or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_result_for_case/{run_id}/{case_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_result_for_case/{run_id}/{case_id}")
     TRResult addResultForCase(TRResult result, @Param("run_id") Long runID, @Param("case_id") Long caseID);
 
     /**
@@ -518,7 +519,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run/tests
      * 403	No permissions to add test results or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_results/{run_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_results/{run_id}")
     List<TRResult> addResults(TRResults results, @Param("run_id") Long runID);
 
     /**
@@ -570,7 +571,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run/cases
      * 403	No permissions to add test results or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_results_for_cases/{run_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_results_for_cases/{run_id}")
     List<TRResult> addResultsForCases(TRResults results, @Param("run_id") Long runID);
 
     /**
@@ -606,7 +607,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      *
      * */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_case/{case_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_case/{case_id}")
     TRCase getCase(@Param("case_id") Long caseID);
 
     /**
@@ -622,7 +623,7 @@ public interface TestRailClient {
      *
      *
      * For example get all test cases for project with ID 1, suite with ID 2 and priority 3 or 4
-     * GET /index.php?/api/v2/get_cases/1&suite_id=2&priority_id=3,4
+     * GET /index.php/api/v2/get_cases/1&suite_id=2&priority_id=3,4
      *
      * @param projectID is the ID of the project
      * @param queryMap is the following optional parameters and filters {@link GetCasesFilter}
@@ -635,7 +636,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      *
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_cases/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_cases/{project_id}", collectionFormat = CSV)
     List<TRCase> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);
 
     /**
@@ -676,7 +677,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown section
      * 403 No permissions to add test cases or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_case/{section_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_case/{section_id}")
     TRCase addCase(TRCase aCase, @Param("section_id") Long sectionID);
 
     /**
@@ -705,7 +706,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown test case
      * 403 No permissions to modify test cases or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_case/{case_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_case/{case_id}")
     TRCase updateCase(TRCase caze, @Param("case_id") Long caseID);
 
     /**
@@ -730,7 +731,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown test case
      * 403 No permissions to delete test cases or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_case/{case_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_case/{case_id}")
     void deleteCase(@Param("case_id") Long caseID);
 
     /**
@@ -758,7 +759,7 @@ public interface TestRailClient {
      * 	"url": "http://localhost/testrail/index.php?/projects/overview/1"
      * }
      * */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_project/{projectID}")
+    @RequestLine(value = "GET /index.php/api/v2/get_project/{projectID}")
     TRProject getProject(@Param("projectID") Long projectID);
 
     /**
@@ -784,7 +785,7 @@ public interface TestRailClient {
      * 	{ "id": 2, "name": "Writer", .. }
      * ]
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_projects")
+    @RequestLine(value = "GET /index.php/api/v2/get_projects")
     List<TRProject> getProjects(@QueryMap GetProjectsQueryMap queryMap);
 
     /**
@@ -807,7 +808,7 @@ public interface TestRailClient {
      * using the same response format as {@link TestRailClient#getProject(Long)}.
      * { "id": 1, "name": "DataHub", .. }
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_project")
+    @RequestLine(value = "POST /index.php/api/v2/add_project")
     TRProject addProject(TRProject project);
 
     /**
@@ -830,7 +831,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project
      * 403 No permissions to modify projects (requires admin rights)
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_project/{projectID}")
+    @RequestLine(value = "POST /index.php/api/v2/update_project/{projectID}")
     TRProject updateProject(TRProject project, @Param("projectID") Long projectID);
 
     /**
@@ -855,7 +856,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project
      * 403 No permissions to delete projects (requires admin rights)
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_project/{projectID}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_project/{projectID}")
     void deleteProject(@Param("projectID") Long projectID);
 
     /**
@@ -908,7 +909,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown test run
      * 403 No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_run/{run_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_run/{run_id}")
     TRRun getRun(@Param("run_id") Long runID);
 
     /**
@@ -939,7 +940,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project
      * 403 No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_runs/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_runs/{project_id}")
     List<TRRun> getRuns(@Param("project_id") Long projectID, @QueryMap GetRunsQueryMap queryMap);
 
     /**
@@ -988,7 +989,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No permissions to add test runs or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_run/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_run/{project_id}")
     TRRun addRun(TRRun run, @Param("project_id") Long projectID);
 
     /**
@@ -1028,7 +1029,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run
      * 403	No permissions to modify test runs or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_run/{run_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_run/{run_id}")
     TRRun updateRun(TRRun run, @Param("run_id") Long runID);
 
     /**
@@ -1055,7 +1056,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run
      * 403	No permissions to close test runs or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/close_run/{run_id}")
+    @RequestLine(value = "POST /index.php/api/v2/close_run/{run_id}")
     TRRun closeRun(@Param("run_id") Long runID);
 
     /**
@@ -1079,7 +1080,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run
      * 403	No permissions to delete test runs or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_run/{run_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_run/{run_id}")
     void deleteRun(@Param("run_id") Long runID);
 
     /**
@@ -1104,7 +1105,7 @@ public interface TestRailClient {
      * 	"url": "http://<server>/testrail/index.php?/suites/view/1"
      * }
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_suite/{suite_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_suite/{suite_id}")
     TRSuite getSuite(@Param("suite_id") Long suiteID);
 
     /**
@@ -1127,7 +1128,7 @@ public interface TestRailClient {
      * 	{ "id": 2, "name": "Document Editing", .. }
      * ]
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_suites/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_suites/{project_id}")
     List<TRSuite> getSuites(@Param("project_id") Long projectID);
 
     /**
@@ -1153,7 +1154,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project
      * 404 No permissions to add test suites or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_suite/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_suite/{project_id}")
     TRSuite addSuite(TRSuite suite, @Param("project_id") Long projectID);
 
     /**
@@ -1180,7 +1181,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown test suite
      * 404 No permissions to modify test suites or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_suite/{suite_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_suite/{suite_id}")
     TRSuite updateSuite(TRSuite suite, @Param("suite_id") Long suiteID);
 
     /**
@@ -1205,7 +1206,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown test suite
      * 404 No permissions to delete test suites or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_suite/{suite_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_suite/{suite_id}")
     void deleteSuite(@Param("suite_id") Long suiteID);
 
     /**
@@ -1230,7 +1231,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project or test suite
      * 403 No permissions to add sections or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_section/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_section/{project_id}")
     TRSection addSection(TRSection section, @Param("project_id") Long projectID);
 
     /**
@@ -1270,7 +1271,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown section
      * 403 No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_section/{section_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_section/{section_id}")
     TRSection getSection(@Param("section_id") Long sectionID);
 
     /**
@@ -1307,7 +1308,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown project or test suite
      * 403 No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_sections/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_sections/{project_id}")
     List<TRSection> getSections(@Param("project_id") Long projectID, @QueryMap GetSectionsQueryMap queryMap);
 
     /**
@@ -1348,7 +1349,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown section
      * 403 No permissions to modify sections or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_section/{section_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_section/{section_id}")
     TRSection updateSection(TRSection section, @Param("section_id") Long sectionID);
 
     /**
@@ -1373,7 +1374,7 @@ public interface TestRailClient {
      * 400 Invalid or unknown section
      * 403 No permissions to delete sections or test cases or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_section/{section_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_section/{section_id}")
     void deleteSection(@Param("section_id") Long sectionID);
 
     /**
@@ -1422,7 +1423,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_test/{test_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_test/{test_id}")
     TRTest getTest(@Param("test_id") Long testID);
 
     /**
@@ -1456,7 +1457,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test run
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_tests/{run_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_tests/{run_id}")
     List<TRTest> getTests(@Param("run_id") Long runID, @QueryMap GetTestsQueryMap queryMap);
 
     /**
@@ -1517,7 +1518,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the available custom fields are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_case_fields")
+    @RequestLine(value = "GET /index.php/api/v2/get_case_fields")
     List<TRCaseField> getCaseFields();
 
     /**
@@ -1535,7 +1536,7 @@ public interface TestRailClient {
      * 400	Bad request, check the error message for diagnostics
      * 404	Not found, bad parameter passed
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_case_field")
+    @RequestLine(value = "POST /index.php/api/v2/add_case_field")
     void addCaseField(TRCaseField caseField);
 
     /**
@@ -1549,7 +1550,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the case types are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_case_types")
+    @RequestLine(value = "GET /index.php/api/v2/get_case_types")
     List<TRCaseType> getCaseTypes();
 
     /**
@@ -1566,7 +1567,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_configs/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_configs/{project_id}")
     List<TRProjectConfigGroup> getConfigs(@Param("project_id") Long projectID);
 
     /**
@@ -1590,7 +1591,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No permissions to add configuration groups or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_config_group/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_config_group/{project_id}")
     TRProjectConfigGroup addConfigGroup(TRProjectConfigGroup cGroup, @Param("project_id") Long projectID);
 
     /**
@@ -1616,7 +1617,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown configuration group
      * 403	No permissions to modify configuration groups or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_config_group/{config_group_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_config_group/{config_group_id}")
     TRProjectConfigGroup updateConfigGroup(TRProjectConfigGroup cGroup, @Param("config_group_id") Long configGroupID);
 
     /**
@@ -1641,7 +1642,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown configuration group
      * 403	No permissions to delete configuration groups or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_config_group/{config_group_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_config_group/{config_group_id}")
     void deleteConfigGroup(@Param("config_group_id") Long configGroupID);
 
     /**
@@ -1667,7 +1668,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No permissions to add configurations or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_config/{config_group_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_config/{config_group_id}")
     TRProjectConfig addConfig(TRProjectConfig config, @Param("config_group_id") Long configGroupID);
 
     /**
@@ -1693,7 +1694,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown configuration
      * 403	No permissions to modify configurations or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_config/{config_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_config/{config_id}")
     TRProjectConfig updateConfig(TRProjectConfig config, @Param("config_id") Long configID);
 
     /**
@@ -1718,7 +1719,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown configuration
      * 403	No permissions to delete configurations or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_config/{config_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_config/{config_id}")
     void deleteConfig(@Param("config_id") Long configID);
 
     /**
@@ -1741,7 +1742,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown milestone
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_milestone/{milestone_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_milestone/{milestone_id}")
     TRMilestone getMilestone(@Param("milestone_id") Long milestoneID);
 
     /**
@@ -1764,7 +1765,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_milestones/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_milestones/{project_id}")
     List<TRMilestone> getMilestones(@Param("project_id") Long projectID, @QueryMap GetMilestonesQueryMap queryMap);
 
     /**
@@ -1804,7 +1805,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No permissions to add milestones or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_milestone/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_milestone/{project_id}")
     TRMilestone addMilestone(TRMilestone milestone, @Param("project_id") Long projectID);
 
     /**
@@ -1836,7 +1837,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown milestone
      * 403	No permissions to modify milestones or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_milestone/{milestone_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_milestone/{milestone_id}")
     TRMilestone updateMilestone(TRMilestone milestone, @Param("milestone_id") Long milestoneID);
 
     /**
@@ -1858,7 +1859,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown milestone
      * 403	No permissions to delete milestones or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_milestone/{milestone_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_milestone/{milestone_id}")
     void deleteMilestone(@Param("milestone_id") Long milestoneID);
 
     /**
@@ -1889,7 +1890,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the available priorities are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_priorities")
+    @RequestLine(value = "GET /index.php/api/v2/get_priorities")
     List<TRPriority> getPriorities();
 
     /**
@@ -1904,7 +1905,7 @@ public interface TestRailClient {
      * 200	Success, the user is returned as part of the response
      * 400	Invalid or unknown user
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_user/{user_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_user/{user_id}")
     TRUser getUser(@Param("user_id") Long userID);
 
     /**
@@ -1926,7 +1927,7 @@ public interface TestRailClient {
      * 200	Success, the user is returned as part of the response
      * 400/404	Invalid or unknown email address
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_user_by_email/&email={email}")
+    @RequestLine(value = "GET /index.php/api/v2/get_user_by_email/&email={email}")
     TRUser getUserByEmail(@Param("email") String email);
 
     /**
@@ -1945,7 +1946,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the users are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_users")
+    @RequestLine(value = "GET /index.php/api/v2/get_users")
     List<TRUser> getUsers();
 
     /**
@@ -1965,7 +1966,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_templates/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_templates/{project_id}")
     List<TRTemplate> getTemplates(@Param("project_id") Long projectID);
 
     /**
@@ -1985,7 +1986,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the available statuses are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_statuses")
+    @RequestLine(value = "GET /index.php/api/v2/get_statuses")
     List<TRStatus> getStatuses();
 
     /**
@@ -2002,7 +2003,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      * 200	Success, the available custom fields are returned as part of the response
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_result_fields")
+    @RequestLine(value = "GET /index.php/api/v2/get_result_fields")
     List<TRResultField> getResultFields();
 
     /**
@@ -2021,7 +2022,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_plan/{plan_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_plan/{plan_id}")
     TRPlan getPlan(@Param("plan_id") Long planID);
 
     /**
@@ -2045,7 +2046,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No access to the project
      */
-    @RequestLine(value = "GET /index.php%3F/api/v2/get_plans/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_plans/{project_id}")
     List<TRPlan> getPlans(@Param("project_id") Long projectID, @QueryMap GetPlansQueryMap queryMap);
 
     /**
@@ -2092,7 +2093,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown project
      * 403	No permissions to add test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_plan/{project_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_plan/{project_id}")
     TRPlan addPlan(TRPlan plan, @Param("project_id") Long projectID);
 
     /**
@@ -2117,7 +2118,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan
      * 403	No permissions to modify test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_plan/{plan_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_plan/{plan_id}")
     TRPlan updatePlan(TRPlan plan, @Param("plan_id") Long planID);
 
     /**
@@ -2144,7 +2145,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan
      * 403	No permissions to close test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/close_plan/{plan_id}")
+    @RequestLine(value = "POST /index.php/api/v2/close_plan/{plan_id}")
     TRPlan closePlan(@Param("plan_id") Long planID);
 
     /**
@@ -2169,7 +2170,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan
      * 403	No permissions to delete test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_plan/{plan_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_plan/{plan_id}")
     void deletePlan(@Param("plan_id") Long planID);
 
     /**
@@ -2198,7 +2199,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan
      * 403	No permissions to modify test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/add_plan_entry/{plan_id}")
+    @RequestLine(value = "POST /index.php/api/v2/add_plan_entry/{plan_id}")
     TRPlanEntry addPlanEntry(TRPlanEntry entry, @Param("plan_id") Long planID);
 
     /**
@@ -2224,7 +2225,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan or entry
      * 403	No permissions to modify test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/update_plan_entry/{plan_id}/{entry_id}")
+    @RequestLine(value = "POST /index.php/api/v2/update_plan_entry/{plan_id}/{entry_id}")
     TRPlanEntry updatePlanEntry(TRPlanEntry entry, @Param("plan_id") Long planID, @Param("entry_id") String entryID);
 
     /**
@@ -2249,7 +2250,7 @@ public interface TestRailClient {
      * 400	Invalid or unknown test plan or entry
      * 403	No permissions to modify test plans or no access to the project
      */
-    @RequestLine(value = "POST /index.php%3F/api/v2/delete_plan_entry/{plan_id}/{entry_id}")
+    @RequestLine(value = "POST /index.php/api/v2/delete_plan_entry/{plan_id}/{entry_id}")
     void deletePlanEntry(@Param("plan_id") Long planID, @Param("entry_id") String entryID);
 
     /**

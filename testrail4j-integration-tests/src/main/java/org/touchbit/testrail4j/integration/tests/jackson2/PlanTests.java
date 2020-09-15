@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +38,7 @@ import org.touchbit.testrail4j.integration.tests.BaseJackson2Test;
 import org.touchbit.testrail4j.jackson2.model.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -78,7 +78,13 @@ public class PlanTests extends BaseJackson2Test {
         TRRun run = CLIENT.addRun(project, suite);
         TRPlan plan = CLIENT.addPlan(project);
         TRPlanEntry entry = CLIENT.addPlanEntry(plan, suite, run);
-        entry.setName("test_20190106184206");
+        TRSection section = CLIENT.addSection(project, suite);
+        TRCase tCase = CLIENT.addCase(new TRCase()
+                .withSectionId(section.getId())
+                .withSuiteId(suite.getId())
+                .withCreatedBy(1L)
+                .withTitle("test_20200106184206"));
+        entry.withName("test_20200106184206").withCaseIds(new ArrayList<Long>() {{ add(tCase.getId()); }});
         TRPlanEntry actEntry = CLIENT.updatePlanEntry(entry, plan);
         assertThat(actEntry.getAdditionalProperties()).isEmpty();
         for (TRRun trRun : actEntry.getRuns()) {

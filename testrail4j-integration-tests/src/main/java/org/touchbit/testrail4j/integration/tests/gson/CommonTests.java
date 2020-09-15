@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,28 +47,16 @@ import java.util.Base64;
 @Suite(component = TestRail.class, service = Gson.class, interfaze = API.class, task = "common_operations")
 public class CommonTests extends BaseGsonTest {
 
-    @Test(description = "Expecting successful authentication with SSL errors")
-    @Details()
-    public void test_20190119015452() {
-        TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHttpsHost(),
-                        TestRailTestClient.class,
-                        new FeignCallLogger(log),
-                        true);
-        client.getProject();
-    }
-
     @Test(description = "Expecting successful authentication with base64 string")
     @Details()
     public void test_20200107185620() {
         String auth = Base64.getEncoder()
-                .encodeToString("testrail@testrail.testrail:1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj".getBytes());
+                .encodeToString((Config.getLogin() + ":" + Config.getToken()).getBytes());
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth(auth),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(auth));
         client.getProject();
     }
 
@@ -77,10 +64,10 @@ public class CommonTests extends BaseGsonTest {
     @Details()
     public void test_20200107202118() {
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail", "testrail"),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(Config.getLogin(), Config.getPassword()));
         client.getProject();
     }
 
@@ -88,20 +75,17 @@ public class CommonTests extends BaseGsonTest {
     @Details()
     public void test_20200107202205() {
         TestRailTestClient client = TestRailClientBuilder
-                .build(new BasicAuth("testrail@testrail.testrail",
-                                                         "1IhRVxFoYL0SFm2A6Wyq-Yv703Uawzs/PjmM1auBj"),
-                        Config.getHttpHost(),
+                .build(Config.geHost(),
                         TestRailTestClient.class,
-                        new FeignCallLogger(log));
+                        new FeignCallLogger(log),
+                        new BasicAuth(Config.getLogin(), Config.getToken()));
         client.getProject();
     }
 
     @Test(description = "Expecting successful call with base builder")
     @Details()
     public void test_20200107203936() {
-        String login = "testrail@testrail.testrail";
-        String pass = "testrail";
-        TestRailClient client = TestRailClientBuilder.build(login, pass, Config.getHttpHost());
+        TestRailClient client = TestRailClientBuilder.build(Config.getLogin(), Config.getPassword(), Config.geHost());
         step("Get existing statuses");
         client.getStatuses();
     }

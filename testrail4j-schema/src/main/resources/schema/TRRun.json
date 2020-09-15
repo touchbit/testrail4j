@@ -2,6 +2,15 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements (available since TestRail 6.4)"
+    },
+    "updated_on": {
+      "type": "integer",
+      "javaType" : "java.lang.Long",
+      "description": "The date/time when the test run was last updated (as UNIX timestamp)"
+    },
     "assignedto_id": {
       "type": "integer",
       "description": "The ID of the user the entire test run is assigned to"

@@ -1,41 +1,20 @@
-TestRail4J |TestRail4JMavenCentral| |TestRail| |GitLabSource|
-=============================================================
+TestRail4J |CI/CD| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
+=====================================================================
 
-.. |TestRail4JMavenCentral| image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
+.. |CI/CD| image:: https://github.com/touchbit/testrail4j/workflows/CI%2FCD/badge.svg?style=plastic
+    :target: https://github.com/touchbit/testrail4j/actions?query=CI%2FCD
+
+.. |MavenCentral| image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
     :target: https://mvnrepository.com/artifact/org.touchbit.testrail4j
-
-.. |TestRail| image:: https://img.shields.io/badge/TestRail-v5.6.0.3856-blue.svg?style=plastic
-    :target: https://www.gurock.com/testrail
-
-.. |GitLabSource| image:: https://img.shields.io/badge/Source-GitLab-blue.svg?style=plastic
-    :target: https://gitlab.com/TouchBIT/testrail4j
-
-|MasterPipeline| |ReadTheDocs| |AlertStatus| |ncloc| |Coverage|
-
-.. |MasterPipeline| image:: https://gitlab.com/TouchBIT/testrail4j/badges/master/build.svg
-    :target: https://gitlab.com/TouchBIT/testrail4j/pipelines
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/testrail4j/badge/?version=master
     :target: https://testrail4j.readthedocs.io
 
-.. |AlertStatus| image:: https://touchbit.org/sonar/api/project_badges/measure?project=org.touchbit.testrail4j%3Atestrail4j&metric=alert_status
-    :target: https://touchbit.org/sonar/dashboard?id=org.touchbit.testrail4j%3Atestrail4j
+.. |AlertStatus| image:: https://sonarcloud.io/api/project_badges/measure?project=org.touchbit.testrail4j%3Atestrail4j&metric=alert_status
+    :target: https://sonarcloud.io/dashboard?id=org.touchbit.testrail4j%3Atestrail4j
 
-.. |ncloc| image:: https://touchbit.org/sonar/api/badges/measure?key=org.touchbit.testrail4j%3Atestrail4j&metric=ncloc&blinking=true
-    :target: https://touchbit.org/sonar/component_measures?id=org.touchbit.testrail4j%3Atestrail4j&metric=ncloc
-
-.. |Coverage| image:: https://touchbit.org/sonar/api/badges/measure?key=org.touchbit.testrail4j%3Atestrail4j&metric=coverage&blinking=true
-    :target: https://touchbit.org/sonar/component_measures?id=org.touchbit.testrail4j%3Atestrail4j&metric=coverage
-
-|UnitTests| |UnitTestSuccessDensity| |iTests| |iTestSuccess|
-
-.. |UnitTests| image:: https://touchbit.org/sonar/api/badges/measure?key=org.touchbit.testrail4j%3Atestrail4j&metric=tests&blinking=true
-
-.. |UnitTestSuccessDensity| image:: https://touchbit.org/sonar/api/badges/measure?key=org.touchbit.testrail4j%3Atestrail4j&blinking=true&metric=test_success_density
-
-.. |iTests| image:: https://gitlab.com/TouchBIT/testrail4j/raw/master/.indirect/badges/TestNG-Integration-tests-total.svg
-
-.. |iTestSuccess| image:: https://gitlab.com/TouchBIT/testrail4j/raw/master/.indirect/badges/TestNG-Integration-tests-success-percent.svg
+.. |Coverage| image:: https://sonarcloud.io/api/project_badges/measure?project=org.touchbit.testrail4j%3Atestrail4j&metric=coverage&blinking=true
+    :target: https://sonarcloud.io/component_measures?id=org.touchbit.testrail4j%3Atestrail4j&metric=coverage
 
 Java HTTP-client for the TestRail API.
 
@@ -49,7 +28,7 @@ Requirements
 ------------
 
 * Java 8+
-* `Open feign core`_ 10.1+
+* `Open feign core`_ 11+
 
 .. _Open feign core: https://mvnrepository.com/artifact/io.github.openfeign/feign-core
 

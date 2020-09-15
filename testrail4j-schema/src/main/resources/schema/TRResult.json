@@ -2,6 +2,15 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
+    "attachment_ids": {
+      "type": "array",
+      "description": "Attachments",
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "The unique ID of the attachment"
+      }
+    },
     "id": {
       "type": "integer",
       "javaType" : "java.lang.Long",

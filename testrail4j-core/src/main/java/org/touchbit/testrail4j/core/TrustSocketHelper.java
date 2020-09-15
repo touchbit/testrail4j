@@ -66,7 +66,7 @@ public class TrustSocketHelper {
         return TRUST_ALL_CERTS_MANAGER;
     }
 
-    @SuppressWarnings("squid:S3510")
+    @SuppressWarnings({"java:S5527"})
     public static class TrustAllHostnameVerifier implements HostnameVerifier {
 
         @Override
@@ -79,11 +79,13 @@ public class TrustSocketHelper {
     public static class TrustAllCertsManager implements X509TrustManager {
 
         @Override
+        @SuppressWarnings({"java:S4830"})
         public void checkClientTrusted(X509Certificate[] chain, String authType) {
             // do nothing
         }
 
         @Override
+        @SuppressWarnings({"java:S4830"})
         public void checkServerTrusted(X509Certificate[] chain, String authType) {
             // do nothing
         }

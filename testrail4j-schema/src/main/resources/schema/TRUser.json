@@ -17,6 +17,14 @@
     "name": {
       "type": "string",
       "description": "The full name of the user"
+    },
+    "role": {
+      "type": "string",
+      "description": "The Name of the user’s globally assigned role (Requires TestRail 6.4 or later)"
+    },
+    "role_id": {
+      "type": "integer",
+      "description": "The unique ID of the user’s globally assigned role (Requires TestRail 6.4 or later)"
     }
   },
   "required": [

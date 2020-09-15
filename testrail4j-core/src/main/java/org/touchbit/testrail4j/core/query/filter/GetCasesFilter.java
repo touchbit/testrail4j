@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +26,10 @@
 package org.touchbit.testrail4j.core.query.filter;
 
 import org.touchbit.testrail4j.core.query.GetCasesQueryMap;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Get Cases QueryMap Filter
@@ -65,27 +68,27 @@ public class GetCasesFilter extends BaseFilter implements GetCasesQueryMap {
      * A comma-separated list of milestone IDs to filter by
      * (not available if the milestone field is disabled for the project).
      */
-    private String milestone_id;
+    private List<String> milestone_id;
     /**
      * A comma-separated list of creators (user IDs) to filter by.
      */
-    private String created_by;
+    private List<String> created_by;
     /**
      * A comma-separated list of priority IDs to filter by.
      */
-    private String priority_id;
+    private List<String> priority_id;
     /**
      * A comma-separated list of template IDs to filter by (requires TestRail 5.2 or later)
      */
-    private String template_id;
+    private List<String> template_id;
     /**
      * A comma-separated list of case type IDs to filter by.
      */
-    private String type_id;
+    private List<String> type_id;
     /**
      * A comma-separated list of users who updated test cases to filter by.
      */
-    private String updated_by;
+    private List<String> updated_by;
 
     public Number getCreatedAfter() {
         return created_after;
@@ -103,27 +106,27 @@ public class GetCasesFilter extends BaseFilter implements GetCasesQueryMap {
         return updated_before;
     }
 
-    public String getCreatedBy() {
+    public List<String> getCreatedBy() {
         return created_by;
     }
 
-    public String getMilestoneId() {
+    public List<String> getMilestoneId() {
         return milestone_id;
     }
 
-    public String getPriorityId() {
+    public List<String> getPriorityId() {
         return priority_id;
     }
 
-    public String getTemplateId() {
+    public List<String> getTemplateId() {
         return template_id;
     }
 
-    public String getTypeId() {
+    public List<String> getTypeId() {
         return type_id;
     }
 
-    public String getUpdatedBy() {
+    public List<String> getUpdatedBy() {
         return updated_by;
     }
 
@@ -152,27 +155,27 @@ public class GetCasesFilter extends BaseFilter implements GetCasesQueryMap {
     }
 
     public void setCreatedBy(Number... createdBy) {
-        this.created_by = toCommaSeparatedString(createdBy);
+        this.created_by = Arrays.stream(createdBy).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setMilestoneId(Number... milestoneId) {
-        this.milestone_id = toCommaSeparatedString(milestoneId);
+        this.milestone_id = Arrays.stream(milestoneId).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setPriorityId(Number... priorityId) {
-        this.priority_id = toCommaSeparatedString(priorityId);
+        this.priority_id = Arrays.stream(priorityId).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setUpdatedBy(Number... updatedBy) {
-        this.updated_by = toCommaSeparatedString(updatedBy);
+        this.updated_by = Arrays.stream(updatedBy).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setTemplateId(Number... templateId) {
-        this.template_id = toCommaSeparatedString(templateId);
+        this.template_id = Arrays.stream(templateId).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setTypeId(Number... typeId) {
-        this.type_id = toCommaSeparatedString(typeId);
+        this.type_id = Arrays.stream(typeId).map(String::valueOf).collect(Collectors.toList());
     }
 
     public void setSuiteId(Number suiteId) {
@@ -204,32 +207,32 @@ public class GetCasesFilter extends BaseFilter implements GetCasesQueryMap {
     }
 
     public GetCasesFilter withCreatedBy(Number... createdBy) {
-        this.created_by = toCommaSeparatedString(createdBy);
+        this.created_by = Arrays.stream(createdBy).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 
     public GetCasesFilter withMilestoneId(Number... milestoneId) {
-        this.milestone_id = toCommaSeparatedString(milestoneId);
+        this.milestone_id = Arrays.stream(milestoneId).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 
     public GetCasesFilter withPriorityId(Number... priorityId) {
-        this.priority_id = toCommaSeparatedString(priorityId);
+        this.priority_id = Arrays.stream(priorityId).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 
     public GetCasesFilter withUpdatedBy(Number... updatedBy) {
-        this.updated_by = toCommaSeparatedString(updatedBy);
+        this.updated_by = Arrays.stream(updatedBy).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 
     public GetCasesFilter withTemplateId(Number... templateId) {
-        this.template_id = toCommaSeparatedString(templateId);
+        this.template_id = Arrays.stream(templateId).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 
     public GetCasesFilter withTypeId(Number... typeId) {
-        this.type_id = toCommaSeparatedString(typeId);
+        this.type_id = Arrays.stream(typeId).map(String::valueOf).collect(Collectors.toList());
         return this;
     }
 

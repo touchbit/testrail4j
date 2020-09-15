@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,10 +67,11 @@ public class MilestonesTests extends BaseJackson2Test {
     @Details()
     public void test_20190106062046() {
         TRProject project = CLIENT.getProject();
-        TRMilestone milestone = new TRMilestone().withName("test");
+        TRMilestone milestone = new TRMilestone().withName("test").withRefs("ABC-1, QWE-2");
         TRMilestone addedMilestone = CLIENT.addMilestone(milestone, project);
         addedMilestone.withName("test_20190106062046");
         TRMilestone actMilestone = CLIENT.updateMilestone(addedMilestone);
+        assertThat(actMilestone.getRefs()).isEqualTo(addedMilestone.getRefs());
         assertThat(actMilestone.getId()).isEqualTo(addedMilestone.getId());
         assertThat(actMilestone.getName()).isEqualTo("test_20190106062046");
         assertThat(actMilestone.getAdditionalProperties()).isEmpty();

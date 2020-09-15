@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +37,7 @@ import org.touchbit.testrail4j.integration.goals.TestRail;
 import org.touchbit.testrail4j.integration.tests.BaseGsonTest;
 import org.touchbit.testrail4j.gson.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -73,7 +73,13 @@ public class PlanTests extends BaseGsonTest {
         TRRun run = CLIENT.addRun(project, suite);
         TRPlan plan = CLIENT.addPlan(project);
         TRPlanEntry entry = CLIENT.addPlanEntry(plan, suite, run);
-        entry.setName("test_20200106184206");
+        TRSection section = CLIENT.addSection(project, suite);
+        TRCase tCase = CLIENT.addCase(new TRCase()
+                .withSectionId(section.getId())
+                .withSuiteId(suite.getId())
+                .withCreatedBy(1L)
+                .withTitle("test_20200106184206"));
+        entry.withName("test_20200106184206").withCaseIds(new ArrayList<Long>() {{ add(tCase.getId()); }});
         CLIENT.updatePlanEntry(entry, plan);
     }
 

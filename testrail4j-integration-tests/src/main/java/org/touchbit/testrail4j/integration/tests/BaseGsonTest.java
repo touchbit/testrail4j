@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +26,7 @@
 package org.touchbit.testrail4j.integration.tests;
 
 import feign.FeignException;
+import org.testng.annotations.AfterSuite;
 import org.touchbit.buggy.core.Buggy;
 import org.touchbit.buggy.core.test.BaseBuggyTest;
 import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener;
@@ -40,7 +40,6 @@ import org.touchbit.testrail4j.integration.config.Config;
 import org.touchbit.testrail4j.gson.feign.client.TestRailClient;
 import org.touchbit.testrail4j.gson.feign.client.TestRailClientBuilder;
 import org.touchbit.testrail4j.gson.model.*;
-
 import java.util.*;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -62,11 +61,11 @@ public class BaseGsonTest extends BaseBuggyTest {
             Buggy.getExitHandler().exitRun(1, "Missing IntellijIdeaPluginListener in the Intellij IDEA" +
                     " TestNG plugin configuration.");
         }
-        CLIENT = TestRailClientBuilder
-                .build(new BasicAuth(Config.getAuth()),
-                        Config.getHttpHost(),
-                        TestRailTestClient.class,
-                        new FeignCallLogger(log));
+        CLIENT = TestRailClientBuilder.build(Config.geHost(),
+                TestRailTestClient.class,
+                new FeignCallLogger(log),
+                        new BasicAuth(Config.getLogin(), Config.getPassword()),
+                        new RPSLimiter());
     }
 
     protected FeignException executeThrowable(Executable executable) {
@@ -176,6 +175,14 @@ public class BaseGsonTest extends BaseBuggyTest {
 
         default TRSection addSection(TRProject project) {
             TRSection section = new TRSection()
+                    .withName(UUID.randomUUID().toString())
+                    .withDescription(UUID.randomUUID().toString());
+            return addSection(section, project);
+        }
+
+        default TRSection addSection(TRProject project, TRSuite suite) {
+            TRSection section = new TRSection()
+                    .withSuiteId(suite.getId())
                     .withName(UUID.randomUUID().toString())
                     .withDescription(UUID.randomUUID().toString());
             return addSection(section, project);

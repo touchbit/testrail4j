@@ -60,6 +60,10 @@
     "url": {
       "type": "string",
       "description": "The address/URL of the milestone in the user interface"
+    },
+    "refs": {
+      "type": "string",
+      "description": "A comma-separated list of references/requirements (available since TestRail 6.4)"
     }
   },
   "required": [

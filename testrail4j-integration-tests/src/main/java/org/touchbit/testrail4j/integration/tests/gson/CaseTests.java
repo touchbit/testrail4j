@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,6 +70,7 @@ public class CaseTests extends BaseGsonTest {
         TRSection section = CLIENT.addSection();
         long time = new Date().getTime() / 1000;
         TRCase caze = new TRCase()
+                .withDisplayOrder(1L)
                 .withTitle("test_20200101201312")
                 .withSectionId(section.getId())
                 .withCreatedBy(1L)

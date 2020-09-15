@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +45,7 @@ import static org.touchbit.testrail4j.core.type.Statuses.PASSED;
 class TestRailClientTests extends BaseUnitTest {
 
     private static final TestRailClient CLIENT = TestRailClientBuilder
-            .build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER));
+            .build(TARGET, new ExecutionLogger(TEST_LOGGER), new Auth());
 
     @Nested
     @DisplayName("API: Results")

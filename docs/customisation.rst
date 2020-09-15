@@ -11,7 +11,7 @@ interface inherited from TestRailClient with your own methods of working with AP
 
     public interface CustomTestRailClient extends TestRailClient {
 
-        @RequestLine(value = "GET /index.php%3F/api/v2/get_results/{foo}/{bar}")
+        @RequestLine(value = "GET /index.php/api/v2/get_results/{foo}/{bar}")
         List<TRResult> getResultsWithFooBar(@Param("foo") Long foo, @Param("bar") Long bar);
     }
 

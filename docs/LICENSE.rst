@@ -1,9 +1,8 @@
 MIT License
 ===========
 
-* Copyright (c) 2019 TouchBIT.
-* Copyright (c) 2019 Oleg Shaburov.
-* Copyright (c) 2018 Maria Vasilenko.
+* Copyright (c) 2020 TouchBIT.
+* Copyright (c) 2020 Oleg Shaburov.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

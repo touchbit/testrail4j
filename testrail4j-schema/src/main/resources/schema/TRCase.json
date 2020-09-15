@@ -2,6 +2,9 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
+    "display_order": {
+      "type": "integer"
+    },
     "created_by": {
       "type": "integer",
       "description": "The ID of the user who created the test case"

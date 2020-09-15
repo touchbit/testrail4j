@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +40,7 @@ class BasicAuthTests extends BaseUnitTest {
     void unitTest_20181111212222() {
         RequestTemplate template = new RequestTemplate();
         BasicAuth interceptor = new BasicAuth("user", "pass");
-        interceptor.intercept(template);
+        interceptor.apply(template);
         assertThat(template.headers()).containsKeys("Authorization");
         assertThat(template.headers().get("Authorization")).contains("Basic dXNlcjpwYXNz");
     }
@@ -51,7 +50,7 @@ class BasicAuthTests extends BaseUnitTest {
     void unitTest_20181113154823() {
         RequestTemplate template = new RequestTemplate();
         BasicAuth interceptor = new BasicAuth("unitTest_20181113154823");
-        interceptor.intercept(template);
+        interceptor.apply(template);
         assertThat(template.headers()).containsKeys("Authorization");
         assertThat(template.headers().get("Authorization")).contains("Basic unitTest_20181113154823");
     }

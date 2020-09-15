@@ -2,9 +2,8 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright © 2019 TouchBIT.
-  ~ Copyright © 2019 Oleg Shaburov.
-  ~ Copyright © 2018 Maria Vasilenko.
+  ~ Copyright © 2020 TouchBIT.
+  ~ Copyright © 2020 Oleg Shaburov.
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +32,8 @@
     <parent>
         <groupId>org.touchbit.buggy</groupId>
         <artifactId>buggy</artifactId>
-        <version>0.2.23</version>
+        <version>0.3.7-beta</version>
+        <relativePath/>
     </parent>
 
     <groupId>org.touchbit.testrail4j</groupId>
@@ -45,8 +45,8 @@
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <sonar.projectKey>org.touchbit.testrail4j:integration-tests</sonar.projectKey>
-        <shaded.final.name>Corvus</shaded.final.name>
-        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.Corvus</shaded.transformer.main.class>
+        <shaded.final.name>Buggy</shaded.final.name>
+        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.IBuggy</shaded.transformer.main.class>
         <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
         <testrail4j.sonar.exclusions>
             src/main/java/org/touchbit/testrail4j/integration/*,
@@ -103,8 +103,8 @@
     </build>
     <repositories>
         <repository>
-            <id>touchbit.org.repository</id>
-            <url>https://touchbit.org/repository/</url>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com</url>
         </repository>
     </repositories>
 </project>

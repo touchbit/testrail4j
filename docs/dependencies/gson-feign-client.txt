@@ -1,8 +1,10 @@
 org.touchbit.testrail4j:gson-feign-client:jar:2.1.2
 +- org.touchbit.testrail4j:testrail4j-core:jar:2.1.2:compile
-|  \- org.slf4j:slf4j-api:jar:1.7.25:compile
+|  \- org.slf4j:slf4j-api:jar:1.8.0-beta4:compile
 +- org.touchbit.testrail4j:gson-api-model:jar:2.1.2:compile
-|  +- com.google.code.gson:gson:jar:2.8.5:compile
-|  \- org.apache.commons:commons-lang3:jar:3.8.1:compile
-+- io.github.openfeign:feign-core:jar:10.1.0:compile
-\- io.github.openfeign:feign-gson:jar:10.1.0:compile
+|  +- com.google.code.gson:gson:jar:2.8.6:compile
+|  \- org.apache.commons:commons-lang3:jar:3.11:compile
++- io.github.openfeign:feign-core:jar:11.0:compile
++- io.github.openfeign:feign-gson:jar:11.0:compile
+\- org.junit.jupiter:junit-jupiter-engine:jar:5.7.0-RC1:compile
+   \- org.junit.platform:junit-platform-engine:jar:1.7.0-RC1:compile

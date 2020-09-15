@@ -1,9 +1,8 @@
 /*
  * MIT License
  *
- * Copyright © 2019 TouchBIT.
- * Copyright © 2019 Oleg Shaburov.
- * Copyright © 2018 Maria Vasilenko.
+ * Copyright © 2020 TouchBIT.
+ * Copyright © 2020 Oleg Shaburov.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +62,7 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @Test
     @DisplayName("build(I auth, String target)")
     void unitTest_20181112131511() {
-        TestRailClientBuilder.build(new Auth(), TARGET).getCase(2100L);
+        TestRailClientBuilder.build(TARGET, new Auth()).getCase(2100L);
         assertThat(TEST_LOGGER.takeLoggedMessages()).isEmpty();
     }
 
@@ -77,7 +76,7 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @Test
     @DisplayName("build(I auth, String target, Logger log)")
     void unitTest_20181112132100() {
-        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
+        TestRailClientBuilder.build(TARGET, new ExecutionLogger(TEST_LOGGER), new Auth()).getCase(2100L);
         String msg = TEST_LOGGER.takeLoggedMessages().toString();
         assertThat(msg).contains(GET_API + "/get_case/2100");
         assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
@@ -87,7 +86,7 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel)")
     void unitTest_20190107220640() {
         TestRailClientBuilder
-                .build(new Auth(), TARGET, TestRailClient.class, new ExecutionLogger(TEST_LOGGER)).getCase(2100L);
+                .build(TARGET, TestRailClient.class, new ExecutionLogger(TEST_LOGGER), new Auth()).getCase(2100L);
         String msg = TEST_LOGGER.takeLoggedMessages().toString();
         assertThat(msg).contains(GET_API + "/get_case/2100");
         assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
@@ -96,7 +95,7 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @Test
     @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel)")
     void unitTest_20181112132306() {
-        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS).getCase(2100L);
+        TestRailClientBuilder.build(TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS, new Auth()).getCase(2100L);
         String msg = TEST_LOGGER.takeLoggedMessages().toString();
         assertThat(msg).contains(GET_API + "/get_case/2100");
         assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
@@ -105,7 +104,7 @@ class TestRailClientBuilderTests extends BaseUnitTest {
     @Test
     @DisplayName("build(I auth, String target, Logger logger, Logger.Level logLevel, true)")
     void unitTest_20190119015337() {
-        TestRailClientBuilder.build(new Auth(), TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS, true).getCase(2100L);
+        TestRailClientBuilder.build(TARGET, new ExecutionLogger(TEST_LOGGER), HEADERS, true, new Auth()).getCase(2100L);
         String msg = TEST_LOGGER.takeLoggedMessages().toString();
         assertThat(msg).contains(GET_API + "/get_case/2100");
         assertThat(msg).contains("Authorization: Basic dXNlcjpwYXNz");
