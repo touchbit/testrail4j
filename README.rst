@@ -1,5 +1,8 @@
-TestRail4J |CI| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
+TestRail4J |CI/CD| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
 =====================================================================
+
+.. |CI/CD| image:: https://github.com/touchbit/testrail4j/workflows/CI%2FCD/badge.svg?style=plastic
+    :target: https://github.com/touchbit/testrail4j/actions?query=CI%2FCD
 
 .. |MavenCentral| image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
     :target: https://mvnrepository.com/artifact/org.touchbit.testrail4j

@@ -1,4 +1,4 @@
-name: Testrail4J
+name: CI/CD
 
 on:
   pull_request:
@@ -15,8 +15,7 @@ on:
       - Makefile
 
 jobs:
-  ci:
-    name: CI
+  base:
     runs-on: ubuntu-latest
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
