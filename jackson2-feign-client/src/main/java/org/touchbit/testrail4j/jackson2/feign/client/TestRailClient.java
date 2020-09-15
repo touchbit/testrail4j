@@ -36,6 +36,8 @@ import org.touchbit.testrail4j.jackson2.model.*;
 
 import java.util.List;
 
+import static feign.CollectionFormat.CSV;
+
 /**
  * This class explains how to access and use TestRail's API
  * to integrate automated tests, submit test results
@@ -634,7 +636,7 @@ public interface TestRailClient {
      * @apiNote Response codes
      *
      */
-    @RequestLine(value = "GET /index.php/api/v2/get_cases/{project_id}")
+    @RequestLine(value = "GET /index.php/api/v2/get_cases/{project_id}", collectionFormat = CSV)
     List<TRCase> getCases(@Param("project_id") Long projectID, @QueryMap GetCasesQueryMap queryMap);
 
     /**

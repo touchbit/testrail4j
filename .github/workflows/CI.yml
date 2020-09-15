@@ -1,0 +1,44 @@
+name: Testrail4J
+
+on:
+  push:
+    branches:
+      - '*'
+    paths-ignore:
+      - README.rst
+      - LICENSE.rst
+      - Makefile
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: sonatype
+          server-username: SONATYPE_LOGIN
+          server-password: SONATYPE_TOKEN
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+      - name: Build & test
+        run: mvn clean package
+      - name: Run sonar
+        env:
+          SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: ${{ github.ref == 'refs/heads/master' || github.event_name == 'release' }}
+        run: mvn package sonar:sonar -DskipTests=true -Dsonar.login=${SONAR_GH_CI_TOKEN}
+      - if: ${{ github.event_name == 'pull_request' }} ||
+        run: |
+          mvn package sonar:sonar -DskipTests=true \
+          -Dsonar.login=${SONAR_GH_CI_TOKEN} \
+          -Dsonar.pullrequest.key=${GITHUB_PR_NUMBER} \
+          -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
+          -Dsonar.pullrequest.base=${GITHUB_BASE_REF}

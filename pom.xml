@@ -88,28 +88,24 @@
         <source.encoding>${encoding}</source.encoding>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-
-        <junit.report>${project.build.directory}/report/junit-report</junit.report>
-        <jacoco.report>${project.build.directory}/report/jacoco.exec</jacoco.report>
-
         <sonar.sources>src/main</sonar.sources>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>touchbit</sonar.organization>
+        <sonar.projectName>Testrail4J</sonar.projectName>
+        <sonar.projectKey>${project.groupId}:testrail4j</sonar.projectKey>
         <sonar.java.binaries>target/classes</sonar.java.binaries>
         <sonar.java.test.binaries>target/test-classes</sonar.java.test.binaries>
-        <sonar.host.url>https://touchbit.org/sonar/</sonar.host.url>
-        <sonar.projectKey>${project.groupId}:testrail4j</sonar.projectKey>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <reports.path>${project.build.directory}/reports</reports.path>
-        <sonar.junit.reportPaths>${reports.path}</sonar.junit.reportPaths>
-        <sonar.jacoco.reportPaths>${reports.path}/jacoco.exec</sonar.jacoco.reportPaths>
-        <sonar.skippedModules>integration, model4jackson2, model4gson</sonar.skippedModules>
+        <sonar.skippedModules>testrail4j-integration-tests, testrail4j-test-core, jackson2-api-model, gson-api-model</sonar.skippedModules>
         <testrail4j.sonar.exclusions>
-            *.xml,
+            **/*.xml,
             **/src/main/java/org/touchbit/testrail4j/**/model/*,
             **/src/main/java/org/touchbit/testrail4j/**/model/**/*
         </testrail4j.sonar.exclusions>
+        <sonar.test.exclusions>**/src/test/**/*</sonar.test.exclusions>
         <sonar.exclusions>${testrail4j.sonar.exclusions}</sonar.exclusions>
         <sonar.coverage.exclusions>${testrail4j.sonar.exclusions}</sonar.coverage.exclusions>
-        <sonar.cpd.exclusions>src/main/java/org/touchbit/testrail4j/**/feign/client/*</sonar.cpd.exclusions>
+        <sonar.cpd.exclusions>**/src/main/java/org/touchbit/testrail4j/**/feign/client/*</sonar.cpd.exclusions>
         <model.annotation.lib>none</model.annotation.lib>
     </properties>
 
@@ -249,9 +245,6 @@
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
-                    <configuration>
-                        <reportsDirectory>${sonar.junit.reportPaths}</reportsDirectory>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -263,9 +256,6 @@
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
-                            <configuration>
-                                <destFile>${sonar.jacoco.reportPaths}</destFile>
-                            </configuration>
                         </execution>
                         <execution>
                             <id>report</id>
@@ -273,10 +263,6 @@
                             <goals>
                                 <goal>report</goal>
                             </goals>
-                            <configuration>
-                                <dataFile>${sonar.jacoco.reportPaths}</dataFile>
-                                <outputDirectory>${reports.path}/jacoco</outputDirectory>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

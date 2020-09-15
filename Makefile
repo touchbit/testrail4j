@@ -17,7 +17,7 @@ build: clean
 	mvn package -DskipTests
 
 test: clean
-	mvn test
+	mvn package
 
 # do not use -Dmaven.test.skip=true
 deploy: clean
