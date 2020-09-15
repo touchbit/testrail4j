@@ -45,8 +45,8 @@
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <sonar.projectKey>org.touchbit.testrail4j:integration-tests</sonar.projectKey>
-        <shaded.final.name>Corvus</shaded.final.name>
-        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.Corvus</shaded.transformer.main.class>
+        <shaded.final.name>Buggy</shaded.final.name>
+        <shaded.transformer.main.class>org.touchbit.testrail4j.integration.IBuggy</shaded.transformer.main.class>
         <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
         <testrail4j.sonar.exclusions>
             src/main/java/org/touchbit/testrail4j/integration/*,
