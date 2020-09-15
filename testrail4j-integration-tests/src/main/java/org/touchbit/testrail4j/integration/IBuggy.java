@@ -25,22 +25,10 @@
 
 package org.touchbit.testrail4j.integration;
 
-import org.testng.TestNG;
 import org.touchbit.buggy.core.Buggy;
-import org.touchbit.shields4j.testng.IShieldsListener;
 
 /**
  * Created by Oleg Shaburov on 31.12.2018
  * shaburov.o.a@gmail.com
  */
-public class IBuggy extends Buggy {
-
-    public static void main(String[] args) {
-        setProgramName("Buggy");
-        Buggy.prepare(args);
-        TestNG testNG = new TestNG();
-        testNG.addListener(new IShieldsListener().withPath(".indirect/badges/").withLabelPefix("Integration tests"));
-        Buggy.delegate(testNG, args);
-    }
-
-}
+public class IBuggy extends Buggy { }

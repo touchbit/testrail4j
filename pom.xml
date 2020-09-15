@@ -61,6 +61,7 @@
             <id>oleg.shaburov</id>
             <name>Oleg Shaburov</name>
             <email>shaburov.o.a@gmail.com</email>
+            <url>https://shaburov.github.io/</url>
             <roles>
                 <role>Owner</role>
             </roles>
@@ -102,7 +103,6 @@
             **/src/main/java/org/touchbit/testrail4j/**/model/*,
             **/src/main/java/org/touchbit/testrail4j/**/model/**/*
         </testrail4j.sonar.exclusions>
-        <sonar.test.exclusions>**/src/test/**/*</sonar.test.exclusions>
         <sonar.exclusions>${testrail4j.sonar.exclusions}</sonar.exclusions>
         <sonar.coverage.exclusions>${testrail4j.sonar.exclusions}</sonar.coverage.exclusions>
         <sonar.cpd.exclusions>**/src/main/java/org/touchbit/testrail4j/**/feign/client/*</sonar.cpd.exclusions>
