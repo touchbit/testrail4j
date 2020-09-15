@@ -51,7 +51,7 @@ jobs:
       - name: Build & test
         run: mvn clean package
 
-      - if: github.ref == 'refs/heads/master' || github.ref == 'refs/tags'
+      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags')
         name: Sonar master/release rewiew
         run: mvn package sonar:sonar -DskipTests=true -Dsonar.login=${SONAR_GH_CI_TOKEN}
       - if: github.event_name == 'pull_request'
@@ -63,7 +63,7 @@ jobs:
           -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
           -Dsonar.pullrequest.base=${GITHUB_BASE_REF}
 
-      - if: github.ref == 'refs/heads/master' || github.ref == 'refs/tags' || github.event_name == 'pull_request'
+      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags') || github.event_name == 'pull_request'
         id: itest
         name: Integration tests
         run: |
