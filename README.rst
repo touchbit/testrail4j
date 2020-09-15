@@ -1,5 +1,5 @@
 TestRail4J |CI/CD| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
-=====================================================================
+========================================================================
 
 .. |CI/CD| image:: https://github.com/touchbit/testrail4j/workflows/CI%2FCD/badge.svg?style=plastic
     :target: https://github.com/touchbit/testrail4j/actions?query=CI%2FCD

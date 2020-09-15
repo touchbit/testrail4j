@@ -44,7 +44,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - if: github.ref == 'refs/tags'
+      - if: contains(github.ref, 'refs/tags')
         name: Set version (tag)
         run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
 
@@ -84,7 +84,7 @@ jobs:
           name: ITests error logs
           path: logs/errors
 
-      - if: github.ref == 'refs/heads/master' || github.ref == 'refs/tags'
+      - if: contains(github.ref, 'refs/tags')
         name: Publish to sonatype repository
         run: mvn deploy -DskipTests=true
         env:
