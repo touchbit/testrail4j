@@ -84,3 +84,11 @@ jobs:
         with:
           name: ITests error logs
           path: logs/errors
+
+      - if: github.ref == 'refs/heads/master' || github.ref == 'refs/tags'
+        name: Publish to sonatype repository
+        run: mvn deploy -DskipTests=true
+        env:
+          SONATYPE_LOGIN: ${{ secrets.SONATYPE_LOGIN }}
+          SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
