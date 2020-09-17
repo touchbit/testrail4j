@@ -81,7 +81,7 @@ or
                     .withCustomExpected("withCustomExpected")
                     .withCustomStepsSeparated(null);
 
-            Case caze = client.addCase(caze, caze.getSectionId());
+            Case caze = client.addCase(caze, section);
             System.out.println(caze.getId());
         }
     }
