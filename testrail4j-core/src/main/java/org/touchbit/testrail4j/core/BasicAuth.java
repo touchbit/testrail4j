@@ -71,7 +71,7 @@ public class BasicAuth implements RequestInterceptor {
      * See https://github.com/OpenFeign/feign/issues/838
      * See https://github.com/OpenFeign/feign/issues/530
      */
-    protected final void fixOpenFeignBug(RequestTemplate template) {
+    private void fixOpenFeignBug(RequestTemplate template) {
         String url = template.url();
         String fixIssue838 = url.replaceFirst("\\?", "&").replace("/index.php/api/v2/", "/index.php?/api/v2/");
         template.uri(fixIssue838);
