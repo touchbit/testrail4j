@@ -33,6 +33,9 @@ import java.util.stream.Collectors;
 
 /**
  * Get Cases QueryMap Filter
+ *
+ * Snake_case in field names is used purposefully due to problems
+ * when filling with URL parameters in some Feign versions.
  * <p>
  * Created by Oleg Shaburov on 11.11.2018
  * shaburov.o.a@gmail.com

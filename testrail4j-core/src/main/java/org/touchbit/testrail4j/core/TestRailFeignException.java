@@ -29,6 +29,8 @@ import feign.FeignException;
 import feign.Response;
 import feign.Util;
 
+import java.nio.charset.StandardCharsets;
+
 import static java.lang.String.format;
 
 /**
@@ -55,7 +57,7 @@ public class TestRailFeignException extends FeignException {
 
         String message = format("status %s reading %s", response.status(), methodKey);
         if (body.length != 0) {
-            message += " message " + new String(body);
+            message += " message " + new String(body, StandardCharsets.UTF_8);
         }
         return new TestRailFeignException(response.status(), message, body);
     }
