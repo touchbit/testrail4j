@@ -29,7 +29,7 @@ jobs:
       - name: Setup java
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 14
           server-id: sonatype
           server-username: SONATYPE_LOGIN
           server-password: SONATYPE_TOKEN
@@ -73,11 +73,11 @@ jobs:
           --login ${{ secrets.TR_LOGIN }} \
           --token ${{ secrets.TR_TOKEN }} \
           --password ${{ secrets.TR_PASSWORD }}
-      - if: failed() && steps.itest.conclusion == 'failure'
+      - if: failure() && steps.itest.conclusion == 'failure'
         name: Clear logs
         run: |
           find ./ -type f -name *.log -exec sed -i 's/Authorization: Basic .*/Authorization: Basic *********/g' {} \;
-      - if: failed() && steps.itest.conclusion == 'failure'
+      - if: failure() && steps.itest.conclusion == 'failure'
         name: Upload failure logs
         uses: actions/upload-artifact@v2
         with:
