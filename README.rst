@@ -20,7 +20,7 @@ TestRail4J |CI/CD| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
 
 .. |Java| image:: https://img.shields.io/badge/Java-8%2B-blue
 
-.. _TestRail API:https://www.gurock.com/testrail/docs/api
+.. _TestRail API: https://www.gurock.com/testrail/docs/api
 
 TestRail4J represented by two client modules with gson and Jackson2 models respectively. This is done for the convenience of the end user, so as not to use unnecessary dependencies in the project if one of the presented models is already used in the project.
 
