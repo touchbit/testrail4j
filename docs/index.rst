@@ -1,21 +1,17 @@
-TestRail4J |TestRail4J|
-=======================
+TestRail4J |TestRail4J| |Java|
+==============================
 
 .. |TestRail4J| image:: https://maven-badges.herokuapp.com/maven-central/org.touchbit.testrail4j/parent/badge.svg?style=plastic
     :target: https://mvnrepository.com/artifact/org.touchbit.testrail4j
 
-Java HTTP-client for the TestRail API.
+.. |Java| image:: https://img.shields.io/badge/Java-8%2B-blue
+
+Java HTTP-client for the `TestRail API`_.
+
+.. _TestRail API:https://www.gurock.com/testrail/docs/api
 
 A feign HTTP-clients are represented by the `TestRailClient` interface for each type of model annotation.
 Annotated jackson2 and gson models are generated using the jsonschema2pojo plugin from the json schemas.
-
-Requirements
-------------
-
-* Java 8+
-* `Open feign core`_ 10+
-
-.. _Open feign core: https://mvnrepository.com/artifact/io.github.openfeign/feign-core
 
 Usage
 -----

@@ -16,21 +16,17 @@ TestRail4J |CI/CD| |MavenCentral| |ReadTheDocs| |AlertStatus| |Coverage|
 .. |Coverage| image:: https://sonarcloud.io/api/project_badges/measure?project=org.touchbit.testrail4j%3Atestrail4j&metric=coverage&blinking=true
     :target: https://sonarcloud.io/component_measures?id=org.touchbit.testrail4j%3Atestrail4j&metric=coverage
 
-Java HTTP-client for the TestRail API.
+|Java| HTTP-client for the `TestRail API`_.
+
+.. |Java| image:: https://img.shields.io/badge/Java-8%2B-blue
+
+.. _TestRail API:https://www.gurock.com/testrail/docs/api
 
 TestRail4J represented by two client modules with gson and Jackson2 models respectively. This is done for the convenience of the end user, so as not to use unnecessary dependencies in the project if one of the presented models is already used in the project.
 
 Full documentation is available on the `testrail4j.readthedocs.io`_.
 
 .. _testrail4j.readthedocs.io: https://testrail4j.readthedocs.io/en/master/
-
-Requirements
-------------
-
-* Java 8+
-* `Open feign core`_ 10+
-
-.. _Open feign core: https://mvnrepository.com/artifact/io.github.openfeign/feign-core
 
 Briefly
 -------
