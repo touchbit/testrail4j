@@ -44,7 +44,6 @@
     </properties>
     
     <dependencies>
-        <!-- feign -->
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-core</artifactId>

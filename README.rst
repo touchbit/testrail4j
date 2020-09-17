@@ -28,7 +28,7 @@ Requirements
 ------------
 
 * Java 8+
-* `Open feign core`_ 11+
+* `Open feign core`_ 10+
 
 .. _Open feign core: https://mvnrepository.com/artifact/io.github.openfeign/feign-core
 
