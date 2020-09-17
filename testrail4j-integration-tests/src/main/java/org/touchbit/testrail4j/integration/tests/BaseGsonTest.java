@@ -25,10 +25,7 @@
 
 package org.touchbit.testrail4j.integration.tests;
 
-import feign.FeignException;
-import org.testng.annotations.AfterSuite;
 import org.touchbit.buggy.core.Buggy;
-import org.touchbit.buggy.core.test.BaseBuggyTest;
 import org.touchbit.buggy.core.testng.listeners.IntellijIdeaTestNgPluginListener;
 import org.touchbit.buggy.feign.FeignCallLogger;
 import org.touchbit.testrail4j.core.BasicAuth;
@@ -42,7 +39,6 @@ import org.touchbit.testrail4j.gson.feign.client.TestRailClientBuilder;
 import org.touchbit.testrail4j.gson.model.*;
 import java.util.*;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.touchbit.testrail4j.core.type.SuiteMode.MULTIPLE;
 import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
 
@@ -52,7 +48,7 @@ import static org.touchbit.testrail4j.core.type.SuiteMode.SINGLE;
  */
 
 @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
-public class BaseGsonTest extends BaseBuggyTest {
+public class BaseGsonTest extends BaseTest {
 
     protected static final TestRailTestClient CLIENT;
 
@@ -68,54 +64,10 @@ public class BaseGsonTest extends BaseBuggyTest {
                         new RPSLimiter());
     }
 
-    protected FeignException executeThrowable(Executable executable) {
-        return executeThrowable(executable, FeignException.class);
-    }
-
-    @SuppressWarnings("unchecked")
-    protected <T> T executeThrowable(Executable executable, Class<T> exceptionClass) {
-        Throwable throwable = null;
-        try {
-            executable.execute();
-        } catch (Throwable e) {
-            throwable = e;
-        }
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(exceptionClass);
-        return (T) throwable;
-    }
-
-    @FunctionalInterface
-    public interface Executable {
-        void execute() throws Throwable;
-    }
-
-    public static String getRandomString(int length) {
-        return getRandomString(length, true);
-    }
-
-    public static String getRandomString(int length, boolean withLowerCase) {
-        String str = generateString("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm", length);
-        return withLowerCase ? str.toLowerCase() : str;
-    }
-
-    private static String generateString(String characters, int length) {
-        if (length < 1) {
-            throw new IllegalArgumentException("The length of the generated string must be positive. Received: " + length);
-        } else {
-            char[] text = new char[length];
-
-            for(int i = 0; i < length; ++i) {
-                text[i] = characters.charAt((new Random()).nextInt(characters.length()));
-            }
-
-            return new String(text);
-        }
-    }
-
     /**
      * Tests interface with Utility methods
      */
+    @SuppressWarnings("UnusedReturnValue")
     public interface TestRailTestClient extends TestRailClient {
 
         /* ---------------------------------------------------------------------------------------------------------- */

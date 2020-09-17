@@ -27,6 +27,7 @@ package org.touchbit.testrail4j.integration.config;
 
 import com.beust.jcommander.Parameter;
 import org.touchbit.buggy.core.config.PrimaryConfig;
+import org.touchbit.testrail4j.integration.goals.TestRail;
 
 /**
  * Test configuration for local testing with docker-compose
@@ -55,6 +56,7 @@ public class Config implements PrimaryConfig {
     public Config() {
         setPrintLogFile(true);
         setPrintSuite(true);
+        setServices(new TestRail().getServices());
     }
 
     public static String geHost() {

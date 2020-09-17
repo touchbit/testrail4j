@@ -23,34 +23,19 @@
  * SOFTWARE.
  */
 
-package org.touchbit.testrail4j.integration;
+package org.touchbit.testrail4j.integration.goals;
 
-import org.touchbit.buggy.core.Buggy;
-import org.touchbit.buggy.core.utils.IOHelper;
-
-import java.util.*;
+import org.touchbit.buggy.core.process.Service;
 
 /**
- * Created by Oleg Shaburov on 31.12.2018
+ * Created by Oleg Shaburov on 17.09.2020
  * shaburov.o.a@gmail.com
  */
-public class IBuggy extends Buggy {
+public class Maintenance extends Service {
 
-    public static void main(String[] args) {
-        Properties properties = IOHelper.readPropertiesFileFromResource("buggy.properties");
-        List<String> pArgs = new ArrayList<>();
-        Collections.addAll(pArgs, args);
-        properties.forEach((k, v) -> {
-            String key = String.valueOf(k);
-            String val = String.valueOf(v);
-            if (key.startsWith("-")) {
-                pArgs.add(key);
-                if (!val.isEmpty()) {
-                    pArgs.add(val);
-                }
-            }
-        });
-        Buggy.main(pArgs.toArray(new String[0]));
+    @Override
+    public String getDescription() {
+        return "Utility tests";
     }
 
 }
