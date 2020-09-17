@@ -30,25 +30,21 @@
       "type": "array",
       "javaType": "java.util.List<Long>",
       "description": "An array of case IDs for the custom case selection",
-      "items": [
-        {
-          "type": "integer",
-          "javaType" : "java.lang.Long",
-          "description": "case ID for the custom case selection"
-        }
-      ]
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "case ID for the custom case selection"
+      }
     },
     "config_ids": {
       "type": "array",
       "javaType": "java.util.List<Long>",
       "description": "An array of configuration IDs used for the test runs of the test plan entry (requires TestRail 3.1 or later)",
-      "items": [
-        {
-          "type": "integer",
-          "javaType" : "java.lang.Long",
-          "description": "configuration ID"
-        }
-      ]
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long",
+        "description": "configuration ID"
+      }
     },
     "runs": {
       "type": "array",

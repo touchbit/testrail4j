@@ -1,4 +1,4 @@
-org.touchbit.testrail4j:gson-api-model:jar:2.1.2
+org.touchbit.testrail4j:gson-api-model:jar:0.0.0
 +- com.google.code.gson:gson:jar:2.8.6:compile
 +- org.apache.commons:commons-lang3:jar:3.11:compile
 \- org.junit.jupiter:junit-jupiter-engine:jar:5.7.0-RC1:compile

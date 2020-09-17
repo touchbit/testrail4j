@@ -7,13 +7,11 @@
       "type": "array",
       "javaType": "java.util.List<TRCaseFieldConfig>",
       "description": "An object wrapped in an array with two default keys, 'context' and 'options'",
-      "items": [
-        {
-          "type": "object",
-          "javaType": "TRCaseFieldConfig",
-          "$ref": "TRCaseFieldConfig.json"
-        }
-      ]
+      "items": {
+        "type": "object",
+        "javaType": "TRCaseFieldConfig",
+        "$ref": "TRCaseFieldConfig.json"
+      }
     },
     "description": {
       "type": "string",
@@ -72,12 +70,10 @@
       "type": "array",
       "javaType": "java.util.List<Long>",
       "description": "ID's of templates new custom field will apply to if include_all is set to false",
-      "items": [
-        {
-          "type": "integer",
-          "javaType" : "java.lang.Long"
-        }
-      ]
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long"
+      }
     }
   },
   "required": [

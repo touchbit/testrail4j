@@ -29,7 +29,7 @@
 
     <groupId>org.touchbit.testrail4j</groupId>
     <artifactId>parent</artifactId>
-    <version>2.1.2</version>
+    <version>0.0.0</version>
     <packaging>pom</packaging>
 
     <name>TestRail4J parent</name>
@@ -128,28 +128,28 @@
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-test-core</artifactId>
-                <version>2.1.2</version>
+                <version>0.0.0</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
-                <version>2.1.2</version>
+                <version>0.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-api-model</artifactId>
-                <version>2.1.2</version>
+                <version>0.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>jackson2-feign-client</artifactId>
-                <version>2.1.2</version>
+                <version>0.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>gson-api-model</artifactId>
-                <version>2.1.2</version>
+                <version>0.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
@@ -284,7 +284,7 @@
                 <plugin>
                     <groupId>org.jsonschema2pojo</groupId>
                     <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                    <version>0.5.1</version>
+                    <version>1.0.2</version>
                     <executions>
                         <execution>
                             <goals>
@@ -297,7 +297,6 @@
                                 </sourceDirectory>
                                 <outputDirectory>src/main/java</outputDirectory>
                                 <targetPackage>org.touchbit.testrail4j.${model.annotation.lib}.model</targetPackage>
-                                <useCommonsLang3>true</useCommonsLang3>
                                 <generateBuilders>true</generateBuilders>
                                 <includeConstructors>true</includeConstructors>
                                 <annotationStyle>${model.annotation.lib}</annotationStyle>

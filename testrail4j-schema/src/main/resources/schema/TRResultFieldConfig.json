@@ -11,12 +11,10 @@
         "project_ids": {
           "type": "array",
           "javaType": "java.util.List<Long>",
-          "items": [
-            {
-              "type": "integer",
-              "javaType" : "java.lang.Long"
-            }
-          ]
+          "items": {
+            "type": "integer",
+            "javaType" : "java.lang.Long"
+          }
         }
       },
       "required": [

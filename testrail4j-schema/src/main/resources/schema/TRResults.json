@@ -5,13 +5,11 @@
     "results": {
       "type": "array",
       "javaType": "java.util.List<TRResult>",
-      "items": [
-        {
-          "type": "object",
-          "javaType": "TRResult",
-          "$ref": "TRResult.json"
-        }
-      ]
+      "items": {
+        "type": "object",
+        "javaType": "TRResult",
+        "$ref": "TRResult.json"
+      }
     }
   },
   "required": [

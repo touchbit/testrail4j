@@ -63,13 +63,11 @@
       "type": "array",
       "description": "Test Case (Steps) template results",
       "javaType": "java.util.List<TRStep>",
-      "items": [
-        {
-          "type": "object",
-          "javaType": "TRStep",
-          "$ref": "TRStep.json"
-        }
-      ]
+      "items": {
+        "type": "object",
+        "javaType": "TRStep",
+        "$ref": "TRStep.json"
+      }
     }
   }
 }

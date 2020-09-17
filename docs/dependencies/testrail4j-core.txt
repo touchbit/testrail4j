@@ -1,4 +1,4 @@
-org.touchbit.testrail4j:testrail4j-core:jar:2.1.2
+org.touchbit.testrail4j:testrail4j-core:jar:0.0.0
 +- io.github.openfeign:feign-core:jar:11.0:compile
 +- org.slf4j:slf4j-api:jar:1.8.0-beta4:compile
 \- org.junit.jupiter:junit-jupiter-engine:jar:5.7.0-RC1:compile
