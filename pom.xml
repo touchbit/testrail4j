@@ -113,13 +113,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0-RC1</version>
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0-RC1</version>
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -150,13 +150,11 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
                 <version>11.0</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-jackson</artifactId>
                 <version>11.0</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -167,7 +165,6 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-gson</artifactId>
                 <version>11.0</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -177,8 +174,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.8.0-beta4</version>
-                <scope>provided</scope>
+                <version>2.0.0-alpha1</version>
             </dependency>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
@@ -241,6 +237,18 @@
                         <processAllModules>true</processAllModules>
                         <updateMatchingVersions>true</updateMatchingVersions>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>dependency-updates</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>display-dependency-updates</goal>
+                            </goals>
+                            <configuration>
+                                <outputFile>dependency-updates.txt</outputFile>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>

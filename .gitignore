@@ -14,3 +14,4 @@ target
 hs_err_pid*
 temp.*
 _site
+dependency-updates.txt

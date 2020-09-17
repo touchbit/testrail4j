@@ -1,0 +1,29 @@
+name: Dependency
+
+on:
+  schedule:
+    - cron: '0 0 * */1 *'
+
+jobs:
+  newer_versions:
+    runs-on: ubuntu-latest
+    name: Check of relevance
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Init m2 cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Сhecking version relevance
+        run: |
+          mvn versions:set -DnewVersion=100.0.0
+          mvn compile
+          if grep -q 'have newer versions' "dependency-updates.txt"; then cat dependency-updates.txt; exit 1; fi
