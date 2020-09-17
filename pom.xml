@@ -401,6 +401,7 @@
                                 <failOnError>false</failOnError>
                                 <failOnWarnings>false</failOnWarnings>
                                 <detectOfflineLinks>false</detectOfflineLinks>
+                                <source>8</source>
                             </configuration>
                         </execution>
                     </executions>
