@@ -128,12 +128,6 @@
         <dependencies>
             <dependency>
                 <groupId>org.touchbit.testrail4j</groupId>
-                <artifactId>testrail4j-test-core</artifactId>
-                <version>0.0.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.touchbit.testrail4j</groupId>
                 <artifactId>testrail4j-core</artifactId>
                 <version>0.0.0</version>
             </dependency>
@@ -156,21 +150,24 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
                 <version>11.0</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-jackson</artifactId>
                 <version>11.0</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.openfeign</groupId>
-                <artifactId>feign-gson</artifactId>
-                <version>11.0</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>2.11.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-gson</artifactId>
+                <version>11.0</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -181,6 +178,13 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>1.8.0-beta4</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.touchbit.testrail4j</groupId>
+                <artifactId>testrail4j-test-core</artifactId>
+                <version>0.0.0</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

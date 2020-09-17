@@ -1,1 +1,2 @@
 org.touchbit.testrail4j:jackson2-api-model:jar:0.0.0
+\- com.fasterxml.jackson.core:jackson-annotations:jar:2.11.2:compile
