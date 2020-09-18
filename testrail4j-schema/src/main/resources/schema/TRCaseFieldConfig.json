@@ -2,47 +2,18 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "context": {
-      "type": "object",
-      "properties": {
-        "is_global": {
-          "type": "boolean"
-        },
-        "project_ids": {
-          "type": "array",
-          "javaType": "java.util.List<Long>",
-          "items": {
-            "type": "integer",
-            "javaType" : "java.lang.Long"
-          }
-        }
-      }
-    },
     "id": {
       "type": "string"
     },
+    "context": {
+      "type": "object",
+      "javaType": "TRCaseFieldConfigContext",
+      "$ref": "TRCaseFieldConfigContext.json"
+    },
     "options": {
       "type": "object",
-      "properties": {
-        "default_value": {
-          "type": "string"
-        },
-        "format": {
-          "type": "string"
-        },
-        "is_required": {
-          "type": "boolean"
-        },
-        "rows": {
-          "type": "string"
-        },
-        "items": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        }
-      }
+      "javaType": "TRCaseFieldConfigOptions",
+      "$ref": "TRCaseFieldConfigOptions.json"
     }
   },
   "required": [
