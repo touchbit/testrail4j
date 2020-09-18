@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
       - name: Disable CI/CD
         run: |
-          Run echo "$GITHUB_CONTEXT"
+          echo "$GITHUB_CONTEXT"
           echo ${{ github.event.head_commit.message }}
           echo ${{ github.event.commit.message }}
           echo ${{ github.event.pull_request.draft }}
