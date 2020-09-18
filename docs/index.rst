@@ -37,34 +37,42 @@ Build client using `TestRailClientBuilder` and call the necessary method
 .. code:: java
 
     import org.touchbit.testrail4j.jackson2.gson.feign.TestRailClientBuilder;
-    import org.touchbit.testrail4j.core.BasicAuth;
-    import org.touchbit.testrail4j.jackson2.model.Case;
+    import org.touchbit.testrail4j.jackson2.model.*;
+    import org.touchbit.testrail4j.core.field.*;
+    import org.touchbit.testrail4j.core.type.*;
 
     public class Example {
-        public static void main(String[] a) {
-            TestRailClient client = TestRailClientBuilder
-                                        .build("user", "pass", "http://localhost");
+       public static void main(String[] a) {
+          TestRailClient client = TestRailClientBuilder
+                  .build("user", "pass", "http://localhost");
 
-            Project project = client.addProject("name", "announcement", true, 3);
-            Section section = new Section()
-                    .withName(UUID.randomUUID().toString())
-                    .withDescription(UUID.randomUUID().toString());
-            Section section = client.addSection(section, project.getId());
-            Case caze = new Case()
-                    .withTitle("test_20190101201312")
-                    .withPriorityId(CRITICAL.getId())
-                    .withSuiteId(section.getSuiteId())
-                    .withRefs("JIRA-123")
-                    .withTypeId(ACCEPTANCE.getId())
-                    .withTemplateId(TEST_CASE_TEXT.getId())
-                    .withEstimate("1m 45s")
-                    .withCustomPreconds("withCustomPreconds")
-                    .withCustomSteps("withCustomSteps")
-                    .withCustomExpected("withCustomExpected")
-                    .withCustomStepsSeparated(null);
-            Case caze = client.addCase(caze, section);
-            System.out.println(caze.getId());
-        }
+          TRProject trProject = new TRProject()
+                  .withName("name")
+                  .withAnnouncement("Announcement")
+                  .withSuiteMode(MULTIPLE.getId());
+          TRProject resultProject = client.addProject(trProject);
+
+          TRSection trSection = new TRSection()
+                  .withName(UUID.randomUUID().toString())
+                  .withDescription(UUID.randomUUID().toString());
+          TRSection resultSection = client.addSection(trSection, resultProject);
+
+          TRCase trCase = new TRCase()
+                  .withTitle("test_20190101201312")
+                  .withPriorityId(CRITICAL.getId())
+                  .withSuiteId(resultSection.getSuiteId())
+                  .withRefs("JIRA-123")
+                  .withTypeId(ACCEPTANCE.getId())
+                  .withTemplateId(TEST_CASE_TEXT.getId())
+                  .withEstimate(new Estimate().withHour(4).toString())
+                  .withCustomPreconds("withCustomPreconds")
+                  .withCustomSteps("withCustomSteps")
+                  .withCustomExpected("withCustomExpected")
+                  .withCustomStepsSeparated(null);
+          TRCase resultCase = client.addCase(trCase, resultSection);
+
+          System.out.println(resultCase.getId());
+       }
     }
 
 Restrictions

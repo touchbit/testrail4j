@@ -56,34 +56,37 @@ or
 .. code:: java
 
     public class Example {
-        public static void main(String[] a) {
-            TestRailClient client = TestRailClientBuilder
-                                        .build("user", "pass", "http://localhost");
+       public static void main(String[] a) {
+          TestRailClient client = TestRailClientBuilder
+                  .build("user", "pass", "http://localhost");
 
-            Project project = client.addProject("name", "announcement", true, 3);
+          TRProject trProject = new TRProject()
+                  .withName("name")
+                  .withAnnouncement("Announcement")
+                  .withSuiteMode(MULTIPLE.getId());
+          TRProject resultProject = client.addProject(trProject);
 
-            Section section = new Section()
-                    .withName(UUID.randomUUID().toString())
-                    .withDescription(UUID.randomUUID().toString());
+          TRSection trSection = new TRSection()
+                  .withName(UUID.randomUUID().toString())
+                  .withDescription(UUID.randomUUID().toString());
+          TRSection resultSection = client.addSection(trSection, resultProject);
 
-            Section section = client.addSection(section, project.getId());
+          TRCase trCase = new TRCase()
+                  .withTitle("test_20190101201312")
+                  .withPriorityId(CRITICAL.getId())
+                  .withSuiteId(resultSection.getSuiteId())
+                  .withRefs("JIRA-123")
+                  .withTypeId(ACCEPTANCE.getId())
+                  .withTemplateId(TEST_CASE_TEXT.getId())
+                  .withEstimate(new Estimate().withHour(4).toString())
+                  .withCustomPreconds("withCustomPreconds")
+                  .withCustomSteps("withCustomSteps")
+                  .withCustomExpected("withCustomExpected")
+                  .withCustomStepsSeparated(null);
+          TRCase resultCase = client.addCase(trCase, resultSection);
 
-            Case caze = new Case()
-                    .withTitle("test_20190101201312")
-                    .withPriorityId(CRITICAL.getId())
-                    .withSuiteId(section.getSuiteId())
-                    .withRefs("JIRA-123")
-                    .withTypeId(ACCEPTANCE.getId())
-                    .withTemplateId(TEST_CASE_TEXT.getId())
-                    .withEstimate("1m 45s")
-                    .withCustomPreconds("withCustomPreconds")
-                    .withCustomSteps("withCustomSteps")
-                    .withCustomExpected("withCustomExpected")
-                    .withCustomStepsSeparated(null);
-
-            Case caze = client.addCase(caze, section);
-            System.out.println(caze.getId());
-        }
+          System.out.println(resultCase.getId());
+       }
     }
 
 * You can build the Feign client yourself and customize it to fit your needs.

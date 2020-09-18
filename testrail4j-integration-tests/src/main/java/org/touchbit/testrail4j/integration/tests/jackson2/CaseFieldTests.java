@@ -63,10 +63,11 @@ public class CaseFieldTests extends BaseJackson2Test {
     public void test_20190106015332() {
         TRProject project = CLIENT.getProject();
         TRCaseFieldConfig config = new TRCaseFieldConfig()
-                .withContext(new Context()
+                .withContext(new TRCaseFieldConfigContext()
                         .withIsGlobal(false)
                         .withProjectIds(new ArrayList<Long>() {{ add(project.getId()); }}))
-                .withOptions(new Options().withIsRequired(false).withItems("0, A\n1, B").withDefaultValue("1"));
+                .withOptions(new TRCaseFieldConfigOptions()
+                        .withIsRequired(false).withItems("0, A\n1, B").withDefaultValue("1"));
         TRCaseField field = new TRCaseField()
                 .withName("with_name_" + getRandomString(5))
                 .withDescription("withDescription")

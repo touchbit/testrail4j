@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "is_global": {
+      "type": "boolean"
+    },
+    "project_ids": {
+      "type": "array",
+      "javaType": "java.util.List<Long>",
+      "items": {
+        "type": "integer",
+        "javaType" : "java.lang.Long"
+      }
+    }
+  }
+}
