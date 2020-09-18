@@ -36,12 +36,16 @@ TestRailClientBuilder - not necessary to use. You can always build your own `Tes
 
     public class Example {
         public static void main(String[] a) {
-            CustomTestRailClient clientt = new Feign.Builder()
+            CustomTestRailClient client = new Feign.Builder()
+                .client(new Client.Proxied(sslContextFactory, hostnameVerifier, proxy))
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
-                .requestInterceptor(new CustomAuthInterceptor())
+                .logger(new CustomLogger())
+                .logLevel(FULL)
+                .requestInterceptors(Arrays.asList(interceptors))
+                .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
                 .errorDecoder(new CustomTestRailErrorDecoder())
-                .target(CustomTestRailClient.class, "http://custom.tr");
+                .target(CustomTestRailClient.class, "https://testrail.custom");
             client.getResultsWithFooBar("foooooo", "baaaaaar");
         }
     }

@@ -8,7 +8,7 @@ TestRail4J |TestRail4J| |Java|
 
 Java HTTP-client for the `TestRail API`_.
 
-.. _TestRail API:https://www.gurock.com/testrail/docs/api
+.. _TestRail API: https://www.gurock.com/testrail/docs/api
 
 A feign HTTP-clients are represented by the `TestRailClient` interface for each type of model annotation.
 Annotated jackson2 and gson models are generated using the jsonschema2pojo plugin from the json schemas.
@@ -66,21 +66,6 @@ Build client using `TestRailClientBuilder` and call the necessary method
             System.out.println(caze.getId());
         }
     }
-
-* You can build the Feign client yourself and customize it to fit your needs.
-
-.. code:: java
-
-    TestRailClient client = new Feign.Builder()
-        .client(new Client.Proxied(sslContextFactory, hostnameVerifier, proxy))
-        .encoder(new GsonEncoder())
-        .decoder(new GsonDecoder())
-        .logger(new CustomLogger())
-        .logLevel(FULL)
-        .requestInterceptors(Arrays.asList(interceptors))
-        .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
-        .errorDecoder(new CustomTestRailErrorDecoder())
-        .target(TestRailClient.class, "https://testrail.custom");
 
 Restrictions
 ------------
