@@ -21,7 +21,6 @@ on:
 
 jobs:
   base:
-    needs: isCI
     runs-on: ubuntu-latest
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}

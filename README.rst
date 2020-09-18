@@ -101,6 +101,16 @@ or
         .errorDecoder(new CustomTestRailErrorDecoder())
         .target(TestRailClient.class, "https://testrail.custom");
 
+Modules (org.touchbit.testrail4j)
+---------------------------------
+
+* **jackson2-feign-client** - Feign client with jackson2 models.
+* **gson-feign-client** - Feign client with gson models.
+* **gson-api-model** - Gson annotated models (DTO).
+* **jackson2-api-model** - Jackson2 annotated models (DTO).
+* **testrail4j-core** - Base implementation of common classes for the Feign client (without depend of models).
+* **testrail4j-schema** - Json schemas for TestRail API.
+
 Restrictions
 ------------
 
