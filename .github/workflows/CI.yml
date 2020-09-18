@@ -29,6 +29,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: Disable CI/CD
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
           echo ${{ github.event.head_commit.message }}
