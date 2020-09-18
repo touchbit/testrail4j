@@ -25,6 +25,7 @@ jobs:
     name: Skip?
     steps:
       - name: Checkout code
+        id: checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -32,10 +33,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          echo "$GITHUB_CONTEXT"
-          echo ${{ github.event.head_commit.message }}
-          echo ${{ github.event.commit.message }}
-          echo ${{ github.event.pull_request.draft }}
+          echo " >> ${{ jobs.isCI.steps.checkout.conclusion }}"
           exit 1
   base:
     needs: isCI
