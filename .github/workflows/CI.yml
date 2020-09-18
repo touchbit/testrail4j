@@ -2,8 +2,8 @@ name: CI/CD
 
 on:
   pull_request:
-    draft:
-      - 'false'
+    types:
+      - 'ready_for_review'
     branches:
       - 'master'
   push:
