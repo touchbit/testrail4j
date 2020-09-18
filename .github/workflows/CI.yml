@@ -57,6 +57,7 @@ jobs:
       - name: Build & test
         run: |
           echo ${{ github.event.head_commit.message }}
+          echo ${{ github.event.commit.message }}
           echo ${{ github.event.pull_request.draft }}
           mvn clean package
 
