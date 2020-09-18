@@ -2,6 +2,8 @@ name: CI/CD
 
 on:
   pull_request:
+    draft:
+      - 'false'
     branches:
       - 'master'
   push:
@@ -25,7 +27,7 @@ jobs:
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    if: github.event.pull_request.draft == false
+#    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
