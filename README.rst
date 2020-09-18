@@ -81,10 +81,35 @@ or
                     .withCustomExpected("withCustomExpected")
                     .withCustomStepsSeparated(null);
 
-            Case caze = client.addCase(caze, caze.getSectionId());
+            Case caze = client.addCase(caze, section);
             System.out.println(caze.getId());
         }
     }
+
+* You can build the Feign client yourself and customize it to fit your needs.
+
+.. code:: java
+
+    TestRailClient client = new Feign.Builder()
+        .client(new Client.Proxied(sslContextFactory, hostnameVerifier, proxy))
+        .encoder(new GsonEncoder())
+        .decoder(new GsonDecoder())
+        .logger(new CustomLogger())
+        .logLevel(FULL)
+        .requestInterceptors(Arrays.asList(interceptors))
+        .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
+        .errorDecoder(new CustomTestRailErrorDecoder())
+        .target(TestRailClient.class, "https://testrail.custom");
+
+Modules (org.touchbit.testrail4j)
+---------------------------------
+
+* **jackson2-feign-client** - Feign client with jackson2 models.
+* **gson-feign-client** - Feign client with gson models.
+* **gson-api-model** - Gson annotated models (DTO).
+* **jackson2-api-model** - Jackson2 annotated models (DTO).
+* **testrail4j-core** - Base implementation of common classes for the Feign client (without depend of models).
+* **testrail4j-schema** - Json schemas for TestRail API.
 
 Restrictions
 ------------

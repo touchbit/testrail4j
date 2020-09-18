@@ -32,6 +32,9 @@ import org.touchbit.testrail4j.core.query.GetRunsQueryMap;
  * The filter can be applied for the get runs call (available since TestRail 4.0)
  * All active test runs for project with ID 1 created by user with ID 1 or 2
  * {@code GET index.php?/api/v2/get_runs/1&is_completed=0&created_by=1,2}
+ *
+ * Snake_case in field names is used purposefully due to problems
+ * when filling with URL parameters in some Feign versions.
  * <p>
  * Created by Oleg Shaburov on 01.01.2019
  * shaburov.o.a@gmail.com

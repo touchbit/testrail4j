@@ -8,7 +8,7 @@ TestRail4J |TestRail4J| |Java|
 
 Java HTTP-client for the `TestRail API`_.
 
-.. _TestRail API:https://www.gurock.com/testrail/docs/api
+.. _TestRail API: https://www.gurock.com/testrail/docs/api
 
 A feign HTTP-clients are represented by the `TestRailClient` interface for each type of model annotation.
 Annotated jackson2 and gson models are generated using the jsonschema2pojo plugin from the json schemas.
@@ -62,7 +62,7 @@ Build client using `TestRailClientBuilder` and call the necessary method
                     .withCustomSteps("withCustomSteps")
                     .withCustomExpected("withCustomExpected")
                     .withCustomStepsSeparated(null);
-            Case caze = client.addCase(caze, caze.getSectionId());
+            Case caze = client.addCase(caze, section);
             System.out.println(caze.getId());
         }
     }

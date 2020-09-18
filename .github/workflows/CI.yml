@@ -2,6 +2,8 @@ name: CI/CD
 
 on:
   pull_request:
+    types:
+      - 'ready_for_review'
     branches:
       - 'master'
   push:
@@ -10,9 +12,14 @@ on:
     branches:
       - 'master'
     paths-ignore:
+      - docs
+      - .indirect
       - README.rst
       - LICENSE.rst
       - Makefile
+      - .gitignore
+      - .github/workflows/Dependencies.yml
+      - .github/workflows/Maintenance.yml
 
 jobs:
   base:
@@ -20,6 +27,7 @@ jobs:
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

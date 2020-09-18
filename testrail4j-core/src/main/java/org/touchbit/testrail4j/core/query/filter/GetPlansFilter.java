@@ -29,6 +29,9 @@ import org.touchbit.testrail4j.core.query.GetPlansQueryMap;
 
 /**
  * Get plans QueryMap Filter
+ *
+ * Snake_case in field names is used purposefully due to problems
+ * when filling with URL parameters in some Feign versions.
  * <p>
  * Created by Oleg Shaburov on 06.01.2019
  * shaburov.o.a@gmail.com
