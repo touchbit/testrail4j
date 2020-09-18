@@ -25,15 +25,12 @@ jobs:
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, '[ci skip]')
+    if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, 'skip ci')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-        run: |
-          echo ${{ github.event.head_commit.message }}
-          echo ${{ github.event.pull_request.draft }}
 
       - name: Setup java
         uses: actions/setup-java@v1
@@ -55,7 +52,10 @@ jobs:
 
       - if: contains(github.ref, 'refs/tags')
         name: Set version (tag)
-        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
+        run: |
+          echo ${{ github.event.head_commit.message }}
+          echo ${{ github.event.pull_request.draft }}
+          mvn versions:set -DnewVersion=${GITHUB_REF##*/}
 
       - name: Build & test
         run: mvn clean package
