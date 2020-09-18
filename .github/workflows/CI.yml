@@ -10,22 +10,30 @@ on:
     branches:
       - 'master'
     paths-ignore:
+      - docs
+      - .indirect
       - README.rst
       - LICENSE.rst
       - Makefile
+      - .gitignore
+      - .github/workflows/Dependencies.yml
+      - .github/workflows/Maintenance.yml
 
 jobs:
   base:
     runs-on: ubuntu-latest
-    if: "github.event.pull_request.draft == false && !contains(github.event.head_commit.message, '[ci skip]')"
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, '[ci skip]')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+        run: |
+          echo ${{ github.event.head_commit.message }}
+          echo ${{ github.event.pull_request.draft }}
 
       - name: Setup java
         uses: actions/setup-java@v1
