@@ -20,6 +20,7 @@ on:
       - .github/workflows/Maintenance.yml
 
 jobs:
+  if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, 'skip ci')
   base:
     runs-on: ubuntu-latest
     env:
@@ -52,13 +53,13 @@ jobs:
 
       - if: contains(github.ref, 'refs/tags')
         name: Set version (tag)
+        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
+
+      - name: Build & test
         run: |
           echo ${{ github.event.head_commit.message }}
           echo ${{ github.event.pull_request.draft }}
-          mvn versions:set -DnewVersion=${GITHUB_REF##*/}
-
-      - name: Build & test
-        run: mvn clean package
+          mvn clean package
 
       - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags')
         name: Sonar master/release rewiew
