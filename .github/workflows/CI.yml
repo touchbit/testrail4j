@@ -20,96 +20,81 @@ on:
       - .github/workflows/Maintenance.yml
 
 jobs:
-  isCI:
-    runs-on: ubuntu-latest
-    name: Skip?
-    steps:
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Disable CI/CD
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo " >> ${{ jobs.isCI.steps.checkout.conclusion }}"
-          exit 1
   base:
     needs: isCI
     runs-on: ubuntu-latest
     env:
       SONAR_GH_CI_TOKEN: ${{ secrets.SONAR_GH_CI_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, 'skip ci')
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-#
-#      - name: Setup java
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 14
-#          server-id: sonatype
-#          server-username: SONATYPE_LOGIN
-#          server-password: SONATYPE_TOKEN
-#          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-#          gpg-passphrase: GPG_PASSPHRASE
-#
-#      - name: Init m2 cache
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.m2/repository
-#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-maven-
-#
-#      - if: contains(github.ref, 'refs/tags')
-#        name: Set version (tag)
-#        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
-#
-#      - name: Build & test
-#        run: mvn clean package
-#
-#      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags')
-#        name: Sonar master/release rewiew
-#        run: mvn package sonar:sonar -DskipTests=true -Dsonar.login=${SONAR_GH_CI_TOKEN}
-#      - if: github.event_name == 'pull_request'
-#        name: Sonar pull request rewiew
-#        run: |
-#          mvn package sonar:sonar -DskipTests=true \
-#          -Dsonar.login=${SONAR_GH_CI_TOKEN} \
-#          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-#          -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
-#          -Dsonar.pullrequest.base=${GITHUB_BASE_REF}
-#
-#      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags') || github.event_name == 'pull_request'
-#        id: itest
-#        name: Integration tests
-#        run: |
-#          cp testrail4j-integration-tests/target/Buggy.jar ./
-#          java -jar Buggy.jar \
-#          --host ${{ secrets.TR_HOST }} \
-#          --login ${{ secrets.TR_LOGIN }} \
-#          --token ${{ secrets.TR_TOKEN }} \
-#          --password ${{ secrets.TR_PASSWORD }}
-#      - if: failure() && steps.itest.conclusion == 'failure'
-#        name: Clear logs
-#        run: |
-#          find ./ -type f -name *.log -exec sed -i 's/Authorization: Basic .*/Authorization: Basic *********/g' {} \;
-#      - if: failure() && steps.itest.conclusion == 'failure'
-#        name: Upload failure logs
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: ITests error logs
-#          path: logs/errors
-#
-#      - if: contains(github.ref, 'refs/tags')
-#        name: Publish to sonatype repository
-#        run: mvn deploy -DskipTests=true
-#        env:
-#          SONATYPE_LOGIN: ${{ secrets.SONATYPE_LOGIN }}
-#          SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
-#          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+          server-id: sonatype
+          server-username: SONATYPE_LOGIN
+          server-password: SONATYPE_TOKEN
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Init m2 cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - if: contains(github.ref, 'refs/tags')
+        name: Set version (tag)
+        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}
+
+      - name: Build & test
+        run: mvn clean package
+
+      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags')
+        name: Sonar master/release rewiew
+        run: mvn package sonar:sonar -DskipTests=true -Dsonar.login=${SONAR_GH_CI_TOKEN}
+      - if: github.event_name == 'pull_request'
+        name: Sonar pull request rewiew
+        run: |
+          mvn package sonar:sonar -DskipTests=true \
+          -Dsonar.login=${SONAR_GH_CI_TOKEN} \
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+          -Dsonar.pullrequest.branch=${GITHUB_HEAD_REF} \
+          -Dsonar.pullrequest.base=${GITHUB_BASE_REF}
+
+      - if: github.ref == 'refs/heads/master' || contains(github.ref, 'refs/tags') || github.event_name == 'pull_request'
+        id: itest
+        name: Integration tests
+        run: |
+          cp testrail4j-integration-tests/target/Buggy.jar ./
+          java -jar Buggy.jar \
+          --host ${{ secrets.TR_HOST }} \
+          --login ${{ secrets.TR_LOGIN }} \
+          --token ${{ secrets.TR_TOKEN }} \
+          --password ${{ secrets.TR_PASSWORD }}
+      - if: failure() && steps.itest.conclusion == 'failure'
+        name: Clear logs
+        run: |
+          find ./ -type f -name *.log -exec sed -i 's/Authorization: Basic .*/Authorization: Basic *********/g' {} \;
+      - if: failure() && steps.itest.conclusion == 'failure'
+        name: Upload failure logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ITests error logs
+          path: logs/errors
+
+      - if: contains(github.ref, 'refs/tags')
+        name: Publish to sonatype repository
+        run: mvn deploy -DskipTests=true
+        env:
+          SONATYPE_LOGIN: ${{ secrets.SONATYPE_LOGIN }}
+          SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
