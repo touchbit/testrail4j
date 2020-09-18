@@ -20,7 +20,6 @@ on:
       - .github/workflows/Maintenance.yml
 
 jobs:
-  if: github.event.pull_request.draft == false && !contains(github.event.head_commit.message, 'skip ci')
   base:
     runs-on: ubuntu-latest
     env:
